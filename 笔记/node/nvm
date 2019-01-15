@@ -1,0 +1,26 @@
+
+
+
+nvm 下载 https://github.com/coreybutler/nvm-windows/releases
+选择nvm-setup.zip
+
+root: C:\dev\nvm
+path: C:\dev\nodejs
+
+
+配置环境变量
+ sysdm.cpl
+
+新建变量
+NVM_HOME：C:\dev\nvm
+NVM_SYMLINK：C:\dev\nodejs
+PATH 值：%NVM_HOME%;%NVM_SYMLINK%;
+
+nvm list
+
+
+
+
+nvm ls   // 查看目前已经安装的版本
+nvm install 6.10.0  // 安装指定的版本的nodejs
+nvm use 6.10.0  // 使用指定版本的nodejs

@@ -1,0 +1,409 @@
+
+
+全局安装会自动将文件安装在 C:\Users\Administrator\AppData\Roaming\npm
+
+	1. 输入 npm install -g express-generator ，可能有些同学会奇怪为什么要安装 express-generator，而不是直接输入第二步的命令，这是因为在 Express4.x 的版本中，命令工具被分离出来了，所以我们需要先安装一个命令工具，否则输入第三步的命令时会报错
+	 express-generator的路径  C:\Users\sky\AppData\Roaming\npm\node_modules\express-generator\bin\express-cli.js
+	
+	2. 输入 npm install -g express
+	
+	3. 输入 express --version ，回车，如果出现了 Express 的版本号，说明 	Express 安装成功。
+
+
+
+ 
+第二步中的命令如果写成 npm install --save express 或者是 npm install express --save ，则会将这个依赖自动添加到 package.json 文件中，不过前提是先有 package.json 这个文件。
+
+
+第二步的命令还可以写成 npm install express --save-dev ，
+
+-dev 表示将 express 保存至 package.json 的 devDependencies 节点，
+
+不指定 -dev 将保存至 dependencies 节点。
+
+两者的 区别 ：
+	当其他开发者下载我们的项目所依赖的包的时候(先在 cmd 中进入项目所在根目录)，如果输入 npm install ，则会根据 package.json 下载所有需要的包，如果输入 npm install --production，则只会下载 dependencies 节点的包
+
+
+
+
+
+
+express
+methods
+express.static()提供了静态文件功能
+express.router()创建一个新的路由对象
+application
+request
+response
+router
+
+
+
+
+目录
+	中间件
+		功能
+		3个参数
+		5种类型
+		
+	app.get请求参数
+
+	app.post请求参数
+	
+	app.use挂载
+	静态托管
+	常用中间件
+	express路由 
+	路由器实例
+	
+	
+	
+
+
+生成器  
+	express.myapp  
+	cd myapp
+	npm install
+	npm start
+
+
+
+
+中间件-------->小火柴
+
+	本质：
+		一个 Express 应用就是在调用各种中间件
+	
+	最大特点：
+		一个中间件处理完，再传递给下一个中间件。App实例在运行过程中，会调用一系列的中间件
+	
+	3个参数：
+		req  HTTP请求
+		res  HTTP回应
+		next 下一个中间件
+	
+	中间件的功能包括：
+		1、执行任何代码；
+		2、修改请求和响应对象；
+		3、终结请求-响应循环；
+		4、调用堆栈中的下一个中间件
+	
+	
+	5种类型：
+		1、应用级中间件；
+			应用级中间件绑定到 app 对象 使用 app.use() 和 app.METHOD()
+		2、路由级中间件；
+			express.Router()
+		3、错误处理中间件；
+			4个参数
+			app.use(function(err, req, res, next) {
+			  console.error(err.stack);
+			  res.status(500).send('Something broke!');
+			});		
+		4、内置中间件；
+			express.static  提托管静态资源
+		5、第三方中间件
+
+
+
+
+GET - 从指定的资源请求数据。
+POST - 向指定的资源提交要被处理的数据
+
+对于GET方式的请求，浏览器会把http header和data一并发送出去，服务器响应200（返回数据）；
+
+而对于POST，浏览器先发送header，服务器响应100 continue，浏览器再发送data，服务器响应200 ok（返回数据）
+
+app.get请求参数 
+	第一种方式
+		var express = require('express');
+		var app = express();
+		var url = require('url');
+		
+		app.get('/', function (req, res) {
+		  res.send('hello world')
+		})
+		 
+		//接收参数的形式
+		//输入 localhost:3000/hello?name=sky&age=20
+		app.get('/hello', function (req, res) {
+		   var path_url = url.parse(req.url,true);
+		   var query = path_url.query;
+			
+		     
+			res.json({
+				name:query.name,
+				age:query.age
+			});
+		
+		})
+		var server = app.listen(3000,"localhost",function () {
+			var host = server.address().address;
+			var port =  server.address().port;
+			console.log("应用的访问地址http://%s:%s",host,port);
+		});
+	 
+	第二种方式
+		var express = require('express');
+		var app = express();
+		 
+		
+		app.get('/', function (req, res) {
+		  res.send('hello world')
+		})
+		 
+		//加冒号的就是参数   restful -->http://localhost:3000/hello/		sky/40  
+		app.get('/hello/:name/:age', function (req, res) {
+		   var name= req.param('name');
+		   var age = req.param('age');  
+			res.json({
+				name:name,
+				age:age
+			});
+		
+		})
+		//{"name":"sky","age":"40"}
+		
+		var server = app.listen(3000,"localhost",function () {
+			var host = server.address().address;
+			var port =  server.address().port;
+			console.log("应用的访问地址http://%s:%s",host,port);
+		});
+		
+
+app.post请求参数
+	var express = require('express');
+	var app = express();
+	var bodyparser = require('body-parser');
+	
+	app.use(bodyparser.urlencoded({
+		extended:true
+	})) 
+	 
+	app.post('/demo', function (req, res) {
+	   var name= req.body.name;
+	   var age = req.body.age
+		res.json({
+			name:name,
+			age:age
+		});
+	
+	})
+	var server = app.listen(3000,"localhost",function () {
+		var host = server.address().address;
+		var port =  server.address().port;
+		console.log("应用的访问地址http://%s:%s",host,port);
+	});
+	
+app.post第二种
+    var express = require('express');
+	var app = express();
+	var bodyparser = require('body-parser');
+	
+	app.use(bodyparser.urlencoded({
+		extended:true
+	})) 
+	 
+	app.post('/demo', function (req, res) {
+	  var name= req.param('username');
+	  var age = req.param('userage');  
+		res.json({
+			name:name,
+			age:age
+		});
+	
+	})
+	 
+	
+	var server = app.listen(3000,"localhost",function () {
+		var host = server.address().address;
+		var port =  server.address().port;
+		console.log("应用的访问地址http://%s:%s",host,port);
+	});
+	
+
+
+
+
+
+
+app.use挂载
+	app.use是express注册中间件的方法，它返回一个函数。
+
+	app.use 用request.url进行路径判断 实现路由
+	request.url == "/about"
+
+	路径正确 后面的中间件才有效
+	app.use('/path', someMiddleware);
+
+
+静态托管
+	请看 ok文件夹 express打开页面
+
+
+
+
+
+常用中间件  
+	请看小火柴
+	cookie-parser 
+		用于解析cookie的中间件，添加中间后，req具备cookies属性。通过req.cookies.xxx可以访问cookie的值
+	express-session  
+		session可以和Redis或者数据库等结合做持久化操作，当服务器挂掉时也不会导致某些客户信息（购物车）丢失。
+
+	serve-favicon  设置网站的 favicon图标
+
+	body-parser 
+		bodyParser用于解析客户端请求的body中的内容，内部使用JSON编码处理，url编码处理以及对于文件的上传处理
+
+	morgan
+		Mogran是一个node.js关于http请求的express默认的日志中间件     
+
+
+
+
+express路由
+	app.all() 对于一个路径上的所有请求加载中间件
+	除了几个有效路径 对其他所有路径返回404
+
+
+	路由路径 
+		字符串匹配
+			// 匹配 /about 路径的请求
+			app.get('/about', function (req, res) {
+			  res.send('about');
+			});
+		正则匹配
+			'/ab?cd'   匹配 acd   abcd
+			'/a(bc)?d' 匹配/ad   /abcd
+			'/ab+cd'   匹配/abcd, /abbcd, /abbbbbcd
+			'/ab\*cd'  匹配/abcd, /abxcd, /abFOOcd, /abbArcd
+			/a/        匹配任何路径中含有 a 的路径
+	
+	路由句柄
+		1. 使用一个回调函数处理路由
+			 app.get('/example/a', function (req, res) {
+ 			  res.send('Hello from A!');
+			 });
+		2. 使用多个回调函数处理路由 
+			 app.get('/example/b', function (req, res, next) {
+			   console.log('response will be sent by the next function ...');
+			   next();
+			 }, function (req, res) {
+			   res.send('Hello from B!');
+			 });			
+		3. 使用回调函数数组处理路由
+			 var a = function (req, res, next) {
+			   console.log('a');
+			   next();
+			 }
+			 var b = function (req, res, next) {
+			   console.log('b');
+			   next();
+			 }
+			 var c  = function (req, res) {
+			   res.send('Hello from C!');
+			 }
+			 app.get('/example/c', [a, b, c ]);
+
+		 
+	
+	链式路由句柄
+		
+		app.route('/book')
+			.get(function(req, res) {
+   				res.send('随机取一本书');
+  			})
+  			.post(function(req, res) {
+ 			   res.send('添加一本书');
+ 			 })
+  			.put(function(req, res) {
+  			  res.send('更新这本书');
+  			});
+
+
+路由器实例
+		从Express 4.0开始，路由器功能成了一个单独的组件Express.Router。它好像小型的express应用程序一样，有自己的use、get、param和route方法
+		
+		可使用 express.Router 类创建模块化、可挂载的路由句柄。
+	
+		Router 实例是一个完整的中间件和路由系统，因此常称其为一个 “mini-app”
+	
+	
+	
+	
+		Express.Router 基本用法
+		Express.Router是一个构造函数 调用后返回一个实例
+		
+			定义了两个访问路径，然后将它们挂载到根目录
+			var express = require("express");
+			var http = require("http");
+			var app = express();
+			
+			var router = express.Router();
+			router.get('/',function(req,res){
+			    res.send('首页')
+			});
+			router.get('/about', function(req, res){
+			    res.send('关于');
+			});
+			app.use('/',router)
+			http.createServer(app).listen(1337);
+			
+		
+		
+		
+		router.route方法
+			router实例对象的route方法，可以接受访问路径作为参数
+			
+			var express = require('express');
+			var router = express.Router();
+			router.route('/api')
+			    .post(function(req, res) {
+			        // ...
+			    })
+			    .get(function(req, res) {
+			        // ...
+			    });
+			app.use('/', router);
+		
+		
+		router中间件
+			use方法为router对象指定中间件
+			
+			router.use(function(req, res, next) {
+			    console.log(req.method, req.url);
+			    next();    
+			});
+		
+		对路径参数的处理
+			router.param  4.11 弃用
+		
+
+
+
+		例子
+			创建了路由模块，
+			并加载了中间件，
+			定义了一些路由，
+			将它们挂载至应用路径上	
+
+			var authRouter = express.Router();
+			var openRouter = express.Router();
+			
+			authRouter.use(require('./authenticate').basic(usersdb));
+			
+			authRouter.get('/:user_id/edit', function(req, res, next) { 
+			  // ... Edit user UI ...  
+			});
+			openRouter.get('/', function(req, res, next) { 
+			  // ... List users ... 
+			})
+			openRouter.get('/:user_id', function(req, res, next) { 
+			  // ... View user ... 
+			})
+			
+			app.use('/users', authRouter);
+			app.use('/users', openRouter);
+

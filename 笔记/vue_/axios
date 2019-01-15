@@ -1,0 +1,27 @@
+axios 
+
+引入 import Axios from "axios"
+
+要挂到原型上 才能使用
+Vue.prototype.$axios = Axios
+
+
+
+get 
+
+http://t.weather.sojson.com/api/weather/city/101030100
+
+
+
+post
+
+
+
+
+全局配置   
+
+
+
+拦截器
+
+

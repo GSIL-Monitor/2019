@@ -1,0 +1,46 @@
+一套绝佳的图标字体 和 css框架
+
+可缩放的 可以用css修改 大小、颜色、阴影...等
+
+ 图标分类   https://fontawesome.com/icons?d=gallery
+ 
+
+CDN
+
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+
+
+
+
+放大图标
+	使用 fa-lg (33%递增)、fa-2x、 fa-3x、fa-4x，或者 fa-5x 类 来放大图标
+	<i class="fa fa-camera-retro fa-lg"></i> fa-lg
+	<i class="fa fa-camera-retro fa-2x"></i> fa-2x
+	如果图标的底部和顶部被截断了，您需要增加行高来解决此问题。
+
+
+
+fa-fw   将图标设置为一个固定宽度  
+
+
+列表  fa-ul   fa-li
+
+
+边框和对齐 fa-border  pull-right  pull-left
+
+
+动画自旋 fa-spin
+
+动画旋转  fa-pulse   
+
+加载 旋转效果   <i class="fa fa-spinner fa-pulse"></i>
+
+
+
+
+翻转  fa-flip-horizontal   fa-flip-vertical
+
+旋转 fa-rotate-90
+
+组合  fa-stack

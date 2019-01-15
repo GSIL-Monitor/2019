@@ -1,0 +1,345 @@
+npm 是一个包管理器  分享复用代码更方便  
+
+
+目录
+安装和更新
+语义化版本规则
+本地安装
+全局安装
+
+
+
+npm脚本 npm scripts
+	原理
+	通配符
+	传参
+	执行顺序
+	钩子
+	简写
+	常用脚本示例
+
+
+
+
+
+安装和更新
+npm install npm 
+
+npm i -D 
+	i 是install    
+	-S是--save     
+	-D是--save-dev 
+
+修复
+npm audit fix
+
+
+
+package.json
+
+	管理本地文件 最好的方式就是package.json
+	
+	作用：
+		描述文件  描述你的项目有哪些包  
+		语义化版本规则  指明你的项目依赖包的版本
+		发布 下载 传播
+	
+	
+	创建：
+	
+		npm init  
+	
+		跳过问题  npm init --yes
+	
+	
+	内容组成： 至少两部分
+		{
+		   "name" : "值全部小写  没有空格  可以用下划线和横杠",
+		   "version" : " 1.0.0"
+		}
+	
+	其他内容：
+	 
+		name - 包名。
+		
+		version - 包的版本号。
+		
+		description - 包的描述。
+		
+		homepage - 包的官网 url 。
+		
+		author - 包的作者姓名。
+		
+		contributors - 包的其他贡献者姓名。
+		
+		dependencies - 依赖包列表。如果依赖包没有安装，npm 会自动将依赖包安装在 node_module 目录下。
+		
+		repository - 包代码存放的地方的类型，可以是 git 或 svn，git 可在 Github 上。
+		
+		main - main 字段指定了程序的主入口文件，require('moduleName') 就会加载这个文件。这个字段的默认值是模块根目录下面的 	index.js。
+		
+		keywords - 关键字数组，通常用于搜索
+	
+		licenses - 许可证数组
+	
+		repositories - 仓库托管地址数组
+	
+		bugs - 提交bug的地址
+	
+		dependencies - 包的依赖
+	
+
+
+	设置默认值：
+	 	npm set init.author.email "shixinzhang2016@gmail.com"
+	    npm set init.author.name "shixinzhang"
+	
+	
+	 指定依赖的包：
+	 	dependencies：在生产环境中需要用到的依赖
+		devDependencies：在开发、测试环境中用到的依赖
+	
+		"devDependencies": {
+		        "babel-core": "^6.14.0",
+		        "babel-loader": "^6.2.5",
+		        "babel-preset-es2015": "^6.18.0",
+		        "vue-loader": "^10.0.2",
+		        "eslint": "^3.5.0",
+		        "serve": "^1.4.0",
+		        "webpack": "^1.13.2",
+		        "weex-loader": "^0.3.3",
+		        "weex-builder": "^0.2.6"
+		    },
+		 
+		"dependencies": {
+		        "weex-html5": "^0.3.2",
+		        "weex-components": "*"
+		    }	
+	
+
+语义化版本规则：
+
+	补丁版本 ：1.0.1
+	小版本： 1.1.0
+	大版本： 2.0.0
+	
+		如果只打算接受补丁版本的更新（也就是最后一位的改变），就可以这么写： 
+			1.0
+			1.0.x
+			~1.0.4
+		如果接受小版本的更新（第二位的改变），就可以这么写： 
+			1
+			1.x
+			^1.0.4
+		如果可以接受大版本的更新（自然接受小版本和补丁版本的改变），就可以这么写： 
+			*
+			x
+	
+
+
+安装 package
+
+	项目里用 require() 加载使用  本地安装
+	命令行 grunt  使用全局安装 
+
+
+	npm install 默认会安装 package.json 中 dependencies 和 devDependencies 里的所有模块
+	可以指定  npm install --production
+
+
+
+本地安装
+
+npm install package_name  这个命令会在当前的目录 新建一个node_modules目录 然后下载指定的包到 这个目录中 
+
+	安装指定版本：
+		$ npm install sax@0.1.1
+		$ npm install sax@">=0.1.0 <0.2.0"		
+
+	安装参数 --save 和 --save -dev
+		npm install <package_name> --save 表示将这个包名及对应的版本添加到 package.json的 dependencies
+		dependencies依赖的包不仅开发环境能使用，生产环境也能使用
+		
+		npm install <package_name> --save-dev 表示将这个包名及对应的版本添加到 package.json的 devDependencies
+ 		通过NODE_ENV=developement或NODE_ENV=production指定开发还是生产环境。
+
+ 	更新本地package  npm update lodash  
+
+
+ 	查看是否有更新  npm outdated
+ 	
+
+
+ 	npm update 的工作过程
+		1. 先到远程仓库查询最新版本
+		2. 然后对比本地版本，如果本地版本不存在，或者远程版本较新
+		3. 查看 package.json 中对应的语义版本规则
+		4. 如果当前新版本符合语义规则，就更新，否则不更新		
+
+
+
+	卸载本地 npm uninstall <package-name>
+
+
+
+全局安装  npm install -g jshint
+
+权限问题  sudo npm install -g jshint
+
+更新全局  npm update -g
+
+
+卸载全局  npm uninstall -g <package>
+
+查看安装在全局第一层的包 npm ls -g --depth=0
+
+哪些包需要更新  npm outdated -g --depth=0
+
+
+从github 下载  npm install git://github.com/package/path.git
+
+搜索   npm search <搜索词>
+
+运行文件  npm run-script xxx
+
+包信息  npm info
+
+
+
+注册用户 npm adduser   
+
+登录 npm login 
+
+发布 npm publish  
+
+淘宝镜像 cnpm： https://npm.taobao.org。
+
+张拭心  https://blog.csdn.net/u011240877/article/details/76582670/ 
+
+阮一峰 npm  http://javascript.ruanyifeng.com/nodejs/npm.html#toc12
+
+
+
+
+npm脚本 npm scripts   http://www.ruanyifeng.com/blog/2016/10/npm_scripts.html
+
+什么是npm脚本
+ 
+    "scripts": {
+       "build": "node build.js"
+     }
+    解释：scripts字段是一个对象。它的每一个属性，对应一段脚本
+
+	使用 npm run 运行脚本
+		$ npm run build  
+		等同于执行 
+		$ node build.js
+	
+	npm脚本的优点
+		项目的相关脚本，可以集中在一个地方。
+		不同项目的脚本命令，只要功能相同，就可以有同样的对外接口。
+		用户不需要知道怎么测试你的项目，只要运行npm run test即可
+
+原理
+每当执行 npm run 
+	就会自动新建一个 Shell，会将当前目录的node_modules/.bin子目录加入PATH变量，执行结束后，再将PATH变量恢复原样。
+
+	当前目录的node_modules/.bin子目录里面的所有脚本 都可以直接用脚本名调用 而不必加上路径
+	比如，当前项目的依赖里面有 Mocha，只要直接写mocha test就可以了。
+
+	"test": "mocha test"
+
+	npm 脚本的退出码 
+		也遵守 Shell 脚本规则。如果退出码不是0，npm 就认为这个脚本执行失败。
+
+
+Shell 通配符
+
+	"lint": "jshint *.js"
+	"lint": "jshint **/*.js"
+	解释：*表示任意文件名，**表示任意一层子目录。
+
+	防止被 Shell 转义，要将星号转义。
+		"test": "tap test/\*.js"
+
+
+传参
+	向 npm 脚本传入参数，要使用--标明。
+		"lint": "jshint **.js"
+	
+	向上面的npm run lint命令传入参数，必须写成下面这样。
+		$ npm run lint --  --reporter checkstyle > checkstyle.xml
+
+
+执行顺序
+	并行执行  使用&符号
+		npm run script1.js & npm run script2.js
+	继发执行  （即只有前一个任务成功，才执行下一个任务），可以使用&&符号
+		npm run script1.js && npm run script2.js
+
+
+
+钩子 
+	                                                   预构建       编译后
+	npm 脚本有pre和post两个钩子。 build脚本命令的钩子就是 prebuild 和 postbuild。
+	
+		"prebuild": "echo I run before the build script",
+		"build": "cross-env NODE_ENV=production webpack",
+		"postbuild": "echo I run after the build script"
+	
+	执行npm run build的时候，会自动按照下面的顺序执行
+		npm run prebuild && npm run build && npm run postbuild
+	
+		因此，可以在这两个钩子里面，完成一些准备工作和清理工作
+		从 npm 5 开始，prepublish将只在npm publish命令之前运行
+	
+
+简写
+	npm start是npm run start
+	npm stop是npm run stop的简写
+	npm test是npm run test的简写
+	npm restart是npm run stop && npm run restart && npm run start的简写
+    
+    restart是一个复合命令 
+    	实际上会执行三个脚本命令：stop、restart、start。具体的执行顺序如下
+        prerestart
+        prestop
+        stop
+        poststop
+        restart
+        prestart
+        start
+        poststart
+        postrestart
+
+
+
+
+常用脚本示例
+
+	// 删除目录
+	"clean": "rimraf dist/*",
+	
+	// 本地搭建一个 HTTP 服务
+	"serve": "http-server -p 9090 dist/",
+	
+	// 打开浏览器
+	"open:dev": "opener http://localhost:9090",
+	
+	// 实时刷新
+	 "livereload": "live-reload --port 9091 dist/",
+	
+	// 构建 HTML 文件
+	"build:html": "jade index.jade > dist/index.html",
+	
+	// 只要 CSS 文件有变动，就重新执行构建
+	"watch:css": "watch 'npm run build:css' assets/styles/",
+	
+	// 只要 HTML 文件有变动，就重新执行构建
+	"watch:html": "watch 'npm run build:html' assets/html",
+	
+	// 部署到 Amazon S3
+	"deploy:prod": "s3-cli sync ./dist/ s3://example-com/prod-site/",
+	
+	// 构建 favicon
+	"build:favicon": "node scripts/favicon.js",

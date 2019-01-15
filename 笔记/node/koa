@@ -1,0 +1,9 @@
+
+
+npm install babel-register --save-dev
+npm install --save-dev babel-plugin-transform-async-to-generator
+npm install --save-dev babel-plugin-transform-async-to-module-method
+
+
+
+npm install -g koa2-generator

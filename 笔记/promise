@@ -1,0 +1,817 @@
+技术的出现,都跟现实世界里的应用场景密切相关的。
+
+
+(1) JS是单线程语言
+
+(2) JS的Event Loop是JS的执行机制。深入了解JS的执行,就等于深入了解JS里的event loop
+
+
+
+为什么js是单线程   为什么需要异步   单线程如何实现异步     event loop 
+
+promise是 为异步操作的结果所准备的占位符  不需要订阅一个事件 或 向函数传递一个回调参数
+
+
+
+
+
+promise生命周期
+	初始为挂起状态 表示异步操作未结束  unsettle
+	一旦操作结束 settled 就进入两种状态之一 已完成  已拒绝 
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+promise 
+	三种状态 
+		pending 进行时  
+		resolve 已完成  
+		reject 已失败
+
+	promise将  一个函数 作为参数  用来出理promise的状态变化
+	
+	这个函数有两个参数 他们的作用是 将状态修改为resolved和rejected
+	
+	
+	new Promise(function(resolve,reject){
+		if(true) {resolve()};
+		if(false) {reject()};
+	})
+	
+
+then  有2个参数 
+	promise.then(a, b)
+	成功时 a调用
+	失败时 b调用
+	function fn(num) {
+  		return new Promise(function(resolve, reject) {
+  		    if (typeof num == 'number') {
+  		        resolve();
+  		    } else {
+  		        reject();
+  		    }
+  		})
+  		.then(function() {  //只监听成功
+  		    console.log('参数是一个number值');
+  		})
+  		.then(null, function() {   //只监听拒绝
+  		    console.log('参数不是一个number值');
+  		})
+	}
+
+	fn(1234);
+	fn('hahha');	
+
+
+
+
+
+
+
+
+
+
+
+同步任务和异步任务
+
+小例 ：
+	 console.log(1)
+	    
+	    setTimeout(function(){
+	        console.log(2)
+	    },0)
+	
+	    console.log(3)
+	    
+	
+	解释：
+		console.log(1) 是同步任务,放入主线程里
+		setTimeout() 是异步任务,被放入event table, 0秒之后被推入event queue里
+		console.log(3 是同步任务,放到主线程里
+		
+		当 1、 3在控制条被打印后,主线程去event queue(事件队列)里查看是否有可执行的函数,执行setTimeout里的函数
+		
+
+ 
+小例子
+
+		setTimeout(function(){  //1
+		  console.log(1); //9
+		}) // 10
+		
+		new Promise(function(resolve,reject){ //2
+		  console.log(2);       // 3
+		 
+		  resolve(3);           // 4
+		
+		}).then(function(val){  // 5  检查所有的then  然后进入 then里面执行
+		  
+		  console.log(val) // 7 
+		
+		}) // 8
+		// 6  第5步执行完 跳到这 
+		结果	
+			2
+			3
+			Promise {<resolved>: undefined}
+			 
+			1
+
+
+
+
+
+
+macro-task(宏任务)：包括整体代码script，setTimeout，setInterval
+micro-task(微任务)：Promise，process.nextTick
+
+
+例子  
+
+		 setTimeout(function(){
+		     console.log('timeout1')       4
+		 });
+		 
+		 new Promise(function(resolve){
+		     console.log('promise1');  1
+		     for(var i = 0; i < 10000; i++){
+		         i == 99 && resolve();
+		     }
+		 }).then(function(){  //微任务
+		     console.log('then1')     3
+		 });
+		 
+		 console.log('global1');          2
+		解释：
+			首先执行script下的宏任务,遇到setTimeout,将其放到宏任务的【队列】里
+			
+			遇到 new Promise直接执行,打印"马上执行for循环啦"
+			
+			遇到then方法,是微任务,将其放到微任务的【队列里】
+			
+			打印 "代码执行结束"
+			
+			本轮宏任务执行完毕,查看本轮的微任务,发现有一个then方法里的函数, 打印"执行then函数啦"
+			
+			到此,本轮的event loop 全部完成。
+			
+			
+			下一轮的循环里,先执行一个宏任务,发现宏任务的【队列】里有一个 setTimeout里的函数,执行打印"定时器开始啦"
+		
+		
+		宏任务是有很多轮的，每轮宏任务执行结束后，会去执行这一轮宏任务下的微任务。
+		然后执行下一轮宏任务，循环往复。
+		
+			1.整体script作为第一个宏任务进入主线程，这是第一轮宏任务。
+			2.遇到setTimeout，其回调函数被分发到宏任务Event Queue中，这是第二个宏任务。
+			3.继续执行，打印【马上执行for循环啦】
+			4.遇到promise.then()微任务，这是第一轮宏任务下的微任务，因为整体script是第一轮宏任务嘛
+			5.继续执行，打印【代码执行结束】
+			6.现在整体script作为第一轮宏任务，去检查这一轮下的微任务，发现有一个promise.then()，去执行它
+			
+			（至此现在第一轮宏任务，以及这一轮宏任务下的微任务都被执行过了）
+			7.开始第二轮宏任务，发现宏任务队列里有一个setTimeout，执行它，就打印了【定时器开始啦】
+		
+
+
+
+ 
+	
+	
+整体流程：
+
+	事件循环的顺序决定代码执行的顺序  从script开始第一次循环  之后全局上下文进入函数调用栈  直到调用栈清空 
+	然后执行所有的微任务  执行完后 从宏任务开始第二次循环  
+	
+	都是借助函数调用栈来执行的
+
+
+node 事件循环
+
+		console.log('golb1');
+		
+		setTimeout(function() {
+		    console.log('timeout1');
+		    
+		    new Promise(function(resolve) {
+		        console.log('timeout1_promise');
+		        resolve();
+		    }).then(function() {
+		        console.log('timeout1_then')
+		    })
+		})
+		
+		setImmediate(function() {
+		    console.log('immediate1');
+		    
+		    new Promise(function(resolve) {
+		        console.log('immediate1_promise');
+		        resolve();
+		    }).then(function() {
+		        console.log('immediate1_then')
+		    })
+		})
+		
+		
+		new Promise(function(resolve) {
+		    console.log('glob1_promise');
+		    resolve();
+		}).then(function() {
+		    console.log('glob1_then')
+		})
+		
+		setTimeout(function() {
+		    console.log('timeout2');
+		    
+		    new Promise(function(resolve) {
+		        console.log('timeout2_promise');
+		        resolve();
+		    }).then(function() {
+		        console.log('timeout2_then')
+		    })
+		})
+		
+		
+		new Promise(function(resolve) {
+		    console.log('glob2_promise');
+		    resolve();
+		}).then(function() {
+		    console.log('glob2_then')
+		})
+		
+		setImmediate(function() {
+		    console.log('immediate2');
+		    
+		    new Promise(function(resolve) {
+		        console.log('immediate2_promise');
+		        resolve();
+		    }).then(function() {
+		        console.log('immediate2_then')
+		    })
+		})
+		
+		
+		结果：
+		 golb1
+		 glob1_promise
+		 glob2_promise
+		 glob1_then
+		 glob2_then
+		
+		 immediate1
+		 immediate1_promise
+		 immediate1_then
+		 immediate2
+		 immediate2_promise
+		 immediate2_then
+		 timeout1
+		 timeout1_promise
+		 timeout1_then
+		 timeout2
+		 timeout2_promise
+		 timeout2_then
+		
+
+
+
+
+
+
+
+
+
+
+
+
+promise.catch()
+	catch() 与 then() 调用是功能等效的  组合使用它们  
+	让操作是 成功还是失败 变得完全清晰（事件模式 在出错时 不被触发， 回调函数模式中你必须始终记得检查错误参数）
+	
+	promise.catch(function(err){console.error(err.message);})
+
+	等同于
+
+	promise.then(null, function(err){console.error(err.message);})
+
+
+调度作业
+	//在500毫秒后 添加此函数到 作业队列中
+	setTimeout( function(){
+		console.log("hello");
+	}, 500);
+	console.log("123")
+
+
+
+
+创建已决的 Promise
+
+	使用 promise.resolve()方法  接受一个参数 并返回一个处于完成态的promise  这意味着没有 作业调度会发生
+
+		let promise = Promise.resolve(42);
+		promise.then(function(value) {
+			console.log(value); // 42
+		});
+
+		Promise.resolve(42).then(function(value){
+    		console.log(value);
+		});
+
+
+	使用 Promise.reject()
+
+		let promise = Promise.reject(42);
+		promise.catch(function(value) {
+			console.log(value); // 42
+		});
+	
+		Promise.reject(new Error("BOOM!")).catch(function(error){
+    		console.error(error);
+		});
+
+
+非 Promise 的 Thenable  将对象转换成 promise对象
+
+	thenable指的是一个具有 .then 方法的对象。
+
+	Promise.resolve() 与 Promise.reject() 都能接受非 Promise 的 thenable 作为参数。
+	当传入了非 Promise 的 thenable 时，这些方法会创建一个新的 Promise ，
+	此 Promise 会在then() 函数之后被调用。
+
+	let thenable = {
+		then:function(resolve,reject){
+			resolve(42);
+		}
+	}
+	
+	let p1 = Promise.resolve(thenable);
+	p1.then(function(value){
+		console.log(value);
+	})
+	
+	
+
+执行器错误   捕获错误
+
+	let promise = new Promise(function(resolve,reject){
+		throw new Error("出错了");
+	});
+	promise.catch(function(error){
+		console.log(error.message);
+	})
+	//	存在 catch时 才会报告错误
+
+
+	let rejected = Promise.reject(42);
+		// 在此刻 rejected 不会被处理
+		
+		
+		//只有调用catch 才处理
+	rejected.catch(function(value) { 
+		// 现在 rejected 已经被处理了
+		console.log(value);
+	});
+
+
+
+
+
+
+
+
+
+
+node.js 的拒绝处理
+
+	识别已被拒绝但未曾被处理 promise
+		unhandledRejection ：当一个 Promise 被拒绝、而在事件循环的一个轮次中没有任何拒绝处理函数被调用，该事件就会被触发；
+		rejectionHandled ：若一个 Promise 被拒绝、并在事件循环的一个轮次之后再有拒绝处理函数被调用，该事件就会被触发
+
+ 
+	
+
+
+
+浏览器的拒绝处理
+
+	
+	识别未处理的拒绝 这两个事件会被 window 对象触发，并完全等效于 Node.js 的相关事件
+	unhandledrejection 没人处理 我被激活
+	rejectionHandled   已有reject 我被激活
+
+	type ： 事件的名称（ "unhandledrejection" 或 "rejectionhandled" ）；
+	promise ：被拒绝的 Promise 对象；
+	reason ： Promise 中的拒绝值（拒绝原因）。
+
+	例子：
+		let rejected;
+		window.onunhandledrejection = function(event) {
+			console.log(event.type); // "unhandledrejection"
+			console.log(event.reason.message); // "错误信息 出错了"
+			console.log(rejected === event.promise); // true
+		};
+		window.onrejectionhandled = function(event) {
+			console.log(event.type); // "rejectionhandled"
+			console.log(event.reason.message); // "错误信息 出错了"
+			console.log(rejected === event.promise); // true
+		};
+		rejected = Promise.reject(new Error(" 错误信息 出错了 "));
+		
+
+
+	map中存储错误信息：
+		let possiblyUnhandledRejections = new Map();
+		// 当一个拒绝未被处理，将其添加到 map
+		window.onunhandledrejection = function(event) {
+		    possiblyUnhandledRejections.set(event.promise, event.reason);
+		};
+		window.onrejectionhandled = function(event) {
+		    possiblyUnhandledRejections.delete(event.promise);
+		};
+		setInterval(function() {
+		    possiblyUnhandledRejections.forEach(function(reason, promise) {
+		        console.log(reason.message ? reason.message: reason);
+		        // 做点事来处理这些拒绝
+		        handleRejection(promise, reason);
+		    });
+		    possiblyUnhandledRejections.clear();
+		},60000);
+		
+
+
+
+串联promise
+	每次对 then或catch 的调用 实际上创建并返回了另一个promise 
+
+
+前一个promise完成时 后一个才会被决议
+	let p1 = new Promise(function(resolve,reject){
+		resolve(2);
+	});
+	let p2 = p1.then(function(value){
+		console.log(value);
+	})
+	
+	p2.then(function(){
+		console.log("完成")
+	})
+
+	// 等价   let p2=p1.then()  =====  p1.then().then()
+
+	p1.then(function(value){
+		console.log(value);
+	}).then(function(){
+		console.log("完成")
+	})
+
+
+
+当始终在 Promise 链尾部添加拒绝处理函数
+
+	let p1 = new Promise(function(resolve, reject) {
+		throw new Error("出错了");
+	});
+
+	p1.catch(function(error) {
+		console.log(error.message); // "出错了"
+		throw new Error("Boom!");
+
+	}).catch(function(error) {
+		console.log(error.message); // "Boom!"
+	});
+	
+
+返回值  从一个 Promise 传递数据给下一个 Promise 
+
+	let p1 = new Promise(function(resolve, reject) {
+		resolve(42);
+	});
+
+	p1.then(function(value) {
+		console.log(value); // "42"
+		return value + 1;
+
+	}).then(function(value) {
+		console.log(value); // "43"
+	});
+	
+
+
+在 Promise 链中返回 Promise
+
+	let p1 = new Promise(function(resolve, reject) {
+		resolve(42);
+	});
+	let p2 = new Promise(function(resolve, reject) {
+		resolve(43);
+	});
+	
+	p1.then(function(value) {
+		// 第一个完成处理函数
+		console.log(value); // 42
+		return p2;
+	}).then(function(value) {  //这个then是加到第三个Promise上的
+		// 第二个完成处理函数
+		console.log(value); // 43
+	});
+	
+	//等价上面
+
+	let p1 = new Promise(function(resolve, reject) {
+		resolve(42);
+	});
+	let p2 = new Promise(function(resolve, reject) {
+		resolve(43);
+	});
+	
+	let p3 = p1.then(function(value) {
+		// 第一个完成处理函数
+		console.log(value); // 42
+		return p2;
+	});
+	p3.then(function(value) {
+		// 第二个完成处理函数
+		console.log(value); // 43
+	});
+	
+
+
+
+
+
+
+
+
+
+响应多个promise
+
+	Promise.all() 方法接收单个可迭代对象（如数组）作为参数，并返回一个 Promise
+	
+		let p1 p2 p3
+		let p4 = promise.all([p1,p2,p3]); 
+		// 数组里每一个都完成 它才能完成 任意一个被拒绝  p4的拒绝函数就被调用了  不必等待其他的 Promise 结束
+		p4.then();
+	
+	
+	赛跑胜出   Promise.race()
+		let p1 = Promise.resolve(42);
+		let p2 = new Promise(function(resolve, reject) {
+			resolve(43);
+		});
+		let p3 = new Promise(function(resolve, reject) {
+			resolve(44);
+		});
+	
+		let p4 = Promise.race([p1, p2, p3]);
+		p4.then(function(value) {
+			console.log(value); // 42
+		});
+		
+	
+继承promise
+
+
+实现 success() 与 failure()
+
+class yy_promise extends Promise{
+	success(resolve,reject){
+		return this.then(resolve,reject);
+	}
+
+	failure(reject){
+		return this.catch(reject);
+	}
+}
+
+let yy = new yy_promise(function(resolve,reject){
+	resolve("~@~");
+});
+yy.success(function(value){
+	console.log(value);
+}).failure(function(value){
+	console.log(value);
+})
+
+
+
+
+promise封装ajax
+
+	var url = 'https://hq.tigerbrokers.com/fundamental/finance_calendar/getType/2017-02-26/2017-06-10';
+	
+	// 封装一个get请求的方法
+	function getJSON(url) {
+	    return new Promise(function(resolve, reject) {
+	        var XHR = new XMLHttpRequest();
+	        XHR.open('GET', url, true);
+	        XHR.send();
+	
+	        XHR.onreadystatechange = function() {
+	            if (XHR.readyState == 4) {
+	                if (XHR.status == 200) {
+	                    try {
+	                        var response = JSON.parse(XHR.responseText);
+	                        resolve(response);
+	                    } catch (e) {
+	                        reject(e);
+	                    }
+	                } else {
+	                    reject(new Error(XHR.statusText));
+	                }
+	            }
+	        }
+	    })
+	}
+	
+	getJSON(url).then(resp => console.log(resp));
+
+
+创建XHR的promise对象
+
+	function getURL(URL) {
+	    return new Promise(function (resolve, reject) {
+	        var req = new XMLHttpRequest();
+	        req.open('GET', URL, true);
+	        req.onload = function () {
+	            if (req.status === 200) {
+	                resolve(req.responseText);
+	            } else {
+	                reject(new Error(req.statusText));
+	            }
+	        };
+	        req.onerror = function () {
+	            reject(new Error(req.statusText));
+	        };
+	        req.send();
+	    });
+	}
+	// 运行示例
+	var URL = "http://httpbin.org/get";
+	getURL(URL).then(function onFulfilled(value){
+	    console.log(value);
+	}).catch(function onRejected(error){
+	    console.error(error);
+	});
+
+
+
+
+
+
+
+
+
+
+
+setTimeout()接受两个参数，第一个是回调函数，第二个是推迟执行的毫秒数。
+
+setTimeout(function(){
+    console.log('执行了')
+ },3000)    
+
+ 只有满足 (1)3秒后 (2)主线程空闲,同时满足时,才会3秒后执行该函数
+ 如果主线程执行内容很多,执行时间超过3秒,比如执行了10秒,那么这个函数只能10秒后执行了
+
+ 
+
+setTimeout作为一个任务分发器，这个函数会立即执行，而它所要分发的任务，也就是它的第一个参数， 进入队列 延迟执行
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+/*  不连贯会加重带宽负担  */ 
+/*  限制你速度的  还是你的认知*/
+
+ ajax   
+
+
+
+
+
+
+
+sf。gg
+https://segmentfault.com/a/1190000012646373 事件循环
+
+https://segmentfault.com/a/1190000012646402   promise 三个 场景 
+
+
+灵魂三问 https://segmentfault.com/a/1190000012806637   深入理解JS引擎的执行机制
+
+
+promise 迷你书  http://liubin.org/promises-book/#promise.then
+
+
+
+
+   
+
+
+
+
+
+
+
+
+// get 异步请求 url
+	function promiseAjax(url) {
+		return new Promise(function(resolve, reject){
+			ajax({
+				type : "get",
+				url : url,
+				dataType : "json",
+				success : function(data){
+					resolve(data);
+				},
+				error : function(err){
+					reject(err);
+				}
+			});
+		});
+	}
+
+	function loadProvince() {
+		var _url1 = "http://route.showapi.com/1149-1?showapi_appid=29550&showapi_sign=1b9802a551774e3480cb844e18f0ceef&level=1",
+			_url2 = "http://route.showapi.com/1149-1?showapi_appid=29550&showapi_sign=1b9802a551774e3480cb844e18f0ceef&level=1&page=2";
+
+		/*
+		// 利用Promise对象将异步嵌套转换为同步链式调用的方式
+		var html = "";
+		promiseAjax(_url1).then(function(data){
+			console.log(data);
+			data.showapi_res_body.data.forEach(function(province){
+				html += `<option>${province.areaName}</option>`;
+			});
+			return promiseAjax(_url2);
+		}).then(function(data){
+			console.log(data)
+			data.showapi_res_body.data.forEach(function(province){
+				html += `<option>${province.areaName}</option>`;
+			});
+		}).then(function(){
+			$("#province").innerHTML += html;
+		});*/
+
+		// Promise.all()
+		// 当两页数据都加载完成后，执行成功的回调函数
+		Promise.all([promiseAjax(_url1), promiseAjax(_url2)])
+					 .then(function(array){
+					 	var html = ""; // 存放HTML字符串
+					 	// 第一页省份数据与第二页省份数据串联后遍历
+					 	array[0].showapi_res_body.data
+					 		.concat(array[1].showapi_res_body.data)
+					 		.forEach(function(province){
+					 			// 连接下拉列表中的列表项标签
+								html += `<option>${province.areaName}</option>`;
+							});
+					 	// 显示所有省份
+					 	$("#province").innerHTML += html;
+					 	console.log(arguments);
+					 });
+	}
+
+	loadProvince();
+ 

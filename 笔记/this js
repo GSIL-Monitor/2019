@@ -1,0 +1,395 @@
+
+
+this  这个对象
+
+	this 在任何情况下都不指向函数的词法作用域
+	
+	this 是在运行时进行绑定的，并不是在编写时绑定
+	this 的绑定和函数声明的位置没有任何关系，只取决于函数的调用方式。
+	
+	当一个函数被调用时，会创建一个活动记录（有时候也称为执行上下文）。这个记录会包
+	含函数在哪里被调用（调用栈）、函数的调用方法、传入的参数等信息。this 就是记录的
+	其中一个属性，会在函数执行的过程中用到。	
+	
+    new绑定> 显示绑定> 隐式绑定> 默认绑定
+
+    new绑定到新建对象
+    显示绑定到指定对象
+    隐式绑定到上下文对象
+    默认绑定到全局对象
+
+	绑定规则
+		默认绑定
+			对于默认绑定来说，决定 this 绑定对象的并不是调用位置是否处于严格模式，而是函数体是否处于严格模式。如果函数体处于严格模式，this 会被绑定到 undefined，否则this 会被绑定到全局对象。
+			function foo() {
+			console.log( this.a );
+			}
+		
+			var a = 2;
+			foo(); // 2
+
+			严格模式（strict mode）  全局对象将无法使用默认绑定
+				function foo() {
+				"use strict";
+				console.log( this.a );
+				}
+				var a = 2;
+				foo();
+	    
+	    隐式绑定     
+	    	解析隐式绑定时，我们必须在一个对象内部包含一个指向函数的属性，并通过这个属性间接引用函数，从而把 this 间接（隐式）绑定到这个对象上
+			
+	    	this 指向 obj
+			function foo() {
+		        console.log(this.a); 
+		    }
+		
+		    var obj = {
+		        a: 1,
+		        foo: foo
+		    };
+		
+		    obj.foo(); // 输出1
+
+
+			 var obj = {
+			    a: 1,
+			    foo: function() {
+			        console.log(this.a); //绑定到 obj
+			     }
+			 };
+			
+			obj.foo(); // 输出1
+			
+
+			隐式丢失
+				
+				赋值给了全局对象
+					function foo() {
+					console.log( this.a );
+					}
+					var obj = {
+					a: 2,
+					foo: foo
+					};
+					var bar = obj.foo; // 函数别名！
+					var a = "oops, global"; // a 是全局对象的属性
+					bar(); // "oops, global"
+				参数传递 是一种隐式赋值
+					function foo() {
+					console.log( this.a );
+					}
+					function doFoo(fn) {    传参是隐式赋值  function是全局函数
+					// fn 其实引用的是 foo
+					fn(); // <-- 调用位置！
+					}
+					var obj = {
+					a: 2,
+					foo: foo
+					};
+					var a = "oops, global"; // a 是全局对象的属性
+					doFoo( obj.foo ); // "oops, global"
+				内置函数是全局对象
+					function foo() {
+					console.log( this.a ); 
+					}
+					var obj = {
+					a: 2,
+					foo: foo
+					};
+					var a = "oops, global"; // a 是全局对象的属性
+					setTimeout( obj.foo, 100 ); // "oops, global"
+	
+		显示绑定
+			call() 和 apply() 方法 可以直接指定 this 的绑定对象 称之为显式绑定
+			如果你传入了一个原始值（字符串类型、布尔类型或者数字类型）来当作 this 的绑定对象，这个原始值会被转换成它的对象形式（也就是 new String(..)、new Boolean(..) 或者new Number(..)）。这通常被称为“装箱”
+			function foo() {
+			console.log( this.a );
+			}
+			var obj = {
+			a:2
+			};
+			foo.call( obj ); // 2   this 绑定到 obj 上
+
+		硬绑定
+			function foo() {
+			console.log( this.a );
+			}
+			var obj = {
+			a:2
+			};
+			var bar = function() {
+			foo.call( obj );
+			};
+			bar(); // 2
+			setTimeout( bar, 100 ); // 2
+			// 硬绑定的 bar 不可能再修改它的 this
+			bar.call( window ); // 2
+		
+		
+			硬绑定的典型应用场景就是创建一个包裹函数，传入所有的参数并返回接收到的所有值
+		
+				function foo(something) {
+				console.log( this.a, something );
+				return this.a + something;
+				}
+				var obj = {
+				a:2
+				};
+				var bar = function() {
+				return foo.apply( obj, arguments );
+				};
+				var b = bar( 3 ); // 2 3
+				console.log( b ); // 5
+		
+			由于硬绑定是一种非常常用的模式，所以在 ES5 中提供了内置的方法 Function.prototype.bind，
+		
+		
+				function foo(something) {
+				console.log( this.a, something );
+				return this.a + something;
+				}
+				 
+				var obj = {
+				a:2
+				};
+				var bar = foo.bind( obj );
+				var b = bar( 3 ); // 2 3
+				console.log( b ); // 5
+				
+
+		API调用的“上下文
+			“上下文”（context），其作用和 bind(..) 一样，确保你的回调函数使用指定的 this。
+			function foo(el) {
+			console.log( el, this.id );
+			}
+			var obj = {
+			id: "awesome"
+			};
+			// 调用 foo(..) 时把 this 绑定到 obj
+			[1, 2, 3].forEach( foo, obj );
+			// 1 awesome 2 awesome 3 awesome
+
+		new绑定
+		
+			在传统的面向类的语言中，“构造函数”是类中的一些特殊方法，使用 new 初始化类时会
+			调用类中的构造函数。通常的形式是这样的：
+			something = new MyClass(..);
+			
+		
+			构造函数只是一些使用 new 操作符时被调用的函数。它们并不会属于某个类，也不会实例化一个类 它们只是被 new 操作符调用的普通函数而已
+			不存在所谓的“构造函数”，只有对于函数的“构造调用”。
+			 
+		
+			new创建的对象
+			使用 new 来调用函数，或者说发生构造函数调用时，会自动执行下面的操作。
+				1. 创建（或者说构造）一个全新的对象。
+				2. 这个新对象会被执行 [[ 原型 ]] 连接。
+				3. 这个新对象会绑定到函数调用的 this。
+				4. 如果函数没有返回其他对象，那么 new 表达式中的函数调用会自动返回这个新对象
+				
+			function foo(a) {
+			this.a = a;
+			}
+			var bar = new foo(2);
+			console.log( bar.a ); // 2
+			
+		
+			总结：
+			* 
+		    * 普通的函数中this是window
+		    * 构造函数中的this,构造函数一般都是创建实例对象使用的,是通过new关键字,构造函数也是函数
+		    * 构造函数中的this是实例对象
+		    * 方法中的this是实例对象
+		    * 原型中的方法中的this是实例对象
+		    * 定时器中的this是window
+		    *
+				
+	
+
+
+
+
+
+
+
+
+
+
+
+this
+ 
+	Reference 的构成
+		base value        基本值  基本数据类型中的一个
+		referenced name   属性名称
+		strict reference  是不是严格模式
+		
+	获取 Reference 组成部分的方法
+		GetBase 
+		  返回 reference 的 base value。
+	 	IsPropertyReference
+	 	  如果 base value 是一个对象，就返回true。
+	
+	从 Reference 类型获取对应值的方法： 
+	
+		 ！！！ GetValue
+	
+		  var foo = 1;
+		  
+		  var fooReference = {
+		      base: EnvironmentRecord,
+		      name: 'foo',
+		      strict: false
+		  };
+	
+	GetValue(fooReference) // 1;
+	
+	调用 GetValue，返回的将是具体的值，而不再是一个 Reference
+	
+	function GetValue(value) {
+	 
+	  if (Type(value) != Reference) {
+	    return value;
+	  }
+	 
+	  var base = GetBase(value);
+	 
+	  if (base === null) {
+	    throw new ReferenceError;
+	  }
+	 
+	  return base.[[Get]](GetPropertyName(value));
+	 
+	}
+
+
+
+	例子  简单理解 MemberExpression 其实就是()左边的部分。
+		
+		function foo() {
+		    console.log(this)
+		}
+		
+		foo(); // MemberExpression 是 foo
+		
+		function foo() {
+		    return function() {
+		        console.log(this)
+		    }
+		}
+		
+		foo()(); // MemberExpression 是 foo()
+		
+		var foo = {
+		    bar: function () {
+		        return this;
+		    }
+		}
+		
+		foo.bar(); // MemberExpression 是 foo.bar
+		
+	判断this
+	如果不是，直接可以推出等于window，
+	如果是，只需要看是不是属性 reference
+	
+	
+
+
+	如果调用者函数，被某一个对象所拥有，那么该函数在调用时，内部的this指向该对象。
+	如果函数独立调用，那么该函数内部的this，则指向undefined
+	但是在非严格模式中，当this指向undefined时，它会被自动指向全局对象
+	
+	
+	每当调用一个函数时，我们必须查看括号/括号“（）”的左侧。
+	！！！如果 括号左侧是引用，那么传递给函数调用的“this”的值正是该对象所属的值，否则它是全局对象
+	
+	事件处理程序内部的“this”始终引用它所触发的元素
+	
+	
+	
+	方法模式  
+	方法属于对象  this指向对象
+	function f() {
+	    this.method = function () {};
+	}
+	
+	函数独立调用指向全局
+	
+	构造函数 this指向实例对象
+	
+	
+	
+	函数中的this
+
+	var anum = 0;
+	
+	var foo = {
+	    anum: 10,
+	    baz: {
+	        anum: 20,
+	        bar: function() {
+	            console.log(this.anum);
+	        }
+	    }
+	}
+	foo.baz.bar(); // 20  括号左边是bar
+	
+	var hello = foo.baz.bar;
+	hello(); // 0 
+		
+		
+	对象中的this
+	function foo() {
+	  alert(this.bar);
+	}
+	 
+	var x = {bar: 10};
+	var y = {bar: 20};
+	 
+	x.test = foo;//添加属性
+	y.test = foo;
+	 
+	x.test(); // 10
+	y.test(); // 20
+		
+	
+	匿名函数中的this
+	(function () {
+	  alert(this); // null => global
+	})();//[object Window]
+		
+	
+	括号左边
+
+	var value = 1;
+	
+	var foo = {
+	  value: 2,
+	  bar: function () {
+	    return this.value;
+	  }
+	}
+	
+	//示例1
+	console.log(foo.bar()); // 2
+	//示例2
+	console.log((foo.bar)()); // 2
+	//示例3
+	console.log((foo.bar = foo.bar)()); // 1 
+	//示例4
+	console.log((false || foo.bar)()); // 1
+	//示例5
+	console.log((foo.bar, foo.bar)()); // 1   （= ||  ， 都是全局的）
+
+
+
+this 转换代码
+
+func() 等价于 func.call(undefined)
+
+func(p1, p2)  等价于  func.call(undefined,p1,p2)
+
+obj.child.method(p1, p2) 等价于  obj.child.method.call(obj.child,p1,p2)
+
+func.call(context, p1, p2) <---这才是正常调用形式  上面都是语法糖
+

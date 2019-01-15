@@ -1,0 +1,240 @@
+人会注意到互联网不仅仅是虚拟  “如果你认为教育的成本太高，试试看无知的代价”
+
+基础平台从操作系统 (Linux) 转变为 JavaScript 运行时 (Node.js) 让操作系统变得独立
+
+
+Node.js  取代了   Apache 
+从MySQL 到 NoSQL 再到无架构的、以文档为导向的持久存储（如 MongoDB） 	
+	这些代表着持久化策略发生了根本性的转变。用户花费在编写 SQL 上的时间将会减少，
+	
+	将会有更多的时间编写 JavaScript 中的 mapReduce (映射化简)
+		映射化简 把一堆杂乱无章的数据按照某种特征归纳起来，然后处理并得到最后的结果
+		映射化简 为了解决其搜索引擎中大规模网页数据的并行化处理  
+		Hadoop是一个由Apache基金会所开发的分布式系统基础架构。用户可以在不了解分布式底层细节的情况下，开发分布式程序。充分利用集群的威力进行高速运算和存储。
+		Hadoop的框架最核心的设计就是：HDFS和MapReduce。HDFS为海量的数据提供了存储，则 MapReduce 为海量的数据提供了计算
+	
+	编写 RESTful Web 服务变得前所未有的容易。
+
+		RESTful 一种软件架构风格、设计风格，而不是标准，只是提供了一组设计原则和约束条件。它主要用于客户端和服务器交互类的软件
+ 
+从传统的服务器端页面生成变为客户端 单页面应用程序 
+
+从以页面为中心的应用程序视图转到面向组件的视图
+
+您访问的每个网站都是库、语言与 Web 框架的一种独特组合   小块松散组合
+
+
+GUI     图形用户界面
+CLI     命令行界面
+PVM     并行虚拟机
+NPM     包管理工具
+SPA     单页应用程序
+Grunt   一个Javascript任务运行器。
+
+
+
+MVC     MVVM开发模式 前后端各负其责
+ajax    重前端 业务逻辑全部在本地操作，数据都需要通过AJAX同步、提交
+路由    在URL中采用#号来作为当前视图的地址,
+	    改变#号后的参数，页面并不会重载
+
+
+
+
+
+
+MongoDB + Express +AngularJS + NodeJS
+
+NPM – NodeJS包管理器，类似Java的Maven。
+Grunt – 一个Javascript任务运行器。
+
+mean安装目录：
+app                    包含控制器, 模型 和视图 
+	controllers
+	models
+	routes             路由
+	views
+		includes       包含页面的头部和尾部模板，能够插入这个应用的所有页面
+			foot.html
+			head.html
+		layouts        页面布局的文件
+		users          用户注册 登录和授权有关页面。
+			404.html
+			500.html
+			index.html
+config                 包含各种配置文件  控制应用行为部分的文件 Node.JS部分
+	env
+		config.js
+		express.js
+		passport.js
+
+node_modules
+
+public                  客户端部分在public目录下
+	css
+	img
+	js                  包含了Angular代码
+	lib                 lib目录是Angular的代码库 
+	views
+		humans.txt
+		robots.txt 		网络是为人类设置的...
+						只有一个专为搜索引擎准备的的robots.txt文件。
+						为什么不为我们自己也配备一个文件？  
+test
+	bower.json
+	gruntfile.js
+	package.json
+	procfile
+	readme.md
+	server.js           Node.JS部分 启动整个应用的文件
+							加载配置：配置应用自身 授权 和数据库连接的 加载。
+							引导模型：这是通过遍历模型目录实现的，加载其下面所有文件。包括子目录。
+							启动passport
+							初始化express
+							配置express
+							配置express路由
+							在指定端口启动服务器
+
+
+
+http://www.jdon.com/idea/js/mean.html以上
+服务器后端 三个目录  app config server.js
+app目录中驻扎着整个后端的代码
+
+
+
+Mongo DB很好的实现了面向对象的思想(OO思想)，在Mongo DB中每一条记录都是一个Document对象。Mongo DB最大的优势在于所有的数据持久操作都无需开发人员手动编写SQL语句，直接调用方法就可以轻松的实现CRUD操作。
+
+
+
+
+
+react  jsx
+
+组件周期
+mounted 插入
+ react组件被render解析生成对应的dom节点 并被插入浏览器的dom结构的一个过程
+
+update 更新
+ 一个mounted的react组件被重新render的过程 
+
+unmounted 移除
+一个mounted的react 组件对应的dom节点被从dom结构中移除
+
+封装钩子函数
+will 将要怎么怎么样
+did  已经怎么怎么样
+
+
+
+
+
+
+
+ 
+
+angular     
+
+
+
+
+Vue
+
+virtual dom tree  虚拟DOM树
+
+component render function 组件渲染函数
+
+watcher  观察者
+render     渲染
+collect    收集 dependency 依赖
+notify     通知
+trigger    触发
+
+用getter去访问data的属性 建立关系标记为依赖  数据依赖发生改变（即数据的setter被调用）的时候  watcher会对比前后两个的数值是否发生变化，然后确定是否通知视图进行重新渲染。
+
+Vuex是一个专为Vue服务
+	它集中于MVC模式中的Model层，
+	规定所有的数据操作必须 通过 action – mutation – state change 的流程 来 进行，
+	再结合Vue的数据视图双向绑定特性来 实现 页面的展示更新。
+	统一的页面状态管理以及操作处理，
+	可以让复杂的组件交互变得简单清晰，
+	同时可在调试模式下进行时光机般的倒退前进 操作，
+	查看数据改变过程，使 code debug更加方便。
+
+
+数据驱动是vuejs最大的特点。
+	
+	在vuejs中，所谓的数据驱动就是当数据发生变化的时候，用户界面发生相应的变化，开发者不需要手动的去修改dom。
+
+ 
+Vuejs的数据驱动是通过MVVM这种框架来实现的。MVVM框架主要包含3个部分:model、view和 viewmodel。
+
+	Model:指的是数据部分，对应到前端就是javascript对象
+	
+	View:指的是视图部分，对应前端就是dom
+	
+	Viewmodel:就是连接视图与数据的中间件
+
+Viewmodel就相当于一个观察者，监控着双方的动作，并及时通知对方进行相应的操作。
+
+	数据(Model)和视图(View)是不能直接通讯的，而是需要通过ViewModel来实现双方的通讯。当数据变化的时候，viewModel能够监听到这种变化，并及时的通知view做出修改。同样的，当页面有事件触发时，viewMOdel也能够监听到事件，并通知model进行响应。
+
+
+
+
+
+
+
+mvc 
+	视图：用户界面
+	控制器：业务逻辑
+	模型：数据保存
+
+	1.用户界面传送指令到控制器
+	2.控制器完成业务逻辑后 要求模型改变状态
+	3.模型将新的数据发送给用户界面 用户得到反馈
+	所有的通信都是单向的
+
+
+mvp
+都是双向的
+   
+   >>>   >>>
+ v     p      m
+   <<<   <<<
+
+
+mvvm
+和 MVP 基本一致
+唯一的区别 采用双向绑定 View的变动，自动反映在 ViewModel，反之亦然
+
+          <<<
+v <--> vm     m
+          >>>
+
+
+
+
+
+ js 框架存在的根本原因    UI 与状态同步非常困难
+	不使用框架  最大的问题是每当状态发生改变时都要（手动）更新 UI   它非常脆弱
+
+	使用框架 当状态改变后，框架自动更新（对应的）视图。
+
+
+
+
+框架是如何工作的呢?
+基于两个基本的策略：
+
+	重新渲染整个组件，如React。当组件中的状态发生改变时，在内存中计算出（新的）DOM 结构后与已有的 DOM 结构进行对比。实际上，这是非常昂贵的。因而采取（将真实 DOM）映射为虚拟 DOM ，通过对比状态变化前后虚拟 DOM 的不同，计算出变化后再改变真实 DOM 结构。这个过程称为调和（reconciliation）。
+
+	通过（添加）观察者监测变化，如 Angular 和 Vue.js。应用中状态的属性会被监测，当它们发生变化时，只有依赖了（发生变化）属性的 DOM 元素会被重新渲染。
+
+
+
+
+现代 js 框架解决的主要问题是保持 UI 与状态同步。
+使用原生 JavaScript 编写复杂、高效而又易于维护的 UI 界面几乎是不可能的。
+Web components 并未提供解决同步问题的方案。
+使用现有的虚拟 DOM 库去搭建自己的框架并不困难。但并不建议这么做！ 

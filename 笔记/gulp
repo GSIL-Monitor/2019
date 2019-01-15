@@ -1,0 +1,62 @@
+ 全局安装   就是在命令行里 执行      
+ 项目依赖就是 每个项目都装一个 
+
+
+
+ 全局安装
+ npm install -g gulp
+
+项目依赖
+npm install --save-dev gulp
+
+
+例子
+	var gulp = require('gulp');
+	
+	gulp.task('default', function() {  
+	//如果不指定任务名称 就运行default
+	 console.log("123")
+	});
+	
+
+报错 Did you forget to signal async completion?
+ https://blog.csdn.net/qq_41208114/article/details/79109269
+
+
+
+ 使用gulp 
+ 	gulp本身只是一个容器  所有的功能都依赖于插件
+
+方法 
+	gulp.task(str,fn)
+		创建一个 gulp任务  每一个任务都需要一个task
+	gulp.src(path)
+		文件来源
+	gulp.dest(path)
+		操作之后的文件到哪里去
+	gulp.watch()
+		监听
+	gulp.start()
+		执行gulp任务
+
+插件  要安装 引入才能使用
+	压缩js文件
+		npm install gulp-uglify
+	压缩css文件
+		npm install gulp-minify-css
+	压缩html
+		npm install gulp-minify-html
+	压缩img
+		npm install gulp-imagemin
+	代码检查
+		npm install gulp-jshint 
+	合并 重命名 
+		npm install gulp-concat  gulp-rename
+	监听
+		gulp.task('watch',function(){
+			gulp.watch('libs/js/*.js',function(){
+				gulp.run('uglify')
+			})
+		})
+
+

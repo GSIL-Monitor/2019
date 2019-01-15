@@ -1,0 +1,252 @@
+小程序= 主题部分+各个页面   主体部分主要用于核心的配置，各个页面主要用于不同业务场景
+
+小程序由配置代码JSON文件、模板代码 WXML 文件、样式代码 WXSS文件以及逻辑代码 JavaScript文件组成
+
+
+主体部分主要由3个文件构成 
+
+    1）app.js：小程序逻辑，初始化APP
+    
+    2）app.json ：小程序配置，比如导航、窗口、页面http请求跳转等
+    
+    3）app.wxss：公共样式配置
+
+页面由4个文件构成
+   M        V        C
+  json  wxml,wxss    js
+  1）js：页面逻辑，相当于控制层（C）；也包括部分的数据（M）
+  
+  2）wxml：页面结构展示，相当于视图层（V）
+  
+  3）wxss：页面样式表，纯前端，用于辅助wxml展示
+  
+  4）json：页面配置，配置一些页面展示的数据，充当部分的模型（M）
+
+
+开发流程
+注册小程序--->代码开发--->提审
+
+
+目录结构
+pages
+  index
+    index.js
+    index.wxml
+    index.wxss
+  logs
+    logs.js
+    logs.json
+    logs.wxml
+    logs.wxss
+utils
+  util.js
+app.js
+app.json
+app.wxss
+
+
+utils
+  该文件件主要用于存放全局的一些.js文件，公共用到的一些事件处理代码文件可以放到该文件夹下，用于全局调用。
+  
+  module.exports = {  
+    formatTime: formatTime  
+  }  
+  对于允许外部调用的方法，用module.exports进行声明，才能在其他js文件中用一下代码引入
+  var util = require('../../utils/util.js')  
+
+
+app.json
+
+    {
+      "pages":[
+        "pages/index/index",
+        "pages/logs/logs"
+      ],
+      "window":{
+        "backgroundTextStyle":"light",
+        "navigationBarBackgroundColor": "#fff",
+        "navigationBarTitleText": "WeChat",
+        "navigationBarTextStyle":"black"
+      }
+    }
+    其实这里，共有五个部分可以配置，分别是pages, window, tarBar, networkTimeout和debug
+    
+    pages：定义的是这个小程序由哪些页面组成。
+    在以后需要新增或者减少页面时，都需要在这里进行设置，有几个页面pages数组就有几项。
+    
+    可以看到pages是一个数组，而数组的第一项就是小程序的初始页面，你可以试着把 logs 页面移动到最前面看看效果，这在开发的时候是一个不错的小技巧。
+    
+    还有一个技巧要分享给你的是，在我们需要添加一个新页面的时候，没必要傻傻的手动去创建文件夹，然后 新建xxx.josn, xxx.js, xxx.wxml, xxx.wxss这四个文件。我们只要在pages数组中    添加一个你想创建的页面，然后 Ctrl + s 保存即可！是不是很酷？
+    
+    {
+      "pages":[
+        "pages/logs/logs",
+        "pages/index/index"
+      ],
+      ...
+    }
+    window: 定义的是窗口的配置信息。
+    
+        属性	                             类型	        默认值	       描述
+        navigationBarBackgroundColor	   HexColor	    #000000	     导航栏背景颜色，如"#000000"
+        navigationBarTextStyle	         String	      white	       导航栏标题颜色，仅支持 black/white
+        navigationBarTitleText	         String	      a	           导航栏标题文字内容
+        backgroundColor	                 HexColor	    #ffffff	     窗口的背景色
+        backgroundTextStyle	             String	      dark	       下拉背景字体、
+                                                                   仅支持 dark/light
+        enablePullDownRefresh	           Boolean	    false	       是否开启下拉刷新
+   
+    tarBar: 用来定义 tabBar 的表现
+        tabBar 是一个数组，只能配置最少2个、最多5个 tab，tab 按数组的顺序排序。
+        
+        我们可以在项目目录下添加一个images文件，用来存放我们的图片文件。
+        
+        注意：目前小程序只支持网络图片或者base64图片，使用本地图片需要将图片转为base64代码
+        
+        {
+          "tabBar": {
+            "backgroundColor": "#fbfbfb",
+            "borderStyle": "white",
+            "selectedColor":"#50e3c2",
+            "color": "#aaa",
+            "list": [{
+              "pagePath": "pages/index/index",
+              "text": "首页",
+              "iconPath": "images/home.png",
+              "selectedIconPath": "images/homeHL.png"
+            },{
+              "pagePath": "pages/me/me",
+              "text": "我",
+              "iconPath": "images/me.png",
+              "selectedIconPath": "images/meHL.png"
+            }]
+          }
+        }
+    networkTimeout: 用来设置各种网络请求的超时时间。
+        如果你不是很清楚这个networkTimeout配置有什么作用，那么忽略就好。这对实际开发并没有什么影响。
+        
+        属性	类型	必填	说明
+        request	Number	否	wx.request的超时时间，单位毫秒
+        connectSocket	Number	否	wx.connectSocket的超时时间，单位毫秒
+        uploadFile	Number	否	wx.uploadFile的超时时间，单位毫秒
+        downloadFile	Number	否	wx.downloadFile的超时时间，单位毫秒     
+
+
+js-SDK
+
+  微信发布了一整套网页开发工具包，称之为 JS-SDK
+ ​ JS-SDK是对之前的 WeixinJSBrige 的一个包装
+  JS-SDK 解决了移动网页能力不足的问题
+  微信web资源离线存储 直接从微信本地加载 Web 资源而不需要再从服务端拉取，从而减少网页加载时间 有点类似 HTML5 的 Application Cache   
+
+小程序与普通的网页 区别
+  小程序的逻辑层和渲染层是分开的，逻辑层运行在 JSCore 中，并没有一个完整浏览器对象，因而缺少相关的DOM API和BOM API。 部分前端库无法使用 如jquery zepto
+
+
+
+  json配置
+  是一种轻量级的数据交换格式。
+   
+    json语法
+    JSON文件都是被包裹在一个大括号中 {}，通过key-value的方式来表达数据。
+    {
+       "navigationBarTitleText": "查看启动日志"
+    }
+    JSON的值只能是以下几种数据格式：
+    1.数字 2.字符串 3.布尔 4.数组 5.对象 6.null  没有undefined  不能加注释
+
+
+  wxml模板
+    介绍
+        wxml是小程序框架的一套标记语言 结合小程序的基础组件 事件系统 可以构建出页面的结构
+        
+        严格闭合  大小写敏感
+          <!-- 在此处写注释 -->
+          <标签名 属性名1="属性值1" 属性名2="属性值2" ...> ...</标签名>
+
+        文本标签
+          <text>hello world</text>
+
+        图片标签
+          <image class="info" src=""></image>
+
+    数据绑定
+
+      WXML 通过 {{变量名}} 来绑定 WXML 文件和对应的 JavaScript 文件中的 data 对象属性。
+      {
+        time: (new Date()).toString()
+      }
+
+      <text>当前时间：{{time}}</text>
+
+      属性必须加双引号： <text data-test="{{test}}"> hello world</text>
+
+
+    逻辑语法
+      通过 {{ 变量名 }} 语法可以使得 WXML 拥有动态渲染的能力，除此外还可以在 {{ }} 内进行简单的逻辑运算。
+        三元运算
+          <text>{{ a === 10? "变量 a 等于10": "变量 a 不等于10"}}</text>
+
+        算数运算
+          { a: 1,  b: 2, c: 3 }
+          <view> {{a + b}} + {{c}} + d </view>
+
+        字符拼接
+          <view>{{"hello " + name}}</view>
+          { name: 'world' }
+
+
+        <text>{{[1,2,3]}}</text>
+        <text>{{"hello world"}}</text>
+    条件逻辑
+
+        <block wx:if="{{true}}">
+          <view> view1 </view>
+          <view> view2 </view>
+        </block>
+        
+
+
+
+    列表渲染
+    wx:for
+
+
+    模板
+
+    引用 
+
+
+
+
+
+
+
+  wxss样式
+
+  javascript脚本
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+三元运算
+
+

@@ -1,0 +1,349 @@
+
+
+开发一个数字输入框组件
+    只能输入数字 有两个按钮 加一减一  
+    设置初始值  最大值 最小值  数值改变时 触发自定义事件通知父组件 
+
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>数字输入框组件 </title>
+       <script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>   
+    </head>
+    <body>
+  <div id="app">
+     <input-number v-model="value" :max="10" :min="0"></input-number>
+  </div>
+
+
+
+<script> 
+function isValueNumber(value){
+    return (/(^-?[0-9]+\.{1}\d+$)|(^-?[1-9][0-9]*$)|(^-?0{1}$)/).test(vlaue + "");
+};
+
+Vue.component("input-number", {
+    template:` 
+
+        <div class="input-number">
+            <input type="text" :value="currentValue" @change="handleChange" @keyup="down" />
+            <button @click="handleDown" :disabled="currentValue <= min">-</button>
+            <button @click="handleUp" :disabled="currentValue >= max">+</button>
+
+        </div>
+    `,
+    props:{
+        max:{
+            type:Number,default:Infinity
+        },
+        min:{
+            type:Number,default:-Infinity
+        },
+        value:{
+            type:Number,default:0
+        }
+    },
+    data:function(){
+        return {
+            currentValue:this.value
+        }
+    },
+
+  
+
+  watch:{
+    currentValue:function(val){
+        this.$emit('input',val);
+        this.$emit('on-change',val);
+    },
+    value:function(val){
+        this.updateValue(val);
+    }
+  },
+  methods:{
+    updateValue:function(val){
+        if(val>this.max) val = this.max;
+        if(val<this.min) val = this.min;
+        this.currentValue = val;
+    },
+    handleDown:function(){
+        if(this.currentValue <= this.min) return;
+        this.currentValue -= 1;
+    },
+    handleUp:function(){
+        if(this.currentValue >= this.max) return;
+        this.currentValue += 1;
+    },
+    down:function(){
+        this.currentValue -= 1;
+    },
+    up:function(){
+        this.currentValue += 1;
+    },
+    handleChange:function(event){
+        var val = event.target.value.trim();
+
+        var max = this.max;
+        var min = this.min;
+
+        if(isValueNumber(val)){
+            val = Number(val);
+            this.currentValue = val;
+
+            if(val>max){
+                this.currentValue = max;
+            } else if(val<min){
+                this.currentValue = min;
+            }
+        }else{
+            event.target.value = this.currentValue;
+        }
+    }
+  },
+  
+// /*  el 被新创建的 vm.$el 替换，并挂载到实例上去之后调用该钩子*/
+  mounted:function(){
+    this.updateValue(this.value)
+  }
+
+})
+
+  new Vue({
+    el:'#app',
+    data:{
+        value:5
+    }
+})
+</script>
+ 
+    </body>
+</html>
+
+
+
+
+
+
+开发一个标签页组件
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>选项卡</title>
+       <script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script> 
+
+       <style>
+[v-cloak]{
+    display:none;
+}
+.tabs{
+    font-size:14px;
+    color:#657180;
+}
+.tabs-bar:after{
+    content:'';
+    display:block;
+    width:100%;
+    height:1px;
+    background:#dedde4;
+    margin-top:-1px;
+}
+.tabs-bar{
+    display:inline-block;
+    padding:4px 16px;
+    margin-right:6px;
+    background:#fff;
+    border:1px solid #d7dde4;
+    cursor:pointer;
+    position:relative;
+}
+.tabs-bar div{
+    float:left;
+}
+.tabs-tab-active{
+    color:#3399ff;
+    border-top:1px solid #3399ff;
+    border-bottom:1px solid #fff;
+}
+.tabs-tab-active:after{
+    content:'';
+    display:block;
+    height:1px;
+    background:#3399ff;
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+}
+.tabs-content{
+    padding:8px 0;
+}
+
+
+          
+                   
+        </style>  
+    </head>
+    <body>
+  <div id="app" v-cloak>
+    <tabs v-model="activekey"> 
+        <pane label="标签一" name="1">
+            标签一的内容
+        </pane>
+        <pane label="标签二" name="2">
+            标签二的内容
+        </pane>
+        <pane label="标签三" name="3">
+            标签三的内容
+        </pane>
+    </tabs>
+    
+  </div>
+
+
+
+<script> 
+Vue.component('tab',{
+    template:`
+        <div class="tabs">
+            <div class="tabs-bar">
+                 
+                <div 
+                    :class="tabCls(item)"
+                    v-for="(item, index) in navList"
+                    @click = "handleChange(index)">
+                    {{item.label}}
+                    </div>
+            </div>
+            <div class="tabs-content">
+                
+                <slot></slot>
+            </div>
+        </div>`,
+        props:{
+            value:{
+                type:[String,Number]
+            }
+        },
+        data:function(){
+            return {
+                currentValue:this.value,
+                navList:[]
+            }
+        },
+        methods:{
+            tabCls:function(item){
+                return [
+                    'tabs-tab',
+                    {
+                        'tabs-tab-active':item.name === this.currentValue
+                    }
+                ]
+            },
+        
+            
+            getTabs(){
+                return this.$children.filter(function(item){
+                    return item.$options.name === 'pane';
+                });
+        },
+        updateNav(){
+            this.navList = {};
+            var _this = this;
+
+            this.getTabs().forEach(function(pane,index){
+                _this.navList.push({
+                    label:pane.label,
+                    name:pane.name||index
+                });
+                if(!pane.name) pane.name = index;
+                if(index === 0) {
+                    if(!_this.currentValue){
+                        _this.currentValue = pance.name||index
+                    }
+                }
+            });
+            this.updataStatus();
+
+        },
+        updataStatus(){
+            var tabs = this.getTabs();
+            var _this = this;
+
+            tabs.forEach(function(tab){
+                return tab.show = tab.name === _this.currentValue;
+            })
+        },
+        handleChange:function(index){
+            var nav = this.navList(index);
+            var name = nav.name;
+            this.currentValue = name;
+            this.$emit('input',name);
+            this.$emit('on-click', name)
+        }
+        },
+
+        watch:{
+            value:function(val){
+                this.currentValue = val;
+            },
+            currentValue:function(){
+                this.updataStatus();
+            }
+        }
+
+})
+ 
+Vue.component('pane',{
+    name:'pane',
+    template:`
+        <div class="pane" v-show="show">
+            <slot></slot>
+        </div>`,
+
+    data:function(){
+        return{
+            show:true
+        }
+    },
+    props:{
+        name:{
+            type:String
+        },
+        label:{
+            type:String,
+            default:""
+        }
+    },
+    methods:{
+        updateNav(){
+            this.$parent.updateNav();
+        }
+    },
+    watch:{
+        label(){
+            this.updateNav()
+        }
+    },
+    mounted(){
+        this.updateNav();
+    }
+})
+
+  new Vue({
+    el:'#app',
+    data:{
+        activekey:1
+    }
+    
+})
+</script>
+ 
+    </body>
+</html>
+
+
+
+ 

@@ -1,0 +1,21 @@
+npm install express            本地安装
+npm install express -g         全局安装
+npm uninstall express          卸载模块
+npm list -g                    查看全局安装信息
+npm update express             更新模块
+npm search express             搜索模块
+npm cache clear                清空NPM本地缓存
+npm ls                         显示列表  
+
+npm启动脚本  
+	"scripts": {
+	    "start":"node index.js",  //关键
+	    "test": "echo \"Error: no test specified\" && exit 1"
+	  },
+
+
+
+gulp API 
+https://www.gulpjs.com.cn/docs/api/
+
+

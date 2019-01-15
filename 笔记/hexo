@@ -1,0 +1,199 @@
+安装Git
+安装node
+安装hexo
+创建域名和空间
+创建仓库
+生成SSH并添加到github
+部署项目
+上传到github
+绑定个人域名
+修改及配置主题
+添加RSS
+添加评论
+写文章部分创建仓库
+
+
+
+配置github的用户名和邮箱
+
+生成ssh   ssh-keygen -t rsa -C "你的GitHub注册邮箱"    找到id_rsa.pub
+        
+添加ssh  验证ssh -T git@github.com
+
+
+
+初始化blog
+
+修改_config.yml文件
+
+deploy:
+  type: git
+  repo: https://github.com/YourgithubName/YourgithubName.github.io.git
+  branch: master
+
+
+特别提醒，在每个参数的:后都需要有一个空格
+修改网站相关信息
+   title: wangwlj的博客
+    subtitle: 积跬步以至千里！
+    description: 网页描述
+    author: wangwlj
+    language: zh-CN
+    timezone: Asia/Shanghai
+
+
+可选(可将_config.yml中的repo修改为如下标准格式：
+
+ repo: https://用户名:密码@github.com/用户名/用户名.github.io.git
+这样做的好处就是每次hexo deploy提交时不需要输入账号密码。
+
+)
+
+
+回到gitbash中，进入你的blog目录，分别执行以下命令：
+
+hexo clean
+hexo generate
+hexo server
+
+
+npm install hexo-deployer-git --save
+运行：hexo g（本地生成静态文件）
+运行：hexo d（将本地静态文件推送至Github）
+
+
+source目录下自带一篇hello world文章, 所以直接执行如下命令:
+
+   $ hexo generate
+    # 启动本地服务器
+    $ hexo server
+    # 在浏览器输入 http://localhost:4000/就可以看见网页和模板了
+    INFO  Start processing
+    INFO  Hexo is running at http://localhost:4000/. Press Ctrl+C to stop.
+
+
+
+
+发表文章
+1.新建一篇博文，在CMD中输入:
+
+$ hexo new "我的测试文章"
+INFO  Created: F:\test\blog\source\_posts\我的测试文章.md
+
+
+ 
+
+ 
+ 
+
+ 
+
+ 
+ 
+
+
+
+如果在执行 hexo deploy 后,出现 error deployer not found:github 的错误，执行：
+
+npm install hexo-deployer-git --save
+
+
+现在来介绍常用的Hexo 命令
+
+npm install hexo -g #安装Hexo
+npm update hexo -g #升级 
+hexo init #初始化博客
+
+命令简写
+hexo n "我的博客" == hexo new "我的博客" #新建文章
+hexo g == hexo generate #生成
+hexo s == hexo server #启动服务预览
+hexo d == hexo deploy #部署
+
+hexo server #Hexo会监视文件变动并自动更新，无须重启服务器
+hexo server -s #静态模式
+hexo server -p 5000 #更改端口
+hexo server -i 192.168.1.1 #自定义 IP
+hexo clean #清除缓存，若是网页正常情况下可以忽略这条命令
+
+
+
+
+
+文件目录说明
+
+ 
+
+
+_config.yml  全局配置文件 里面有网站名称  副标题
+	title           网站标题
+	subtitle        网站副标题
+	description     网站描述
+	author          您的名字
+	language        网站使用的语言
+	timezone        网站时区。Hexo 默认使用您电脑的时区。时区列表。比如说：America/New_York, 	Japan, 和 UTC 。
+	
+
+package.json  hexo框架的参数和所依赖插件
+
+scaffolds 脚手架  不用关心
+
+source  新建的文章都放在这里
+
+themes
+
+
+
+
+
+git config --global user.name "c1178396429"
+git config --global user.email "2109200262@qq.com"
+
+ssh-keygen -t rsa -C "c1178396429@qq.com"
+
+
+
+
+
+
+
+
+
+
+
+
+
+http://www.cnblogs.com/lijiayi/p/githubpages.html
+
+创建分支
+
+拉请求  更改内容 提交
+ 
+合并拉请求
+ 
+
+修改配置文件  _config.yml
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

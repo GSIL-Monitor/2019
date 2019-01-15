@@ -1,0 +1,1066 @@
+!!!webpakc-dev-server
+
+DevServer用于提供HTTP服务、监听文件变化并实时刷新页面、支持SourceMap以方便调试。
+
+
+报错
+ Failed to download repo vuejs-templates/webpack: getaddrinfo ENOTFOUND codeload.github.com codeload.github.com:443
+
+ 解决方法：执行三个命令检查环境
+
+1.node -v
+
+2.vue -v  (没有显示版本，npm i vue-cli -g)
+
+3.webpack -v(需要重新安装,npm install webpack -g)
+
+
+
+
+
+webpack术语
+
+	资源  
+		图片 字体 输出为单个文件
+	
+	bundle：
+		最终源文件版本
+	
+	chunk：
+		bundle 由 chunk 组成 例如，入口 chunk(entry chunk) 和子 chunk(child chunk)
+	
+	代码分离(Code Splitting): 
+		指将代码分离到每个 bundles/chunks 里面，你可以按需加载，而不是加载一个包含全部的 bundle。
+	
+	配置: 
+		webpack 的配置文件是一个普通的 JavaScript 文件，它导出为一个对象。然后由 webpack 根据这个对象定义的属性进行处理。
+	
+	关系依赖图：
+		从一个或多个入口点开始，webpack 递归构建一个依赖关系图，里面包含了你的应用程序需要的所有模块/资源(mudule/asset)。
+	
+	入口点 
+		告诉webpack 从哪里开始  要打包什么东西  你可以考虑将待打包文件的根目录作为你应用程序的入口点
+	
+	输出(Output): 
+		此选项指定编译后的文件，输出到硬盘的何处。
+	
+	热更新 
+		在程序运行的过程中 修改删除模块 无需重新加载整个页面
+	
+	loaders
+		loader 允许你在 require() 或“加载”的文件之前，先预处理文件。就像“任务执行器(task-runner)”
+	
+	模块解析(Module Resolution):
+		 一个模块可以作为另一个模块的依赖模块，
+		 resolver 是一个库( library )用于帮助找到模块的绝对路径... 
+		 模块将在 resolve.modules 中指定的所有目录内搜索。
+	
+	
+	
+	插件(Plugin):
+		 一个含有 apply 属性的 JavaScript 对象。该 apply 属性会在 webpack 编译时被调用，并能在整个编译生命周期访问。这些插件包通常以某种方式扩展编译功能。
+
+
+	Request：
+		指 require/import 语句中的表达式，例如，在 require("./template/" + name + ".ejs") 中，request 指的是 "./template/" + name + ".ejs"。
+	
+
+
+
+目录
+
+核心概念
+	入口--
+	出口--
+	loader--
+	插件--
+	模式--
+	配置--
+	模块--
+	模块解析--
+	依赖图--
+	构建目标--
+	热更新--
+
+
+ 
+指南
+
+创建一个 bundle 文件
+管理资源
+输出管理
+清理 /dist 文件夹
+webpack-dev-server
+热更新--
+
+
+
+
+入口-------------------------------------------------------------
+	用哪个模块作为 构建内部依赖图的开始
+
+	entry属性 来指定一个或多个入口起点   默认值为 ./src
+		
+		
+		单个入口
+			const config = {
+			  entry: {
+			    main: './path/to/my/entry/file.js'
+			  }
+			};
+
+		多个入口
+		 	向 entry 传入一个数组  将创建 多个主入口
+
+		常见场景
+			分离 应用程序(app) 和 第三方库(vendor) 入口
+			
+			const config = {
+			  entry: {
+			    app: './src/app.js',
+			    vendors: './src/vendors.js'
+			  }
+			};
+			
+			
+			“可扩展的 webpack 配置”是指，可重用并且可以与其他配置组合使用
+			
+		
+		多页面应用程序
+			告诉 webpack 需要 3 个独立分离的依赖图
+			const config = {
+			  entry: {
+			    pageOne: './src/pageOne/index.js',
+			    pageTwo: './src/pageTwo/index.js',
+			    pageThree: './src/pageThree/index.js'
+			  }
+			};
+		
+		
+
+出口 -------------------------------------------------------------------
+
+	告诉webpack 在哪输出他创建的bundles  以及如何命名这些文件，默认值为 ./dist
+	即使可以存在多个入口起点 但是只指定一个输出配置
+	
+	单个出口
+		用法
+		在 webpack 中配置 output 属性的最低要求是，将它的值设置为一个对象 包括以下两点：
+			filename:输出文件的名字
+			path: 输出目录的绝对路径
+		
+		示例：
+			const config = {
+			  output: {
+			    filename: 'bundle.js',
+			    path: '/home/proj/public/assets'
+			  }
+			};
+			
+			module.exports = config;
+		
+		
+		解释：
+			将一个单独的文件  输出到path目录中
+		
+	
+	
+	多个入口 一个出口
+	示例：
+		{
+		  entry: {
+		    app: './src/app.js',
+		    search: './src/search.js'
+		  },
+		  output: {
+		    filename: '[name].js',
+		    path: __dirname + '/dist'
+		  }
+		}
+	解释：
+		写入硬盘： ./dist/app.js, ./dist/search.js
+	
+
+	使用入口名称
+		filename: "[name].bundle.js"
+
+    使用内部 chunk id
+    	filename: "[id].bundle.js"
+
+    使用每次构建过程中，唯一的 hash 生成
+    	filename: "[name].[hash].bundle.js"
+
+    使用基于每个 chunk 内容的 hash：
+    	filename: "[chunkhash].bundle.js"
+			
+			
+	//webpack.config.js
+		const path = require('path');
+		module.exports = {
+		  entry: './path/to/my/entry/file.js',
+		  output: {
+		    path: path.resolve(__dirname, 'dist'),
+		    filename: 'my-first-webpack.bundle.js'
+		  }
+		};		
+	
+	
+	
+
+
+loader-------------------------------------------------------------
+	loader 用于对模块的源代码进行转换 
+	loader 可以使你在 import 或"加载"模块之前预处理文件
+
+	webpack自身只理解js  
+	loader让webpack 能够去处理非js文件
+	loader 可以将所有类型的文件转换为应用程序的依赖图  可直接引用的模块	
+
+	test 属性，用于标识出应该被对应的 loader 进行转换的某个或某些文件。
+	use 属性，表示进行转换时，应该使用哪个 loader。
+
+
+
+
+	加载css文件 和 转换ts文件  之前 要安装相应的loader
+	
+		npm install --save-dev css-loader
+		npm install --save-dev ts-loader
+		示例：
+			module.exports = {
+			  module: {
+			    rules: [
+			      { test: /\.css$/, use: 'css-loader' },
+			      { test: /\.ts$/, use: 'ts-loader' }
+			    ]
+			  }
+			};
+		解释：
+			指示 webpack 对每个 .css 使用 css-loader，以及对所有 .ts 文件使用 ts-loader
+		
+	
+	
+	使用loader
+		三种使用方式：
+			配置（推荐）：在 webpack.config.js 文件中指定 loader。
+			内联：在每个 import 语句中显式指定 loader。
+			CLI：在 shell 命令中指定它们。
+	
+	配置
+		module.rules 允许你在 webpack 配置中指定多个 loader
+		示例：
+			module: {
+			    rules: [
+			      {
+			        test: /\.css$/,
+			        use: [
+			          { loader: 'style-loader' },
+			          {
+			            loader: 'css-loader',
+			            options: {
+			              modules: true
+			            }
+			          }
+			        ]
+			      }
+			    ]
+			  }
+	
+	
+	
+	
+	内联
+		可以在 import 语句中指定 loader
+		使用 ! 将资源中的 loader 分开。分开的每个部分都相对于当前目录解析
+	
+	CLI
+		webpack --module-bind jade-loader --module-bind 'css=style-loader!css-loader'
+		这会对 .jade 文件使用 jade-loader，对 .css 文件使用 style-loader 和 css-loader
+	
+		
+	loader 特性
+		loader 支持链式传递。
+		能够对资源使用流水线(pipeline)。一组链式的 loader 将按照相反的顺序执行。
+		loader 链中的第一个 loader 返回值给下一个 loader。
+		在最后一个 loader，返回 webpack 所预期的 JavaScript。	
+	
+	
+	解析 loader
+		loader 将从模块路径（通常将模块路径认为是 npm install, node_modules）解析。
+	
+		loader 模块需要导出为一个函数
+
+
+插件-----------------------------------------------------------------------------
+
+插件目的在于解决 loader 无法实现的其他事。
+
+	插件可以：
+		打包优化
+		压缩
+		重新定义环境中变量
+	
+	使用插件 要先require()它 然后 把他添加到plugins数组中
+	
+	//webpack.config.js
+	
+		const HtmlWebpackPlugin = require('html-webpack-plugin'); // 通过 npm 安装
+		const webpack = require('webpack'); // 用于访问内置插件
+		
+		const config = {
+		  module: {
+		    rules: [
+		      { test: /\.txt$/, use: 'raw-loader' }
+		    ]
+		  },
+		  plugins: [
+		    new HtmlWebpackPlugin({template: './src/index.html'})
+		  ]
+		};
+		
+		module.exports = config;
+	
+	剖析
+		webpack 插件是一个具有 apply 属性的 JavaScript 对象。apply 属性会被 webpack compiler 	调用，并且 compiler 对象可在整个编译生命周期访问。
+	用法
+		向 plugins 属性传入 new 实例
+	
+	配置
+		const HtmlWebpackPlugin = require('html-webpack-plugin'); //通过 npm 安装
+		const webpack = require('webpack'); //访问内置的插件
+		const path = require('path');
+		
+		const config = {
+		  //...入口 出口 loader
+		  plugins: [
+		    new webpack.optimize.UglifyJsPlugin(),
+		    new HtmlWebpackPlugin({template: './src/index.html'})
+		  ]
+		};
+	
+	    module.exports = config;
+
+模式----------------------------------------------------------- 
+
+	选择 development 或 production 之中的一个  来设置 mode 参数
+	
+		module.exports = {
+		  mode: 'production'
+		};
+	
+	
+	从 CLI 参数中传递：
+		webpack --mode=production	
+
+
+
+配置----------------------------------------------------------------------------
+
+webpack的配置文件 是导出一个对象的js文件  
+
+webpack根据对象定义的的属性进行解析
+
+webpack 配置是标准的 Node.js CommonJS 模块
+
+
+
+
+模块--------------------------------------------------------------
+
+	模块 离散功能块
+	
+	什么是模块
+		ES2015 import 语句
+		CommonJS require() 语句
+		AMD define 和 require 语句
+		css/sass/less 文件中的 @import 语句。	
+	
+	模块解析
+		一个模块可以作为另一个模块的依赖模块，然后被后者引用
+		
+		resolver 是一个库(library)用于帮助找到模块的 绝对路径。
+	
+		resolver 帮助 webpack 找到 bundle 中 需要引入的模块代码，
+		这些代码在包含在每个 require/import 语句中。 当打包模块时，
+		webpack 使用 enhanced-resolve 来解析文件路径
+		
+		三种文件路径：
+			绝对路径 
+				已经取得文件的绝对路径，因此不需要进一步再做解析。	
+				import "/home/me/file";
+				
+				import "C:\\Users\\me\\file";
+				
+			
+			相对路径
+				上下文目录+相对目录=绝对路径
+				import "../src/file1";
+				import "./file2";
+				
+			模块路径
+				模块将在 resolve.modules 中指定的所有目录内搜索
+				import "module";
+				import "module/lib/file";
+			
+		
+
+依赖图
+	一个文件依赖于另一个文件，webpack 就把此视为文件之间有 依赖关系 。这使得 webpack 可以接收非代码资源(non-code asset)（例如图像或 web 字体），并且可以把它们作为 _依赖_ 提供给你的应用程序
+
+
+运行时
+
+	webpack 的 runtime 和 manifest，管理所有模块的交互。
+	
+	runtime 包含：在模块交互时，连接模块所需的加载和解析逻辑
+	manifest
+		当编译器(compiler)开始执行、解析和映射应用程序时，它会保留所有模块的详细要点。这个数据集合称为 "Manifest"，当完成打包并发送到浏览器时，会在运行时通过 Manifest 来解析和加载模块
+
+
+
+
+构建目标
+	module.exports = {
+	  target: 'node'
+	};
+
+	target 的可用值
+		node编译为类 Node.js 环境可用（使用 Node.js require 加载 chunk）
+		web 编译为类浏览器环境里可用（默认）
+
+
+
+
+
+
+
+
+ 
+指南--------------------------------------------------------------------------------
+
+创建一个 bundle 文件
+管理资源
+输出管理
+清理 /dist 文件夹
+
+webpack-dev-server
+热更新--
+
+
+
+
+
+
+
+
+
+
+安装
+	mkdir webpack-demo && cd webpack-demo
+	npm init -y
+	npm install webpack webpack-cli --save-dev
+
+
+
+
+创建一个 bundle 文件
+npx webpack
+	npm install --save lodash
+
+	目录结构	
+	webpack-demo
+	   package.json
+	   dist
+	      index.html
+	   src
+	      index.js
+
+
+    src/index.js
+		+ import _ from 'lodash';
+		+
+		  function component() {
+		    var element = document.createElement('div');
+		
+		-   // Lodash, currently included via a script, is required for this line to work
+		+   // Lodash, now imported by this script
+		    element.innerHTML = _.join(['Hello', 'webpack'], ' ');
+		
+		    return element;
+		  }
+		
+		  document.body.appendChild(component());
+	
+	
+	dist/index.html
+	
+	  <!doctype html>
+	  <html>
+	   <head>
+	     <title>起步</title>
+	   </head>
+	   <body>
+	+    <script src="main.js"></script>
+	   </body>
+	  </html>
+	
+使用一个配置文件
+	npx webpack --config webpack.config.js
+
+
+npm run build
+	运行 npm run build 就等于运行 node_modules 里的 webpack 可执行文件，这个可执行文件会自己去 webpack.config.js 里找 app/index.js、dist 和 bundle.js 三个关键词
+
+
+
+
+管理资源
+
+加载css 一直报错 显示文件未找到  找到错误文件 确实打不开  
+把node_modules文件夹删掉  重新安装 cnpm install 
+
+
+加载css
+	安装loader
+		npm install --save-dev style-loader css-loader
+
+	配置loader
+
+		webpack.config.js
+		
+		  const path = require('path');
+		
+		  module.exports = {
+		    entry: './src/index.js',
+		    output: {
+		      filename: 'bundle.js',
+		      path: path.resolve(__dirname, 'dist')
+		    },
+		+   module: {
+		+     rules: [
+		+       {
+		+         test: /\.css$/,
+		+         use: [
+		+           'style-loader',
+		+           'css-loader'
+		+         ]
+		+       }
+		+     ]
+		+   }
+		  };
+
+		 解释：在这种情况下，以 .css 结尾的全部文件，都将被提供给 style-loader 和 css-loader。
+
+
+
+新建style.css  将其导入index.js
+
+	project
+		|- /src
+		+   |- style.css
+		    |- index.js
+	
+	src/style.css
+
+	.hello {
+	  color: red;
+	}
+	
+	
+	src/index.js
+		
+		  import _ from 'lodash';
+		+ import './style.css';
+		
+		  function component() {
+		    var element = document.createElement('div');
+		
+		    // lodash 是由当前 script 脚本 import 导入进来的
+		    element.innerHTML = _.join(['Hello', 'webpack'], ' ');
+		+   element.classList.add('hello');
+		
+		    return element;
+		  }
+		
+		  document.body.appendChild(component());
+
+
+
+
+加载图片
+安装 file-loader  html-loader  image-webpack-loader
+加载字体
+	url-loader
+加载数据
+	csv-loader  xml-loader
+
+完整版 资源管理
+
+目录
+
+每添加一个资源  要安装loader  修改配置  在src下添加资源  在index.js中引入资源  然后 cnpm run build
+
+  webpack-demo
+  |- package.json
+  |- webpack.config.js
+  |- /dist
+    |- bundle.js
+    |- index.html
+  |- /src
+    |- data.xml
+    |- icon.png
+    |- style.css
+    |- index.js
+  |- /node_modules
+
+
+package.json
+
+	{
+	  "name": "webpack-demo",
+	  "version": "1.0.0",
+	  "description": "",
+	  "private": true,
+	  "scripts": {
+	    "test": "echo \"Error: no test specified\" && exit 1",
+	    "start": "webpack-dev-server",
+	    "build": "webpack"
+	  },
+	  "keywords": [],
+	  "author": "",
+	  "license": "ISC",
+	  "devDependencies": {
+	    "css-loader": "^2.1.0",
+	    "csv-loader": "^3.0.2",
+	    "file-loader": "^3.0.1",
+	    "has-flag": "^3.0.0",
+	    "html-loader": "^0.5.5",
+	    "image-webpack-loader": "^4.6.0",
+	    "style-loader": "^0.23.1",
+	    "url-loader": "^1.1.2",
+	    "webpack": "^4.28.3",
+	    "webpack-cli": "^3.2.0",
+	    "webpack-dev-server": "^3.1.14",
+	    "xml-loader": "^1.2.1"
+	  },
+	  "dependencies": {
+	    "lodash": "^4.17.11"
+	  }
+	}
+
+webpack.config.js	
+	 const path = require('path'); //引入路径模块
+	
+	  module.exports = {
+	    //入口
+	    entry: './src/index.js',
+	    //出口
+	    output: {
+	      filename: 'bundle.js',
+	      path: path.resolve(__dirname, 'dist')
+	    },
+	    module: {
+	      rules: [
+	        {
+	          test: /\.css$/,
+	          use: [
+	            'style-loader',
+	            'css-loader'
+	          ]
+	        },
+	       {
+	         test: /\.(png|svg|jpg|gif)$/,
+	         use: [
+	           'file-loader'
+	         ]
+	       },
+	        {
+	          test:/\.(csv|tsv)$/,
+	          use:[
+	              'csv-loader'
+	          ]
+	        },
+	        {
+	          test:/\.xml$/,
+	          use:[
+	              'xml-loader'
+	          ]
+	        }
+	      ]
+	    }
+	  };
+
+
+dist/index.html
+	<!doctype html>
+	  <html>
+	    <head>
+	    <title>Asset Management</title>
+	    </head>
+	    <body>
+	      <script src="./bundle.js"></script>
+	    </body>
+	  </html>	
+
+
+src/data.xml
+	<?xml version="1.0" encoding="UTF-8"?>
+	<note>
+	  <to>Mary</to>
+	  <from>John</from>
+	  <heading>Reminder</heading>
+	  <body>Call Cindy on Tuesday</body>
+	</note>
+
+src/style.css
+	.hello {
+	   color: deepskyblue;
+	   background: url('./icon.png') no-repeat fixed center;
+	 }
+
+src/index.js
+	import _ from 'lodash';
+	import './style.css';
+	import Icon from './icon.png';
+	import Data from  './data.xml';
+	  function component() {
+	    var element = document.createElement('div');
+	
+	    element.innerHTML = _.join(['Hello', 'webpack'], ' ');
+	    // hello webpack
+	    element.classList.add('hello');
+	    var myIcon = new Image();
+	    myIcon.src = Icon;
+	 
+	    element.appendChild(myIcon);
+	    console.log(Data);
+	    return element;
+	  }
+	
+	  document.body.appendChild(component());	
+
+
+
+输出管理
+
+ webpack-demo
+  |- package.json
+  |- webpack.config.js
+  |- /dist
+  	|- index.html
+  |- /src
+    |- index.js
+    |- print.js
+  |- /node_modules
+
+
+package.json
+	{
+	  "name": "webpack-demo",
+	  "version": "1.0.0",
+	  "description": "",
+	  "private": true,
+	  "scripts": {
+	    "build": "webpack"
+	  },
+	  "keywords": [],
+	  "author": "",
+	  "license": "ISC",
+	  "devDependencies": {
+	    "css-loader": "^2.1.0",
+	    "csv-loader": "^3.0.2",
+	    "file-loader": "^3.0.1",
+	    "has-flag": "^3.0.0",
+	    "html-loader": "^0.5.5",
+	    "html-webpack-plugin": "^3.2.0",
+	    "image-webpack-loader": "^4.6.0",
+	    "style-loader": "^0.23.1",
+	    "url-loader": "^1.1.2",
+	    "webpack": "^4.28.3",
+	    "webpack-cli": "^3.2.0",
+	    "webpack-dev-server": "^3.1.14",
+	    "xml-loader": "^1.2.1"
+	  },
+	  "dependencies": {
+	    "lodash": "^4.17.11"
+	  }
+	}
+	
+webpack.config.js
+	const path = require('path');
+	const HtmlWebpackPlugin = require('html-webpack-plugin');
+	  module.exports = {
+	
+	    entry: {
+	      app: './src/index.js',
+	      print: './src/print.js'
+	     },
+	    plugins: [
+	      new HtmlWebpackPlugin({
+	        title: 'Output Management'
+	      })
+	    ],
+	    output: {
+	      filename: '[name].bundle.js',
+	      path: path.resolve(__dirname, 'dist')
+	    }
+	
+	  };
+
+html-webpack-plugin 的详解
+	https://segmentfault.com/a/1190000013883242
+
+
+dist/index.html
+	<!DOCTYPE html>
+	<html>
+	  <head>
+	    <meta charset="UTF-8">
+	    <title>Output Management</title>
+	  </head>
+	  <body>
+	  <script type="text/javascript" src="app.bundle.js"></script>
+	  <script type="text/javascript" src="print.bundle.js"></script>
+	  </body>
+	</html>	
+	
+src/print.js
+	export default function printMe() {
+	  console.log('I get called from print.js!');
+	}
+
+src/index.js
+	import _ from 'lodash';
+	import printMe from './print.js';
+	  function component() {
+	    var element = document.createElement('div');
+	    var btn = document.createElement('button');
+	    element.innerHTML = _.join(['Hello', 'webpack'], ' ');
+	    btn.innerHTML = 'click console ';
+	    btn.onclick = printMe;
+	    element.appendChild(btn);
+	    return element;
+	  }
+	
+	  document.body.appendChild(component()); 	
+
+
+
+
+清理 /dist 文件夹
+
+	const path = require('path');
+	const HtmlWebpackPlugin = require('html-webpack-plugin');
+	const CleanWebpackPlugin = require('clean-webpack-plugin');
+	  module.exports = {
+	
+	    entry: {
+	      app: './src/index.js',
+	      print: './src/print.js'
+	     },
+	    plugins: [
+	      new CleanWebpackPlugin(['dist']),
+	      new HtmlWebpackPlugin({
+	        title: 'Output Management'
+	      })
+	    ],
+	    output: {
+	      filename: '[name].bundle.js',
+	      path: path.resolve(__dirname, 'dist')
+	    }
+	
+	  };
+
+
+
+
+webpack-dev-server 
+ 
+ //webpack.config.js
+   devServer: {
+        contentBase: './dist'
+     },
+
+//package.json
+ "scripts": {
+    "build": "webpack",
+    "start": "webpack-dev-server --open"
+  },
+
+
+
+Sublime Text 3出现无法保存文件   https://www.jianshu.com/p/d1fb66deb69e
+	
+	关闭Sublime Text的atomic_save
+		1、打开Sublime Text
+		2、首选项 -> 设置-用户
+		3、配置中加一行："atomic_save": false,
+		4、保存，再试问题解决了。
+
+
+
+热更新-------------
+
+原理
+	hmr热更新 会在应用程序运行过程中替换、添加或删除模块，而无需重新加载整个页面
+
+在应用程序中
+	通过以下步骤，可以做到在应用程序中置换(swap in and out)模块：
+	
+	1.应用程序代码要求 HMR runtime 检查更新。
+	2.HMR runtime（异步）下载更新，然后通知应用程序代码。
+	3.应用程序代码要求 HMR runtime 应用更新。
+	4.HMR runtime（同步）应用更新。
+	  你可以设置 HMR，以使此进程自动触发更新，或者你可以选择要求在用户交互时进行更新
+
+实现
+
+使用 webpack 内置的 HMR 插件
+
+
+//webpack.config.js
+	const path = require('path');
+	const HtmlWebpackPlugin = require('html-webpack-plugin');
+	
+	const webpack = require('webpack');
+	
+	module.exports = {
+	
+	    entry: {
+	        app: './src/index.js',
+	         print: './src/print.js'
+	
+	     },
+	     devServer: {
+	        contentBase: './dist',
+	        hot: true
+	     },
+	    module: {
+	        rules: [
+	            {
+	                test: /\.css$/,
+	                use: ['style-loader', 'css-loader']
+	            }
+	        ]
+	    },
+	    plugins: [
+	
+	      new HtmlWebpackPlugin({
+	        title: 'Output Management'
+	      }),
+	
+	        new webpack.HotModuleReplacementPlugin()
+	    ],
+	    output: {
+	      filename: '[name].bundle.js',
+	      path: path.resolve(__dirname, 'dist')
+	    }
+	
+	  };
+	
+//package.json
+	{
+	  "name": "webpack-demo",
+	  "version": "1.0.0",
+	  "description": "",
+	  "private": true,
+	  "scripts": {
+	    "build": "webpack",
+	    "start": "webpack-dev-server --content-base dist  --inline"
+	  },
+	  "keywords": [],
+	  "author": "",
+	  "license": "ISC",
+	  "devDependencies": {
+	    "clean-webpack-plugin": "^1.0.0",
+	    "css-loader": "^2.1.0",
+	    "csv-loader": "^3.0.2",
+	    "file-loader": "^3.0.1",
+	    "has-flag": "^3.0.0",
+	    "html-loader": "^0.5.5",
+	    "html-webpack-plugin": "^3.2.0",
+	    "image-webpack-loader": "^4.6.0",
+	    "style-loader": "^0.23.1",
+	    "url-loader": "^1.1.2",
+	    "webpack": "^4.28.3",
+	    "webpack-cli": "^3.2.0",
+	    "webpack-dev-server": "^3.1.14",
+	    "xml-loader": "^1.2.1"
+	  },
+	  "dependencies": {
+	    "lodash": "^4.17.11"
+	  }
+	}
+
+
+
+//dist/index.js
+	<!DOCTYPE html>
+	<html>
+	  <head>
+	    <meta charset="UTF-8">
+	    <title>Output Management</title>
+	  </head>
+	  <body>
+	  <script type="text/javascript" src="app.bundle.js"></script>
+	  <script type="text/javascript" src="print.bundle.js"></script></body>
+	</html>
+
+//src/index.js
+	import _ from 'lodash';
+	import printMe from './print.js';
+	import './style.css';
+	function component() {
+	  var element = document.createElement('div');
+	  var btn = document.createElement('button');
+	
+	  element.innerHTML = _.join(['Hello', 'webpack'], ' ');
+	
+	  btn.innerHTML = 'Click';
+	  btn.onclick = printMe;
+	
+	  element.appendChild(btn);
+	
+	  return element;
+	}
+	
+	document.body.appendChild(component());
+	
+	if (module.hot) {
+	  module.hot.accept('./print.js', function() {
+	    console.log('Accepting the updated printMe module!');
+	    printMe();
+	  })
+	}
+
+
+//src/print.js	
+export default function printMe() {
+
+       console.log('Updating print')
+}	 
+
+
+//style.css
+body {
+  background: deepskyblue;
+}
+
+
+
+
+
+入口点被删除
+Entrypoint undefined = index.html
+https://github.com/jantimon/html-webpack-plugin/issues/895
+
+
+
+离线使用
+ cnpm install http-server --save-dev
+
+ "scripts": {
+ 
++    "build": "webpack",
++    "start": "http-server dist"
+  },

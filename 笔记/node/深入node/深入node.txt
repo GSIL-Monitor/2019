@@ -1,0 +1,87 @@
+
+Node 公开宣称的目标是 “旨在提供一种简单的构建可伸缩网络程序的方法”
+
+node不适合的领域
+ 
+	每一种语言或平台都有不擅长领域，对于Nodejs来说最不擅长的领域在于CPU和内存的编程操作。
+	
+	1. 计算密集型应用，让Javascript和C去拼计算性能，估计是不可能赢的。
+	2. 内存控制，让Javascript和Java比较复杂数据类型定义，也是很困难的。因为Javascript的面向对象是基于JSON的，而Java是直接使用内存结	构。所以，通过JSON序列化和反序列的过程控制内存，Javascript就已经输了。
+	3. 大内存的应用，由于V8引擎有内存设计的限制，32位环境中最大堆是1G，64位环境中最大堆也不到2G，如果要一次读入10G数据，对于Nodejs来	说也无法实现。
+	4. 静态服务器，虽然Nodejs的优势在IO密集集应用，但是和Nginx的处理静态资源还是有很大的差距。
+	5. 不需要异步的应用：比如系统管理，自行化脚本等，还是Python更顺手，Nodejs的异步调用可能会给编程带来一些麻烦。
+
+
+
+
+
+项目管理：npm,grunt, bower, yeoman
+Web开发：express,ejs,hexo, socket.io, restify, cleaver, stylus, browserify,cheerio
+工具包：underscore,moment,connet,later,log4js,passport,passport(oAuth),domain,require,reap,
+commander,retry
+数据库：mysql,mongoose,redis
+异步：async,wind
+部署：forever,pm2
+测试：jasmine,karma
+跨平台：rio,tty
+内核：cluster,http,request
+算法：ape-algorithm(快速排序),ape-algorithm(桶排序)
+
+
+深入浅出Node.js
+	简介
+	特点
+	应用场景
+	使用者
+	模块机制
+		从中了解到Node如何实现CommonJS模块和包规范的。在这一章中，我们详细的解释了模块在引用过程中的编译、加载规则
+
+	异步i/o
+		展示了Node中我们将异步I/O作为主要设计理念的原因。另外，还会介绍到异步I/O的详细实现过程。
+
+		事件循环是异步实现的核心，它与浏览器中的执行模型基本上保持一致。而向古老的Rhino{:target="_blank"}，尽管是较早就能在服务器运行的JavaScript运行时但是执行模型并不像浏览器采用事件驱动，而是使用像其他语言一样采用同步I/O作为主要模型，这造成它在性能上面无法发挥。Node正是依靠构建了一套完善的高性能异步I/O框架，打破了JavaScript在服务器止步不前的局面
+	异步编程
+		这一章主要介绍异步编程，其中最常见的异步编程问题介绍，也有详细的解决方案。在这一章中我们可以接触到Promise、事件、高阶函数是如何进行流程控制的。 （这一章建议多看书）
+	内存控制
+		这一章主要介绍了Node的内存控制，主要内容有垃圾回收、内存限制、查看内存、内存泄漏、大内存应用等细节。
+
+		Node将JavaScript的主要应用场景帮到了服务器端，相应要考虑的细节也与浏览器端不同，在服务器端，资源向来是寸土寸金，要为海量用户服务，就使得一切资源都要高效循环利用，需要更严谨为每一份资源作出安排
+	
+	Buffer
+		这一章主要介绍了前端JavaScript里不能遇到的Buffer。由于Node中会涉及频繁的网络和磁盘I/O，处理字节流数据会是很常见的行为，这部分的场景与纯粹的前端开发完全不同。体会过JavaScript友好字符串操作后，有些开发者可能会形成思维定势，将Buffer当作字符串来理解。但字符串与Buffer之间有实质性的差异，即Buffer是二进制数据，字符串与Buffer之间存在编码关系。因此，理解Buffer的诸多细节十分必要，对于如何高效处理二进制十分有用
+	网络编程
+		这一章介绍了Node支持的TCP,UDP,HTTP编程，还讲了有关于Websocket与TSL、HTTPS的介绍。利用Node可以十分方便地搭建网络服务器，不需要专门的Web服务器作为容器，仅仅需要几行代码就可以构建服务器。Node提供了net、dgram、http、https这4个模块，分别用于处理TCP、UDP、HTTP、HTTPS，适用于服务端和客户端
+	构建web应用
+		这一章主要介绍了构建Web应用过程中用到的大多数技术细节，如数据处理、路由、MVC、模板、RESTful等。我觉得这一章对于我么开发一个Nodejs方面的应用很有指导性作用，整理本章细节就可以完成一个功能的Web开发框架，这章的目的也就是希望读者学习过这一章后能够对Node开发带来地图式的启发，在开发Web应用时能够心有轮廓，明了细微
+	进程
+		这一章主要介绍Node的多进程技术，以及如何借助多进程方式来提升应用的可用性和性能。从严格意义上面来讲,Node并非真正的单线程架构，在第3章我们还叙述过Node自身还有一定的I/O线程存在，这些I/O线程由底层libuv处理，这部分线程对于JavaScript开发者是透明的，只在C++扩展开发时才会关注到。JavaScript代码永远运行在V8上，是单线程的。本章将围绕JavaScript部分展开，所以屏蔽底层细节的讨论
+	测试
+		这一章主要介绍Node的单元测试和性能测试技巧。测试的意义在于，在用户消费产出的代码之前，开发者首先消费他，给予其重要的质量保证。
+
+		测试包括单元测试、性能测试、安全测试和功能测试等几个方面，本章将从Node实践的角度来介绍单元测试和性能测试
+	产品化	
+		行百里路半九十
+
+node.js实战
+	构建多个房间的聊天室程序：websocket http socket.io
+	node编程基础 ：模块 异步
+	构建node web程序
+	存储
+	connect：node中间件 http框架
+	Express  web 开发框架  Express就是基于Connect开发的
+	测试
+	Web程序模板 
+	部署Node程序并维持正常运行时间 
+	Web服务器
+
+
+
+
+
+
+
+
+
+
+相关
+CommonJS

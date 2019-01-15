@@ -1,0 +1,577 @@
+
+
+
+node 开发指南
+
+模块和包
+	把包理解成是实现了某个功能模块的集合，用于发布和维护
+
+
+什么是模块
+	一个Node.js 文件就是一个模块
+
+
+加载模块
+	exports是模块的公开接口
+	require用于从外部获取一个模块的接口
+
+
+	npm的模块都是通过以下这种简单的方式搭建起来的
+
+	//module.js
+		var name;
+		exports.setname = function(thyname){
+			name = thyname;
+		}
+		exports.sayhello = function(){
+			console.log('hello'+name);
+		}
+	
+	//同一目录 getmodule.js
+		var mymodule = require('./module.js')
+		mymodule.setname('walk');
+		mymodule.sayhello() //hello walk
+
+
+覆盖exports
+	exports 本身仅仅是一个普通的空对象，即 {}  它专门用来声明接口，
+	本质上是通过它为模块闭包①的内部建立了一个有限的访问接口
+	
+	exports 实际上只是一个和 module.exports 指向同一个对象的变量，它本身会在模块执行结束后释放，但 module 不会
+
+
+	hello.js
+		function Hello(){
+			var name;
+			this.setname = function(thyname){
+				name = thyname;
+			}
+			this.sayhello(){
+				console.log('hello'+name)
+			};
+		};
+		
+		exports.Hello = Hello;  --> require('./hello.js').Hello  要这样获取hello对象
+		
+		module.exports = Hello; --> require('./hello.js');
+		
+		hello = new Hello();      //实例化
+		hello.setName('BYVoid'); 
+		hello.sayHello(); 
+
+
+
+创建包
+
+文件夹
+	包是在模块基础上更深一步的抽象  模块是文件  包是文件夹  
+
+	
+	Node.js 的包是一个目录 
+		package.json 必须在包的顶层目录下； 
+		二进制文件应该在 bin 目录下； 
+		JavaScript 代码应该在 lib 目录下； 
+		文档应该在 doc 目录下； 
+		单元测试应该在 test 目录下
+
+
+加载包
+	//somepackage/index.js
+	exports.hello = function(){
+		console.log('hello world');
+	}
+	
+	//getpackage.js
+	var somepackage = require('./somepackage');
+	somepackage.hello();
+
+
+
+Package.json 属性说明
+	name - 包名。
+	
+	version - 包的版本号。
+	
+	description - 包的描述。
+	
+	homepage - 包的官网 url 。
+	
+	author - 包的作者姓名。
+	
+	contributors - 包的其他贡献者姓名。
+	
+	dependencies - 依赖包列表。如果依赖包没有安装，npm 会自动将依赖包安装在 node_module 目录下。
+	
+	repository - 包代码存放的地方的类型，可以是 git 或 svn，git 可在 Github 上。
+	
+	main - main 字段指定了程序的主入口文件，require('moduleName') 就会加载这个文件。这个字段的默认值是模块根目录下面的 	index.js。
+	
+	keywords - 关键字数组，通常用于搜索
+
+	licenses - 许可证数组
+
+	repositories - 仓库托管地址数组
+
+	bugs - 提交bug的地址
+
+	dependencies - 包的依赖
+
+
+
+
+
+软连接   全局模式安装的包不能直接通过 require    使用npm link命令可以打破这一限制
+ 	npm link express 
+	./node_modules/express -> /usr/local/lib/node_modules/express 
+
+
+
+
+调试node
+
+	浏览器调试  inspector+chrome   npm install -g node-inspector
+
+	vscode 断点调试node
+
+
+
+
+全局对象 
+	global最根本的作用是作为全局变量的宿主
+	所有全局变量（除了 global 本身以外）都是 global对象的属性
+	
+	全局变量的条件：
+		在最外层定义的变量；
+  		全局对象的属性；
+  		隐式定义的变量（未定义直接赋值的变量）
+
+
+
+全局变量
+	process 
+		process.argv 命令行参数数组 第一个元素是 node，第二个元素是脚本文件名
+		
+		process.nextTick(callback)的功能是为事件循环设置一项任务，
+		把耗时的事件放到 下一次循环中  
+
+		例子：
+			function doSomething(args, callback) { 
+			 somethingComplicated(args); 
+			 process.nextTick(callback); //耗时的程序
+			} 
+			doSomething(function onEnd() { 
+			 compute(); 
+			}); 			
+
+
+
+
+常用工具 util
+
+	util.inherits 
+		util.inherits(constructor, superConstructor)是一个实现对象间原型继承的函数
+		例子：
+			var util = require('util');
+				function base() {}
+				function sub() {}
+			util.inherits(sub,base);
+	
+	util.inspect(要转换的对象)  将任意对象转换为字符串的方法
+	
+	util.isArray(object)    是数组返回true
+	util.isRegExp(object)   是正则返回true
+	util.isDate(object)     是日期返回true
+	util.isError(object)    是错误对象返回true
+
+
+
+事件驱动 events   最重要没有之一
+
+
+//引入事件对象 
+	var event = require("events");
+//实例化一个事件对象
+	var myevent = new event.EventEmitter();
+//创建事件
+	myevent.on("hello",function(){
+	  console.log("我是hello事件的信息")
+	})
+//执行事件
+	setTimeout(function(){
+	  myevent.emit("hello")
+	},2000)
+
+
+
+
+
+
+	事件发射器
+		events 模块只提供了一个对象： events.EventEmitter。
+		EventEmitter 的核心就是事件发射与事件监听器功能的封装
+		
+		var events = require("events")
+		var emitter = new events.EventEmitter();
+		emitter.on("someevent",function(arg1,arg2){console.log( arg1, arg2)})
+		emitter.emit('someEvent', 'byvoid', 1991);
+	
+	EventEmitter.on(event, listener)             为指定事件注册一个监听器，接受一个字符串 event 和一个回调函数 listener。
+	EventEmitter.emit(event, [arg1], [arg2] )    发射 event 事件 
+	EventEmitter.once(event, listener)           为指定事件注册一个单次监听器 
+	EventEmitter.removeListener(event, listener) 移除某个监听
+	listeners(event)                             返回指定事件的监听器数组。
+
+error 事件 
+
+	console.log("123");
+	var e = require('events');
+	var em = new e.EventEmitter();
+	em.emit('error');
+	
+	输出：123 throw err; // Unhandled 'error' event
+
+继承EventEmitter
+	只要是支持事件响应的核心模块都是 EventEmitter 的子类
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+微博
+5.1
+	使用http模块
+	express框架
+
+5.2
+	建立工程  ejs
+	启动服务器
+	工程结构
+		app.js
+		routes/index.js
+		index.ejs
+		layout.ejs
+
+5.3
+	路由控制
+		工作原理
+		创建路由规则
+		路径匹配
+		rest风格的路由规则
+		控制权转移
+
+5.4
+	模板引擎
+		页面布局
+		片段试图
+		试图助手
+
+5.5 
+	微博
+		功能分析
+		路由规划
+		界面设计
+		使用 Bootstrap 
+
+5.6 
+	用户注册
+		访问数据库 
+		MongoDB 
+		会话支持
+		注册和登录
+			注册页面
+			注册响应
+			用户模型
+			试图交互
+			登入登出
+		页面权限控制 
+
+5.7 
+	发表微博
+		微博模型
+		用户页面
+		首页
+		
+
+
+
+
+
+
+
+
+将js进行到底
+
+node 并发 采用事件轮询 和timeout http net 一样
+node使用事件轮询 触发一个和文件描述符相关的通知
+
+文件描述符是对象的句柄 存有对打开文件 socket 管道等的引用 本质上 
+
+当node接收到从浏览器发来的http请求时 底层tcp连接会分配一个文件描述符 随后 如果客户端向服务器发送数据 node会收到该文件描述符上的通知 然后触发javascript的回调函数
+
+
+堆栈追踪
+	在js中 发生错误时 在错误消息中可以看到一系列的函数调用 
+
+ 
+
+
+第四章
+
+	全局对象
+		global 
+		process 
+			在node中  只有一个process  进程的名字 process.title
+			
+	
+	模块系统
+		require
+		module
+		exports
+	
+	绝对和相对模块
+		require('http')	
+		require('./xxx')
+	
+	暴露api
+		module_a.js
+			exports.name = "qiao"
+			exports.sayhi = function(){
+				console.log("hi");
+			}
+		index.js
+			var a = require("./module_a.js");
+			console.log(a.name);
+			console.log(a.sayhi());
+		
+	
+	
+	事件
+	
+		EventEmitter
+		它以这样的形式暴露出来 process.EventEmitter
+	
+		事件是node非阻塞设计的重要体现  
+		node 通常不会直接返回数据 而是采用分发事件来传递数据
+	
+		分发data和end事件
+			http.server(function(req,res){
+				var buf = " ";
+				req.on("data", function(data){
+					buf += data;
+				});
+				req.on("end",function(){
+					console.log("数据接收完毕")
+				})
+			})
+	
+	
+	
+	buffer 
+		对二进制进行处理
+	
+
+	命令行文件系统
+		创建模块
+		fs
+		流
+		输入输出
+
+
+	
+
+
+第六章 tcp
+
+http  邮箱pop3  聊天irc  ssh 都基于tcp
+
+tcp是面向连接的
+
+IP是基于数据报的传输  无序的
+
+
+telnet
+	
+		var net=require('net');
+		var chatServer=net.createServer();
+		chatServer.on('connection',function(client){
+		    client.write('Hi\n');
+		    client.write('Bye\n');
+		    client.end();
+		});
+		chatServer.listen(9469,"127.0.0.1");
+
+
+
+
+基于tcp的聊天室  提供可靠的网络通讯  
+
+	创建模块
+	理解 net.server.api
+	接受链接
+	data事件
+	状态以及记录连接情况
+
+一个简单的web服务器
+	创建模块
+	输出表单
+	method 和 url
+	数据
+	整合
+
+
+一个twitter客户端
+	创建模块
+	发送数据
+	获取推文
+	suoeragent 
+	使用up重启http服务器
+	
+	
+
+通过 connect 实现一个简单的网站
+	node 提供了http tcp 基本的api
+		
+		connect是一个基于http服务的工具集 
+		
+		中间件是一个函数
+
+		流概念
+
+		常见功能
+			托管静态文件
+			处理url
+			处理请求
+
+		其他
+			记录日志
+			模块 接受一个参数  返回一个函数 
+
+
+	中间件
+
+	可重用的中间件
+
+	static中间件
+		挂载
+		maxage 资源缓存的时间
+		hidden 隐藏文件
+
+	query中间件  
+		有时候要发送给服务器的数据会以查询字符串形式 作为url的一部分
+
+	logger中间件
+		诊断工具 将 进来和出去的请求打印在屏幕上  
+
+	body.parse中间件
+		 解析post请求的消息体 
+		 处理上传
+
+	cookies
+		connect为 读写cookies提供了便利
+	会话 session
+		登录
+		用户凭证信息存放在xxx.json中
+
+
+	redis.session
+		使用redis 来持久化 session数据
+	
+	method over ride 中间件
+
+	basicauth中间件
+		客户端身份验证
+
+
+一个简单的express
+	创建模块
+		 superagent 模板引擎
+
+	html
+		ejs 模板引擎
+		首个模板 对应默认的路由路径  提供一个入口 让用户提交搜索关键字
+		另一个模板 用于展示查询结果
+	setup
+		初始化服务器
+
+	定义路由
+		使用express来定义路由 就无需手动的每次检查 metthod 和url属性
+		只需要调用 HTTPmetthod方法 并将url和对应的中间件传递进来就行了
+		
+		定义首页路由 **
+			模板依赖
+				var express = require('express')
+					search = require('./search')
+			创建app
+				var app = express.createSercer()
+			配置
+				app.set()  
+			路由**
+				app.get(地址，处理函数)
+			监听
+				app.listen(3000)
+
+
+
+			express为response对象提供了 render方法  
+				作用：
+					初始化模板引擎
+					读取ejs视图文件  将其传递给模板引擎
+					获取解析后的html  作为响应发送给客户端
+
+	查询
+		查询模块暴露一个简单的方法 提供对推文的查询
+	运行
+		访问 localhost:3000  进行搜索
+	设置
+		将模板缓存起来 加快响应速度
+	模板引擎
+		声明 view engine为ejs
+	错误处理
+		将错误对象作为 非阻塞i/o回调函数的第一个参数 是很常见的
+	快捷方法
+		请求
+			req.header     获取头信息
+			req.accepts    分析accepts头信息 返回布尔
+			req.is         检查content-type
+			req.get(field) 获取请求头内的 field 字段
+			req.param(name)返回一个参数名为 name 的值
+		响应
+			res.render()   渲染一个 view
+			res.location   设置location响应头
+			res.send()     发送一个请求
+			res.set()      设置请求头的字段为指定的值
+			res.redirect() 重定向 至给定的 url 并且支持指定 status 代码，默认为 302 方式
+
+
+
+	路由
+	中间件
+	代码组织策略
+
+
+
+
+
+
+
+
+
+
+

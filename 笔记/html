@@ -1,0 +1,643 @@
+数据库 → 数据库协调层 → 后端程序 → 缓存层 → HTTP 服务器 → 前端程序
+
+前端工程化  
+	UC scrat   腾讯mtjs
+	开发规范
+	模块化开发
+	组件化开发
+	组件仓库
+	性能优化
+	部署
+	开发流程
+	开发工具
+性能	
+1. 减少HTTP请求数
+2. 使用CDN
+3. 给HTTP头部添加过期时间
+4. 使用Gzip压缩
+5. 样式表置于页面最前面
+6. 把脚本放在最后
+7. 使用外部JavaScript和CSS
+8. 压缩(Minify)JavaScript和CSS
+
+
+
+html语法 
+	什么是超文本标记语言  
+		1.可以设置文本的格式，比如标题、字号、文本颜色、段落等等
+		2.可以创建列表
+		3.可以插入图像和媒体
+		4.可以建立表格
+		5.超链接，可以使用鼠标点击超链接来实现页面之间的跳转
+	
+	注释
+		<!-- --> 
+		例如<!--我是xxx-->
+	
+	什么是字符实体？
+		比如我们想在网页上面显示一个“<”小于符号，但是“<	”在HTML中是文档标记的开始语言，如果我们直接使用“<	”会出差错，所以我们就会一些实体名称来代替！
+	
+	
+	2.常见的字符实体
+		显示结果----------描述----------实体名称----------实体编号
+	 ---------------------空格----------  &nbsp; ----------&#160;
+	<--------------------小于号---------- &lt;---------- &#60;
+	>--------------------大于号---------- &gt;---------- &#62;
+	&--------------------和号---------- &amp;---------- &#38;
+	"--------------------引号---------- &quot; ---------- &#34;
+	'--------------------撇号---------- &apos;           &#39;
+	￠--------------------分---------- &cent;---------- &#162;
+	£--------------------镑---------- &pound;---------- &#163;
+	¥--------------------日圆---------- &yen;---------- &#165;
+	€--------------------欧元---------- &euro;---------- &#8364;
+	§--------------------小节---------- &sect;---------- &#167;
+	©--------------------版权----------&copy;---------- &#169;
+	®--------------------注册商标---------- &reg;---------- &#174;
+	™--------------------商标---------- &trade;---------- &#8482;
+	×--------------------乘号---------- &times;---------- &#215;
+	÷--------------------除号---------- &divide;---------- &#247;
+
+
+
+核电荷数相同的一类原子 称为元素    元素属性  布尔属性  自定义属性  
+
+html5 规范将元素分为三大类：
+
+	元数据 包含在head内部 用来向浏览器提供文档的一些信息
+
+	流元素
+
+	短语元素
+
+
+
+DTD 文档类型定义 
+
+doctype 告知浏览器的解析器 用哪种文档类型规范来解析这个文档
+
+
+
+什么是语义化
+
+语义 就是准确的表达标签的含义   便于开发阅读 同时对搜索引擎友好
+
+
+
+
+全局属性
+	accesskey     快捷键  <input type="text" name="name" accesskey="n">  alt+n
+	class           将元素归类
+	contenteditable  <p contenteditable="true">修改页面内容</p>	
+	contextmenu
+	dir             文字方向
+	draggable       拖动
+	dropzone
+	hidden          隐藏
+	id
+	lang
+	spellcheck      拼写检查
+	style
+	tabindex        改变默认顺序
+	<label>Name: <input type="text" name="name" tabindex="1"/></label>
+            <p/>
+            <label>City: <input type="text" name="city" tabindex="-1"/></label>
+            </p>
+            <label>Country: <input type="text" name="country" tabindex="2"/></label>
+            </p>
+            <input type="submit" tabindex="3"/>
+
+
+
+
+
+Uncaught SyntaxError: Unexpected token <
+
+
+简单理解token机制  用sessionid作为token
+
+html 基本结构
+	<!DOCTYPE html>
+	<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Document</title>
+	</head>
+	<body>
+		
+	</body>
+	</html>	
+
+
+ meta
+	<!DOCTYPE html>  H5标准声明，使用 HTML5 doctype，不区分大小写
+	<head lang=”en”> 标准的 lang 属性写法
+	<meta charset=’utf-8′>    声明文档使用的字符编码
+	<meta http-equiv=”X-UA-Compatible” content=”IE=edge,chrome=1″/>   优先使用 IE 最新版本和 Chrome
+	<meta name=”description” content=”不超过150个字符”/>       页面描述
+	<meta name=”keywords” content=””/>      页面关键词
+	<meta name=”author” content=”name, email@gmail.com”/>    网页作者
+	<meta name=”robots” content=”index,follow”/>      搜索引擎抓取
+	<meta name=”viewport” content=”initial-scale=1, maximum-scale=3, minimum-scale=1, user-scalable=no”> 为移动设备添加 viewport
+	<meta name=”apple-mobile-web-app-title” content=”标题”> iOS 设备 begin
+	<meta name=”apple-mobile-web-app-capable” content=”yes”/>  添加到主屏后的标题（iOS 6 新增）
+	是否启用 WebApp 全屏模式，删除苹果默认的工具栏和菜单栏
+	<meta name=”apple-itunes-app” content=”app-id=myAppStoreID, affiliate-data=myAffiliateData, app-argument=myURL”>
+	添加智能 App 广告条 Smart App Banner（iOS 6+ Safari）
+	<meta name=”apple-mobile-web-app-status-bar-style” content=”black”/>
+	<meta name=”format-detection” content=”telphone=no, email=no”/>  设置苹果工具栏颜色
+	<meta name=”renderer” content=”webkit”>  启用360浏览器的极速模式(webkit)
+	<meta http-equiv=”X-UA-Compatible” content=”IE=edge”>     避免IE使用兼容模式
+	<meta http-equiv=”Cache-Control” content=”no-siteapp” />    不让百度转码
+	<meta name=”HandheldFriendly” content=”true”>     针对手持设备优化，主要是针对一些老的不识别viewport的浏览器，比如黑莓
+	<meta name=”MobileOptimized” content=”320″>   微软的老式浏览器
+	<meta name=”screen-orientation” content=”portrait”>   uc强制竖屏
+	<meta name=”x5-orientation” content=”portrait”>    QQ强制竖屏
+	<meta name=”full-screen” content=”yes”>              UC强制全屏
+	<meta name=”x5-fullscreen” content=”true”>       QQ强制全屏
+	<meta name=”browsermode” content=”application”>   UC应用模式
+	<meta name=”x5-page-mode” content=”app”>    QQ应用模式
+	<meta name=”msapplication-tap-highlight” content=”no”>    windows phone 点击无高光
+	设置页面不缓存
+	<meta http-equiv=”pragma” content=”no-cache”>
+	<meta http-equiv=”cache-control” content=”no-cache”>
+	<meta http-equiv=”expires” content=”0″>
+ 
+
+
+
+文档设置
+	格式标记
+	1.<br>
+		强制换行标记
+			让后面的文字、图片、表格等等，显示在下一行
+	2.<p>
+		换段落标记
+			换段落，由于多个空格和回车在HTML中会被等效为一个空格，所以HTML中要换段落就要用<<p>	</p>>,<p>段落中也可以包含<p>段落！
+	3.<center>
+		居中对齐标记
+			让段落或者是文字相对于父标记居中显示
+	4.<pre>
+		预格式化标记
+			保留预先编排好的格式
+	无序列表
+	ul>li{一级菜单$}*10
+		<ul>
+		    <li>项目</li>
+		    <li>项目</li>
+		</ul>
+	有序列表
+		<ol>
+		    <li>第一项</li>
+		    <li>第二项</li>
+		</ol>
+		<ol>
+
+		<h4>圆点列表：</h4>
+		<ul style="list-style-type:disc">
+		 <li>Apples</li>
+		 <li>Bananas</li>
+		 <li>Lemons</li>
+		 <li>Oranges</li>
+		</ul>  
+		
+		
+		
+		<h4>罗马数字列表：</h4>
+		<ol type="I">
+		 <li>Apples</li>
+		 <li>Bananas</li>
+		 <li>Lemons</li>
+		 <li>Oranges</li>
+		</ol>  
+				有序列表标记
+					可以显示特定的一些顺序
+						1.格式
+							<ol type="符号类型">
+							<li type="符号类型"></li>
+							<li type="符号类型"></li>
+							</ol>
+						2.有序列表的type属性值
+							1
+								阿拉伯数字1.2.3等等，默认type属性值
+							A
+								大小字母A、B、C等等
+							a
+								小写字母a、b、c等等
+							Ⅰ
+								大写罗马数字Ⅰ、Ⅱ、Ⅲ、Ⅳ等等
+							ⅰ
+								小写罗马数字ⅰ、ⅱ、ⅲ、ⅳ等等
+						3.value
+							指定一个新的序列数字起始值
+						4.列表可以进行嵌套
+
+	定义列表
+		<dl>
+		  <dt>项目 1</dt>
+		    <dd>描述项目 1</dd>
+		  <dt>项目 2</dt>
+		    <dd>描述项目 2</dd>
+		</dl>
+	
+	 
+	    <dl><dt><dd>
+		定义型列表
+			使用场合
+				对列表条目进行简短的说明
+			格式
+				<dl>
+				<dt>软件说明：</dt>
+				<dd>简单介绍软件的功能及基本应用</dd>
+				<dt>软件界面</dt>
+				<dd>用于选择软件的外观</dd>
+				</dl>
+	 <hr>
+		水平分割线标记
+			段落之间的分割线
+	 <div>
+		分区显示标记，也称之为层标记
+			常用来编排一大段的HTML段落，也可以用于格式化表，和<p>很相似
+			层可以多层嵌套使用           
+
+文本标记
+	1.h1 
+		标题标记
+	2.font
+		字体设置标记
+			 
+				三个常用属性
+					1.size（字体大小）
+						<font size="14px">
+					2.color（颜色）
+						<font color="red">
+					3.face（字体）
+						<font face="微软雅黑">
+	3.b
+		粗字体标记
+	4.i
+		斜字体标记
+	6.sub
+		文字下标字体标记
+	7.sup
+		文字上标字体标记
+	8.tt
+		打印机字体标记
+	9.cite
+		定义作品的标题，通常是斜体
+	10.em
+		表示强调，通常显示为斜体字
+	11.strong
+		表示强调，通常显示为粗体字
+	12.small
+		小型字体标记
+	13.big
+		大型字体标记
+	14.u 
+		下划线字体标记               	
+
+图像标记
+	1.使用方法
+		<img src="路径/文件名.图片格式" width="属性值" height="属性值" border="属性值" alt="属性值">
+	2.<img>标记的属性
+		1.src属性
+        	D:/www/adminwang/html/aaa.html
+        	D:/www/adminwang/ bbb.html
+        	D:/www/ ccc.html
+			上一目录的文件
+				例如bbb.html链接ccc.html的代码如下：
+				<a href="../ccc.html">链接ccc网页</a>
+			上2层目录的文件
+				例如aaa.html链接ccc.html的代码如下：
+				<a href=”../../ccc.html”>链接ccc网页</a>
+	
+		2.width属性
+			作用
+				指定图片的宽度，单位px、em、cm、mm
+		3.height属性
+			作用
+				指定图片的高度，单位px、em、cm、mm
+		4.border属性
+			作用
+				指定图标的边框宽度，单位px、em、cm、mm
+		5.alt属性
+			作用1
+				当网页上的图片被加载完成后，鼠标移动到上面去，会显示这个图片指定的属性文字
+			作用2
+				如果图像没有下载或者加载失败，会用文字来代替图像显示
+			作用3
+				搜索引擎可以通过这个属性的文字来抓取图片
+	3.注意
+		1、<img>为单标记，不需要使用</img>闭合
+		2.在加载图像文件的时候，文件的路径或者文件名文件格式错误，将无法加载图片         
+
+超链接的使用
+	1.基本语法
+		<a href="" target="打开方式" name="页面锚点名称" >链接文字或者图片</a>
+		
+		<a href="http://www.runoob.com/ "><img src="smiley.gif" ></a> 
+
+		邮件链接： <a href="mailto:webmaster@example.com">发送e-mail</a>
+		
+		书签：
+			<a id="tips">提示部分</a>
+			<a href="#tips">跳到提示部分</a>
+		
+	属性
+		1.href属性
+			链接的地址，链接的地址可以是一个网页，也可以是一个视频、图片、音乐等等
+		2.target属性
+			1.作用
+				定义超链接的打开方式
+			2.属性值
+				1._blank
+					在一个新的窗口中打开链接
+				2._seif(默认值)
+					在当前窗口中打开链接
+				3._parent
+					在父窗口中打开页面（框架中使用较多）
+				4._top
+					在顶层窗口中打开文件（框架中使用较多）
+		3. 锚点
+			  
+			<a href="#C4">查看章节4</a>  
+			<h2><a id="C4">章节4</a></h2>   
+
+表格
+	<table width="300" border="1" cellpadding="0" cellspacing="0" bordercolor="#FF0000" style="border-collapse:collapse;">
+	  <tr>
+	    <th>表格标题</th>
+	    <th>表格标题</th>
+	  </tr>
+	  <tr>
+	    <td>表格数据</td>
+	    <td>表格数据</td>
+	  </tr>
+	</table> 
+	
+
+
+
+	table 表格
+	tr    行
+	td    单元格
+	th    表头
+	
+	rowspan  行跨
+	colspan  纵跨
+	
+	caption  标题
+	
+	cellpadding  单元格边距
+	cellspacing  单元格间距   间距零 单线
+	border-collapse:collapse;单线表格
+
+	
+
+表单  
+
+		         服务器地址               发送方式
+	<form action="demo_form.php" method="post/get">
+	<input type="text"   maxlength="16">  
+	<input type="password">
+	<input type="checkbox" checked="checked"> 预先选定
+	<input type="radio" checked="checked">
+	<input type="submit" value="Send">         重置
+	<input type="reset">
+	<input type="hidden">
+	
+	<select>
+	<option>苹果</option>
+	<option selected="selected">香蕉</option>
+	<option>樱桃</option>
+	</select>
+	
+	<textarea name="comment" rows="60" cols="20"></textarea>
+	 
+	
+	单选
+	<input type="radio" id="forever" name="myradio"  value="1">
+		<label for="forever">选项一</label>
+	<input type="radio" id="casual" name="myradio" checked value="2">
+		<label for="casual">选项二</label>
+		
+	</form>
+
+input
+	<input autocomplete="on|off">                           自动填充内容
+    <input type="text" name="name" autofocus>               自动获得焦点
+	<input type="date" name="bday" max="1979-12-31">        最大值
+	<input type="text" placeholder="cat photo URL">            提示信息
+	<input type="image" src="submit.gif">                   图片按钮
+   
+    搜索候选项
+	<input list="browsers">
+	<datalist id="browsers">
+	  <option value="Internet Explorer">
+	  <option value="Firefox">
+	  <option value="Chrome">
+	  <option value="Opera">
+	  <option value="Safari">
+	</datalist>
+
+	
+<form oninput="x.value=parseInt(a.value)+parseInt(b.value)">0<input type="range" id="a" value="50">100+<input type="number" id="b" value="50">
+=<output name="x" for="a b"></output>
+</form>
+
+	
+
+    required  必填
+	
+	disabled  禁用
+
+    readonly  只读	
+
+	multiple  多个值
+
+
+button
+	
+	<button type="button|submit|reset">
+	
+                                      新窗口  自己    上一层  顶层
+	<button type="submit" formtarget="_blank|_self|_parent|_top>
+
+
+
+
+
+框架
+	<iframe src="demo_iframe.htm"></iframe>
+ 
+URL
+	scheme://host.domain:port/path/filename
+	http 的默认主机是 www
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+svg
+
+
+
+拖放
+
+
+web存储
+
+	localStorage - 没有时间限制的数据存储  关闭浏览器 再打开 数据依然可用
+	sessionStorage - 针对一个 session 的数据存储  关闭浏览器或页面 数据会被清空
+	
+	创建一个localStorage
+	<script>
+		localStorage.lastname="Smith";
+		document.write(localStorage.lastname);
+	</script>
+	
+	
+	保存数据：localStorage.setItem(key,value);
+	读取数据：localStorage.getItem(key);
+	删除单个数据：localStorage.removeItem(key);
+	删除所有数据：localStorage.clear();
+	得到某个索引的key：localStorage.key(index);
+	
+	
+	
+	创建一个sessionStorage
+	<script>
+	sessionStorage.lastname="Smith";
+	document.write(sessionStorage.lastname);
+	</script>
+	
+
+
+	例子 
+	可以输入网站名，网址，以网站名作为key存入localStorage；
+	根据网站名，查找网址；
+	列出当前已保存的所有网站；
+	
+		<!DOCTYPE html>
+		<html>  
+		<head>  
+		    <meta charset="utf-8">  
+		    <title>HTML5本地存储之Web Storage篇</title>  
+		</head>  
+		<body>  
+		    <div style="border: 2px dashed #ccc;width:320px;text-align:center;">
+		        <label for="keyname">别名(key):</label>  
+		        <input type="text" id="keyname" name="keyname" class="text"/>  
+		        <br/>  
+		        <label for="sitename">网站名：</label>  
+		        <input type="text" id="sitename" name="sitename" class="text"/>  
+		        <br/>  
+		        <label for="siteurl">网 址：</label>  
+		        <input type="text" id="siteurl" name="siteurl"/>  
+		        <br/>  
+		        <input type="button" onclick="save()" value="新增记录"/>  
+		        <hr/>  
+		        <label for="search_phone">输入别名(key)：</label>  
+		        <input type="text" id="search_site" name="search_site"/>  
+		        <input type="button" onclick="find()" value="查找网站"/>  
+		        <p id="find_result"><br/></p>  
+		    </div>  
+		    <br/>  
+		    <div id="list">  
+		    </div>  
+		    <script>
+		    //保存数据  
+		    function save(){  
+		        var site = new Object;
+		        site.keyname = document.getElementById("keyname").value;
+		        site.sitename = document.getElementById("sitename").value;  
+		        site.siteurl = document.getElementById("siteurl").value;
+		        var str = JSON.stringify(site); // 将对象转换为字符串
+		        localStorage.setItem(site.keyname,str);  
+		        alert("保存成功");
+		    }  
+		    //查找数据  
+		    function find(){  
+		        var search_site = document.getElementById("search_site").value;  
+		        var str = localStorage.getItem(search_site);  
+		        var find_result = document.getElementById("find_result");
+		        var site = JSON.parse(str);  
+		        find_result.innerHTML = search_site + "的网站名是：" + site.sitename + "，网址是：" +	 	site.siteurl;  
+		    }  
+		    
+		    //将所有存储在localStorage中的对象提取出来，并展现到界面上
+			// 确保存储的 keyname 对应的值为转换对象，否则JSON.parse会报错
+		    function loadAll(){  
+		        var list = document.getElementById("list");  
+		        if(localStorage.length>0){  
+		            var result = "<table border='1'>";  
+		            result += "<tr><td>别名</td><td>网站名</td><td>网址</td></tr>";  
+		            for(var i=0;i<localStorage.length;i++){ 
+		                var keyname = localStorage.key(i);  
+		                var str = localStorage.getItem(keyname);  
+		                var site = JSON.parse(str);  
+		                result += "<tr><td>"+site.keyname+"</td><td>"+site.sitename+"</td><td>"+	site.	siteurl+"</td></tr>";  
+		            }  
+		            result += "</table>";  
+		            list.innerHTML = result;  
+		        }else{  
+		            list.innerHTML = "数据为空...";  
+		        }  
+		    }  
+		    </script>
+		</body>  
+		</html> 
+		
+
+
+应用程序缓存  application
+
+三个优势:
+	离线浏览 
+	加载已缓存的资源速度更快 	
+	减少服务器荷载 只加载更新过或更改过的资源
+
+用应用程序缓存，请在文档的<html> 标签中包含 manifest 属性：
+
+<!DOCTYPE HTML>
+<html manifest="demo.appcache">
+...
+</html>
+
+
+
+
+
+定位
+
+音频
+
+
+视频
+
+html5属性 
+
+
+html5事件
+
+
+
+ 
+
+
+
+
+
+慕课  雪碧图
+
+JavaScript+jQuery+Ajax+正则表达式+面向对象+js插件+代码性能优化+github+requireJs+gulp
+
+
+ 

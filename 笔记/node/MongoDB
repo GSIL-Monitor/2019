@@ -1,0 +1,685 @@
+
+ctrl+?  快速注释
+
+菜鸟  配置mongo  http://www.runoob.com/mongodb/mongodb-window-install.html
+
+命令行下运行 MongoDB 服务器
+C:\mongodb\bin\mongod --dbpath c:\data\db
+
+连接MongoDB
+C:\mongodb\bin\mongo.exe
+
+创建配置文件  mongod.cfg
+systemLog:
+    destination: file
+    path: c:\data\log\mongod.log
+storage:
+    dbPath: c:\data\db
+
+安装 MongoDB服务
+C:\mongodb\bin\mongod.exe --config "C:\mongodb\mongod.cfg" --install
+
+
+启动MongoDB服务
+	net start MongoDB
+关闭MongoDB服务
+	net stop MongoDB
+移除 MongoDB 服务
+	C:\mongodb\bin\mongod.exe --remove
+
+
+
+
+mongo
+	data
+		db
+		log
+			mongod.log 
+	mongod.cfg	
+
+
+
+npm install mongoose
+
+
+
+步骤
+
+
+	cd到 bin 
+	mongod –dbpath K:\mongo\data\db
+	
+	mongod  –logpath K:\mongo\log\mongod.log
+	
+	
+	http://localhost:27017/	
+
+	K:\mongo\bin\mongo.exe
+
+
+ 
+not only SQL 不止是数据库  
+
+	noSQL 为了解决大规模数据 和 多样数据种类的问题
+
+	面向集合的存储  一个数据库包含多个集合 一个集合包含多个文档
+
+
+
+非关系型数据库 没有行、列的概念  用json来存储数据
+
+
+
+
+
+
+ 
+
+
+    use news
+    //switched to db news
+    show dbs
+    //没有news
+    
+    插入数据
+    db.news.insert({ '123':'456'});
+    //WriteResult({ "nInserted" : 1 })
+    
+    
+    show dbs
+    //news 数据库有了
+    
+    显示当前的数据集合
+    show collections
+    //news
+    
+    查找所有
+    db.news.find(); 
+    //{ "_id" : ObjectId("5c232d89d6162126db0e6f32"), "123" : "456" }
+    
+    
+    创建集合
+    db.createCollection("runoob")
+    
+    
+    
+    
+    
+    关闭mongod服务  
+    	必须在 use admin 下
+    	db.shutdownServer() 
+    
+    
+    切换到 use user
+    
+
+目录
+	插入
+	查找
+	查询数组
+	更新修改
+	排序
+	删除数据
+	索引
+
+
+
+
+插入
+
+	插入单个文档
+		db.news.insertOne(
+		   { item: "字符串", sum: 100, tags: ["数组"], size: {uom: "cm" } }
+		)
+		
+	插入多个文档
+		db.inventory.insertMany([
+		   { item: "mousepad"},
+		   { item: "mousepad"},
+		   { item: "mousepad"}
+		])	 
+	
+
+查找 
+
+	> db.user.find({name:/z/});
+	{ "_id" : ObjectId("5c233c8b1b03a532128dca19"), "name" : "zhang5", "age" : 25 }
+	{ "_id" : ObjectId("5c233c9d1b03a532128dca1a"), "name" : "zhang1", "age" : 21 }
+	{ "_id" : ObjectId("5c233ca61b03a532128dca1b"), "name" : "zhang2", "age" : 22 }
+	{ "_id" : ObjectId("5c233cc51b03a532128dca1c"), "name" : "zhang6", "age" : 26 }
+	{ "_id" : ObjectId("5c233cd91b03a532128dca1d"), "name" : "zhang100", "age" : 100 }
+	
+
+	_id字段
+		每个文档都需要一个唯一的 _id字段作为主键。
+		没有就自动生成ObjectId_id。
+
+
+	等于      db.user.find({"age": 22}); 
+	大于      db.user.find({age:{$gt:22}}); 
+	小于      db.user.find({age:{$lt:22}}); 
+	大于等于   db.user.find({age:{$gte:23}}); 
+	小于等于   db.user.find({age:{$lte:23}}); 
+	范围       db.user.find({age:{$gte:21,$lte:26}}); 大于等于21 小于等于26
+	模糊搜索   db.user.find({name:/z/}); 
+	以z 开头   db.user.find({name:/^z/}); 
+	
+	查询 name = zhangsan, age = 22 的数据 
+	db.user.find({name: 'zhangsan', age: 22});
+
+
+	
+	查询前 5 条         db.user.find().limit(5); 
+	查询 5 条以后的数据  db.user.find().skip(5);  
+	查询在 2-7 之间的数据 db.user.find().limit(7).skip(2);
+	查找第一条            db.user.findOne(); 
+	统计年龄大于25的      db.user.find({age: {$gte: 25}}).count(); 
+	or与查询             db.user.find({$or: [{age: 22}, {age: 25}]}); 
+	in查询               db.news.find( { age: { $in: [ 20, 60 ] } } )
+	
+	指定列查询 
+		db.user.find({},{name: 1});  //只显示name
+		db.user.find({},{age: 1});	 //只显示age
+		
+		db.news.find( { age:20 }, {  _id: 0 } )          //显示age = 20的数据  不显示 _id
+		db.news.find( { name:'a1'}, { age:0, _id: 0  } ) //显示name = a1       不显示age 和 _id  
+
+		db.user.find({'age':{$gt:25}},{name: 1});        //年龄大于25的name	
+		
+
+查询数组  
+
+	只有 red 并且 blank 按指定顺序
+		db.inventory.find( { tags: ["red", "blank"] } )
+	
+	有red并且blank 不考虑 顺序 或 其他元素
+		db.inventory.find( { tags: { $all: ["red", "blank"] } } )
+	大于15 小于70 
+		db.user.find({ 'age': { $gt: 15, $lt: 70 } } )
+
+	按数组长度查询数组
+		db.news.find( { "tags": { $size: 1 } } )
+	
+	存在查询 
+		db.news.find( { name : { $exists: false } } )  仅返回不包含name字段的文档
+
+更新修改
+	db.collection.update(    
+		<query>, 
+		<update>, 
+		{       
+			upsert: <boolean>,   
+			multi: <boolean>,  
+			writeConcern: <document>
+		}
+	)
+	query   要选择的
+	update  要修改的
+	upsert : 布尔	可选的。  
+		如果设置为true，  没有时创建新文档。 
+		默认值为false，未找到匹配项时不插入新文档
+
+	multi : 可选的。
+		如果设置为true， 更新符合条件的 全部  
+		默认值为false 更新一个文档 
+
+	db.books.update({ upsert: true },{ multi: true })
+
+
+	db.user.update({"name":"zhang1"},{$set:{"age":16}}); 
+
+    完全替换 
+	db.user.update({"name":"zhang1"},{"name":"大明","age":60}); 
+
+	更新单个文档
+		db.inventory.updateOne(
+		   { item: "paper" },
+		   {
+		     $set: { "size": "cm"},
+		     $currentDate: { lastModified: true }
+		   }
+		)
+	
+	更新多个文档
+		db.inventory.updateMany(
+		   { "qty": { $lt: 50 } },
+		   {
+		     $set: { "size": "in" },
+		     $currentDate: { lastModified: true }
+		   }
+		)
+
+	替换  
+		db.news.save()
+
+
+
+排序 
+	db.user.find().sort({age: 1});升序 
+	db.user.find().sort({age: -1});降序
+
+删除  
+
+	删除数据库，删除当前所在的数据库 
+    db.dropDatabase();
+    
+    
+    删除指定的集合  删除表 
+    db.collection_name.drop()
+
+
+ 	db.user.remove({"name" : "zhang100"})
+
+
+
+
+ 	news集合中删除条件匹配的所有
+		db.news.deleteMany({ "123" : "456" }) 
+	删除一个
+		db.news.deleteOne( { name: "a7" } )
+
+
+$type 操作符
+	db.col.find({"title" : {$type : 2}})
+	或
+	db.col.find({"title" : {$type : 'string'}}
+
+
+
+
+索引
+	索引是对数据库表中的值 进行排序的一种结构
+
+	创建索引        db.col.createIndex({"title":1})  1 为升序创建索引
+	删除指定索引     db.collection.dropIndex()	
+	删除所有索引     db.collection.dropIndexes()	 
+	获取当前集合索引 db.collection.getIndexes()	 
+
+
+
+compact	对集合进行碎片整理并重建索引。
+reIndex	重建集合上的所有索引。
+
+
+for循环
+	for(var i=0; i<100; i++){db.news.insertOne({'name':'a'+i})}
+
+统计耗时 
+	db.news.find({name:/^z/}).explain( "executionStats" )
+
+
+
+完整的mongodb的地址  
+	var mongoose = require('mongoose');
+	var url = 'mongodb://username:password@hostname:port/数据库名'
+	mongoose.connect(url)
+
+
+
+
+
+
+node 操作 mongodb 
+
+	第一步 引入模块
+	var MongoClient = require ('mongodb').MongoClient; 
+	
+	第二步 连接数据库
+	var url = 'mongodb://localhost:27017/news';  //news 表示数据库的名称
+	  
+	MongoClient.connect(url, function(err, db) {
+	 
+	  console.log("Connected successfully to server");
+	
+	  db.close();
+	});
+	
+	 第三步 实现增删改查
+	
+	
+	
+	
+	
+	var mongodb = require('mongodb');
+	mongodb.MongoClient.connect("mongodb://localhost/news",{ useNewUrlParser: true },function(err,client){
+	    if(!err){
+	       var db = client.db("news");
+	        db.collection("col").insertOne({"c":1},function(err,result){
+	      
+	            if(!err){
+	                console.log(result);
+	            }
+	        })
+	    }
+	})
+	
+	 
+	
+	
+	
+	
+	var MongoClient = require('mongodb').MongoClient;
+	
+	
+	//定义连接数据库的地址
+	
+	const  url = 'mongodb://localhost/news';
+	
+	
+	//连接数据库
+	MongoClient.connect(url,(err,client)=>{
+	
+	    if(err){
+	        console.log('数据连接失败');
+	        return false;
+	    }
+	    var db = client.db("news");  /*获取db对象*/
+	
+	    db.collection("admin").insertOne({"name":"mongodb3.0","age":10},function(err){
+	
+	        if(err){
+	            console.log('增加失败');
+	            return false;
+	        }
+	        console.log('增加成功');
+	        client.close();  /*关闭数据库*/
+	    })
+	
+	
+	})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(node:6592) DeprecationWarning: current URL string parser is deprecated, and will be removed in a future version. To use the new parser, pass option { useNewUrlParser: true } to MongoClient.connect
+//当前的URL字符串解析器被弃用然后也提供了解决方案 让你在选项里面{useNewUrlParser: true}
+
+解决办法：
+
+- mongoose.connect('mongodb://127.0.0.1/models');
++ mongoose.connect('mongodb://127.0.0.1/models',{ useNewUrlParser: true });
+1
+2
+其他问题
+(node:6825) DeprecationWarning: collection.count is deprecated, and will be removed in a future version. Use collection.countDocuments or collection.estimatedDocumentCount instead
+
+使用 collection.countDocuments() 方法 替代 collection.count()
+ 
+
+
+
+第1部分：MongoDB和NodeJS简介
+	启动一个独立的mongod并与shell连接
+	package.json：用npm安装依赖项
+	使用node.js连接到mongodb
+	node.js并发和事件循环基础
+	require（）基础知识
+	使用mocha进行测试
+	package.json：npm run-script
+	用gulp运行摩卡测试
+
+
+第2部分：MongoDB架构设计
+	零售应用概述
+	猫鼬介绍
+	架构设计原则：存储您查询的内容
+	架构设计原则：最小基数原理
+	MongoDB索引
+	零售应用程序架构：产品
+	零售应用程序架构：类别
+	零售应用程序架构：用户和购物车
+	高级猫鼬功能：虚拟
+	高级猫鼬功能：自定义设置器和按货币排序
+
+
+第3部分：使用Express的NodeJS REST API
+	什么是REST API？
+	快递简介
+	NodeJS + ExpressJS中的依赖注入
+	API级TDD
+	产品API
+	类别API
+	购物车API
+	在服务器端集成facebook oauth
+	将Stripe集成到付款中
+	集成MongoDB文本搜索
+	集成Open Exchange Rates
+
+
+
+
+	{
+        "queryPlanner" : {
+                "plannerVersion" : 1,
+                "namespace" : "news.news",
+                "indexFilterSet" : false,
+                "parsedQuery" : {
+                        "name" : {
+                                "$regex" : "^z"
+                        }
+                },
+                "winningPlan" : {
+                        "stage" : "COLLSCAN",
+                        "filter" : {
+                                "name" : {
+                                        "$regex" : "^z"
+                                }
+                        },
+                        "direction" : "forward"
+                },
+                "rejectedPlans" : [ ]
+        },
+        "executionStats" : {
+                "executionSuccess" : true,
+                "nReturned" : 10000,
+                "executionTimeMillis" : 12,
+                "totalKeysExamined" : 0,
+                "totalDocsExamined" : 10107,
+                "executionStages" : {
+                        "stage" : "COLLSCAN",
+                        "filter" : {
+                                "name" : {
+                                        "$regex" : "^z"
+                                }
+                        },
+                        "nReturned" : 10000,
+                        "executionTimeMillisEstimate" : 0,
+                        "works" : 10109,
+                        "advanced" : 10000,
+                        "needTime" : 108,
+                        "needYield" : 0,
+                        "saveState" : 78,
+                        "restoreState" : 78,
+                        "isEOF" : 1,
+                        "invalidates" : 0,
+                        "direction" : "forward",
+                        "docsExamined" : 10107
+                }
+        },
+        "serverInfo" : {
+                "host" : "sky",
+                "port" : 27017,
+                "version" : "4.0.5",
+                "gitVersion" : "3739429dd92b92d1b0ab120911a23d50bf03c412"
+        },
+        "ok" : 1
+}
+>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

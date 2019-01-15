@@ -1,0 +1,6 @@
+var cheerio = require('cheerio');
+var $ = cheerio.load('<h2 class="title">hello world</h2>');
+$('h2.title').text('hi !');
+$('h2').addclass('welcome');
+$.html();
+

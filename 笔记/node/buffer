@@ -1,0 +1,90 @@
+
+
+Buffer 类是一个全局变量，使用时无需 require('buffer').Buffer。
+
+
+// 创建一个长度为 10、且用 0 填充的 Buffer。
+const buf1 = Buffer.alloc(10);
+
+
+
+类数组
+　　Buffer对象类似于数组，它的元素为16进制的两位数，即0到255的数值
+
+
+下标赋值
+	var buf = Buffer.alloc(10);  
+	buf[0] = 100;
+	console.log( buf[0] ); // 100
+
+	buf  十进制100 = 十六进制64
+	<Buffer 64 00 00 00 00 00 00 00 00 00>
+
+
+
+	
+小于0 加256
+	buf[0] = -100;
+	console.log(buf[0]); // 156
+大于256 减256	
+	buf[1] = 300;
+	console.log(buf[1]); // 44
+小数 只保留整数
+	buf[2] = 3.1415;
+	console.log(buf[2]); // 3
+
+
+
+
+
+
+buffer.from()
+
+	const buf1 = Buffer.from('buffer');
+	const buf2 = Buffer.from(buf1);
+	
+	buf1[0] = 0x61;
+	
+	console.log(buf1.toString());
+	// 输出: auffer
+	console.log(buf1);
+	// 输出: <Buffer 61 75 66 66 65 72>
+	
+	console.log(buf2.toString());
+	// 输出: buffer
+	console.log(buf2);
+	// 输出: <Buffer 62 75 66 66 65 72>
+	
+
+长度
+console.log(buf.length);  //6
+
+
+toJSON()
+	var buf = Buffer.from('test');
+	var json = buf.toJSON(buf);
+	console.log(json);//{ type: 'Buffer', data: [ 116, 101, 115, 116 ] }	
+
+buf.write(string, [offset], [length], [encoding])
+　　string <String> 要写入 buf 的字符串
+
+　　offset <Integer> 开始写入 string 的位置。默认: 0
+
+　　length <Integer> 要写入的字节数。默认: buf.length - offset
+
+　　encoding <String> string 的字符编码。默认: 'utf8'；返回: <Integer> 写入的字节数
+
+	var buf = Buffer.alloc(5); 
+	console.log(buf); //<Buffer 00 00 00 00 00>
+
+	var len = buf.write('test',1,3);
+	console.log(buf);//<Buffer 00 74 65 73 00>
+	console.log(len);/3
+
+buf.slice([start[, end]])
+	var buffer1 =Buffer.from('test');
+	console.log(buffer1);//<Buffer 74 65 73 74>
+	
+	var buffer2 = buffer1.slice(1,3);
+	console.log(buffer2);//<Buffer 65 73>
+	console.log(buffer2.toString());//'es'

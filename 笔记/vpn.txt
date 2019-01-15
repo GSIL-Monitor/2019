@@ -1,0 +1,87 @@
+
+
+
+
+
+
+https://yuerblog.cc/2017/01/03/how-vpn-works-and-how-to-setup-pptp/
+	
+	vpn比ss更加底层，它通过操作系统的接口直接虚拟出一张网卡，后续整个操作系统的网络通讯都将通过这张虚拟的网卡进行收发。这和任何一个代理的实现思路都差不多，应用层并不知道网卡是虚拟的，这样vpn虚拟网卡将以中间人的身份对数据进行加工，从而实现各种神奇的效果。具体来说，vpn是通过编写一套网卡驱动并注册到操作系统实现的虚拟网卡，这样数据只要经过网卡收发就可以进行拦截处理。   
+
+	一句话，vpn在IP层工作，而ss在TCP层工作。
+
+
+PPP协议   点对点协议      链路层协议  建立点对点连接传输数据包
+
+PPTP协议  点对点隧道协议  在ppp协议的基础上开发的一种新的增强型安全协议   支持vpn
+
+
+谷歌语法 
+filetype:文件扩展名 关键词
+
+site：域名 
+
+intitle  
+
+inurl
+
+
+link”语法返回所有链接到某个URL地址的网页
+
+
+
+
+# -*- coding: utf-8 -*-
+import requests,re
+from bs4 import BeautifulSoup
+
+r = """<div class='wrap shadow'>
+    
+soup = BeautifulSoup(r , "lxml")
+
+a=[]
+list = soup.find_all('a')
+for i in list:
+
+     b=i["href"]
+     a.append(b)
+for i in range(7):
+     a.remove("javascript:;")
+print("")
+
+
+
+
+for i in a:
+    data = requests.get(i).text
+    print(data)
+    print("--------------")
+
+
+#/+cdU.gTi;~JuHB*9-mgK>Vo62131dMRFv2##l@6}Z:k3lJ~yxiqh rect_url=https:*&A"
+# 3vv]pL%T,J
+8-5=clw<DL
+^,{LueFjM"
+L9h].MG*@6
+[_}Q@igC*u
+# 4I_]
+# d"9u
+# `JU-
+# aEsO
+# ihDD
+# =|oO
+# gEE0
+# 7R9x
+
+
+
+
+
+
+
+
+
+
+
+
+

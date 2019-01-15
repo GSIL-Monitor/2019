@@ -1,0 +1,307 @@
+
+
+
+ie盒模型  border
+width指content部分的宽度，在IE盒子模型中，width=内容+内边距+边框
+
+标准盒模型 不包含 padding border 
+
+
+
+
+画一条0.5px的线  div的高度 0.5   背景黑色
+
+box-shadow: 0 0.5px 0 #000
+
+
+<!DOCType html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        .hr {
+            width: 300px;
+            background-color: #000;
+        }
+        .hr.half-px {
+            height: 0.5px;
+        }
+        .hr.one-px {
+           height: 1px;
+        }
+    </style>
+</head>
+<body>
+    <p>0.5px</p>
+    <div class="hr half-px"></div>
+    <p>1px</p>
+    <div class="hr one-px"></div>
+</body>
+</html>
+
+
+
+
+块元素和行元素
+块元素：独占一行， 
+行元素：不会独占一行，宽度和高度会失效，并且在垂直方向的填充和余量失会
+效。
+
+
+
+
+
+居中 
+
+table
+div{
+    width: 300px;
+    height: 300px;
+    border: 3px solid #555;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+img{
+    vertical-align: middle;
+}
+<div >
+ <img  src="mm.jpg">
+</div>
+
+
+flex
+.container{
+      width: 300px;
+      height: 200px;
+      border: 3px solid #546461;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+ }
+ .inner{
+      border: 3px solid #458761;
+      padding: 20px;
+ }
+<div class="container">
+ <img class="inner" src="mm.jpg">
+</div>
+
+
+
+
+
+
+
+BFC布局规则
+
+	1.内部的Box会在垂直方向，一个接一个地放置。
+	
+	2.Box垂直方向的距离由margin决定。属于同一个BFC的两个相邻Box的margin会发生重叠
+	
+	3.每个元素的margin box的左边， 与包含块border box的左边相接触(对于从左往右的格式化，否则相反)。即使存在浮动也是如此。
+	
+	4.BFC的区域不会与float box重叠。(所以有左边宽度自适应)
+	
+	5.BFC就是页面上的一个隔离的独立容器，容器里面的子元素不会影响到外面的元素。反之也如此。
+	
+	6.计算BFC的高度时，浮动元素也参与计算
+	
+	 
+	
+	    <b>哪些元素会触发BFC</b>
+	
+	    根元素
+	
+	    float属性不为none
+	
+	    position为absolute或fixed
+	
+	    display为    inline-block, table-cell, table-caption, flex, inline-flex
+	
+	    overflow不为visible
+	
+	https://segmentfault.com/a/1190000009545742
+	https://www.zhangxinxu.com/wordpress/2015/02/css-deep-understand-flow-bfc-column-two-auto-layout/
+	
+
+瀑布流
+
+	实现方式：
+	
+	1. 传统多列浮动
+	
+	    *  各列固定宽度，并且左浮动；
+	
+	    *  一列中的数据块为一组，列中的每个数据块依次排列即可；
+	
+	    *  更多数据加载时，需要分别插入到不同的列上；
+
+
+
+
+
+
+transition和动画的区别
+https://www.css88.com/tool/css3Preview/Box-Shadow.html
+
+css旋转 css动画
+发光按钮 
+
+Flex布局
+文章链接：
+ 
+https://css-tricks.com/snippets/css/a-guide-to-flexbox/
+https://juejin.im/entry/57675f8f80dda4005f9bbe0c	
+
+Flex布局   flex缺点    flex中的align-item只能垂直居中么，横向可不可以
+
+	Flex是Flexible Box的缩写，意为“弹性布局”，用来为盒状模型提供最大的灵活性。
+	布局的传统解决方案，基于盒状模型，依赖display attribute性+ position属性+ float属性。它对于那些特殊布局非常不方便，比如，垂直居中就不容易实现。
+	
+	 
+	容器的属性：
+	
+		flex-direction：决定主轴的方向（即子项的排列方法）
+		.box { 
+		flex-direction：row | row-reverse | 专栏| 列反向; 
+		}
+		flex-wrap：决定换行规则
+		.box { 
+		flex-wrap：nowrap | 包裹| 包裹后退; 
+		}
+		flex-flow：
+		.box { 
+		flex-flow：|| ; 
+		}
+		证明内容：对其方式，水平主轴对齐方式
+		对齐项目：对齐方式，竖直轴线方向
+	项目的属性（元素的属性）：
+	
+		为了属性：定义项目的排列顺序，顺序越小，排列越靠前，默认为0
+		FLEX-成长属性：定义项目的放大比例，即使存在空间，也不会放大
+		弯曲收缩属性：定义了项目的缩小比例，当空间不足的情况下会等比例的缩小，如果定义个项目的流动收缩为0，则为不缩小
+		柔性基础属性：定义了在分配多余的空间，项目占据的空间。
+		flex：是flex-grow和flex-shrink，flex-basis的简写，默认值为0 1 auto。
+		对齐自：允许单个项目与其他项目不一样的对齐方式，可以覆盖对齐项，默认属性为自动，表示继承父元素的排列项
+		比如说，用柔性实现圣杯布局		
+
+
+
+
+
+
+
+
+
+
+
+
+	line-height   
+	
+	overflow 
+	
+	display:inline-block
+	说一下BFC
+	css尺寸单位。em是相对于什么，百分比相对于什么
+	
+
+	
+ 
+	
+	
+	
+    css 滚动
+	
+	雪碧图
+
+    <div class="box">
+    <span class="icon1"></span>
+    <span class="icon2"></span>
+    <span class="icon3"></span>
+    <span class="icon4"></span>
+	.box{width: 600px; height:300px; border: 3px solid #ccc; background-color: #8064A2; }
+        span{display: inline-block; width: 25px; height: 25px; border: 3px solid #ccc;
+        background-image: url(https://img-blog.csdn.net/20160404213159853); background-repeat: no-repeat;
+        margin: 5px;}
+        .icon1{background-position: 0 0;}
+        .icon2{background-position: -40px 0;}
+        .icon3{background-position: 0 -25px;}
+        .icon4{background-position: -40px -25px;}
+
+	就是将很多很多的小图标放在一张图片上，就称之为雪碧图。
+
+	使用雪碧图的目的：有时为了美观，我们会使用一张图片来代替一些小图标，但是一个网页可能有很多很多的小图标，浏览器在显示页面的时候，就需要像服务器发送很多次访问请求，这样一来，一是造成资源浪费，二是会导致访问速度变慢
+
+
+
+
+
+
+
+
+
+
+			margin和padding分别适合什么场景使用？
+			
+			需要在border外侧添加空白时 空白处需要背景（色）时
+			
+			
+			
+			
+			
+		
+			
+			
+			响应式
+			基本原理是利用CSS3媒体查询，为不同尺寸的设备适配不同样式
+			
+			
+			全屏滚动的原理是什么？ 用到了CSS的那些属性？
+			
+			原理：有点类似于轮播，整体的元素一直排列下去，假设有5个需要展示的全屏页面，那么高度是500%，只是展示100%，剩下的可以通过transform进行y轴定位，也可以通过margin-top实现
+
+			overflow：hidden；transition：all 1000ms ease；
+			原理类似图片轮播原理，超出隐藏部分，滚动时显示
+			可能用到的CSS属性：overflow:hidden; transform:translate(100%, 100%); display:none;
+			
+			
+			
+			什么是视差滚动效果，如何给每页做不同的动画？
+			
+			视差滚动是指多层背景以不同的速度移动，形成立体的运动效果，具有非常出色的视觉体验
+			
+			一般把网页解剖为：背景层、内容层和悬浮层。当滚动鼠标滚轮时，各图层以不同速度移动，形成视差的
+			
+			实现原理
+			
+			以 “页面滚动条” 作为 “视差动画进度条”
+			以 “滚轮刻度” 当作 “动画帧度” 去播放动画的
+			监听 mousewheel 事件，事件被触发即播放动画，实现“翻页”效果
+			
+			
+			
+			
+			伪元素 -- 在内容元素的前后插入额外的元素或样式，但是这些元素实际上并不在文档中生成。
+			它们只在外部显示可见，但不会在文档的源代码中找到它们，因此，称为“伪”元素。例如：
+			p::before {content:"第一章：";}
+			p::after {content:"Hot!";}
+			p::first-line {background:red;}
+			p::first-letter {font-size:30px;}
+			
+			伪类 -- 将特殊的效果添加到特定选择器上。它是已有元素上添加类别的，不会产生新的元素。例如：
+			a:hover {color: #FF00FF}
+			p:first-child {color: red}
+			
+			
+			
+			
+			 一个高度自适应的div，里面有两个div，一个高度100px，希望另一个填满剩下的高度
+			
+			方案1： .sub { height: calc(100%-100px); }
+			方案2： .container { position:relative; } .sub { position: absolute; top: 100px; bottom: 0; }
+			方案3： .container { display:flex; flex-direction:column; } .sub { flex:1; }
+			

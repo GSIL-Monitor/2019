@@ -1,0 +1,50 @@
+Chrome浏览器看本身的DNS缓存
+chrome://net-internals/#dns
+
+
+dns 模块包含两类函数：
+
+第一类函数，使用底层操作系统工具进行域名解析，且无需进行网络通信。 这类函数只有一个：dns.lookup()。
+
+例子 查找 iana.org：
+
+	const dns = require('dns');
+	
+	dns.lookup('iana.org', (err, address, family) => {
+	  console.log('IP 地址: %j 地址族: IPv%s', address, family);
+	});
+	// IP 地址: "192.0.43.8" 地址族: IPv4
+
+
+
+第二类函数，连接到一个真实的 DNS服务器进行域名解析，且始终使用网络进行 DNS 查询。 
+这类函数包含了 dns 模块中除 dns.lookup() 以外的所有函数。
+
+	var dns = require('dns');
+	dns.resolve4('www.qq.com',function(err,address){
+    	console.log(address);	
+	});
+		//[ '125.39.52.26' ]
+
+反向解析 IP 地址，返回指向该 IP 地址的域名数组
+	var dns = require('dns');
+	dns.reverse('114.114.114.114',function(err,hostnames){
+	    console.log(hostnames);//'public1.114dns.com'
+	});
+	
+
+
+	const dns = require('dns');
+	
+	let domain = 'baidu.com';
+	
+	dns.resolve(domain, function(err, address){
+	    if(err){
+	        console.log(err);
+	        return;
+	    }
+	    console.log(address);
+	})
+	//[ '220.181.57.216', '123.125.115.110' ]
+
+

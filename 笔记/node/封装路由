@@ -1,0 +1,23 @@
+var app = {
+	login:function(req,res){
+	console.log(111)
+	}
+}
+app.login("req") //111
+
+
+
+
+
+var app = {
+	login:function(req,res){
+	console.log("login");
+	},
+	register:function(req,res){
+		console.log("register")
+	}
+}
+//app.login()  在其他文件调用
+module.exports = app;
+
+

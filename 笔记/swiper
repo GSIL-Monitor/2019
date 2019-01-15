@@ -1,0 +1,596 @@
+
+initialslide        1008   初始化后显示的内容                 
+preloadImages       27197  预先加载图片
+direction           905    水平方向 竖直方向
+speed               323    速度                        
+updateOnImagesReady 330    所有图片加载完成后 重新初始化 
+
+parallax            529    视差
+setWrapperSize      128    display: flex 
+roundLengths        397    四舍五入快的尺寸
+grabCursor          186    改变抓手
+
+runCallbacksOnInit  66     初始化后执行回调函数                            
+on                  71     注册事件
+init                34     初始化
+
+
+
+ 
+virtualTranslate    94    
+a11y                127   
+width               191   
+height              86     
+breakpoints         165  
+breakpointsInverse  4   
+autoHeight          137                              
+uniqueNavElements   61                                  
+nested              66                                         
+watchOverflow       15   
+ 
+ 
+
+
+
+
+
+
+
+Slides grid (网格分布)
+
+
+centeredSlides      417        居中
+
+ slidesPerView      269        同时显示个数
+spaceBetween        200        间距
+
+slidesPerGroup      141        一组的个数
+
+slidesPerColumn     83         每列的数量
+
+slidesPerColumnFill  66        填充方式  默认：column  举例：row
+
+ slidesOffsetBefore   60
+
+ slidesOffsetAfter    73
+
+ normalizeSlideIndex  54
+
+ centerInsufficientSlides  2
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+Free Mode （free模式/抵抗反弹）
+
+freeMode                       886   默认false 设置为true则变为free模式    
+freeModeMomentum               97   若设置为false则关闭动量
+freeModeMomentumRatio          59   设置惯性的大小
+freeModeSticky                 78   自由模式自动贴合
+freeModeMomentumVelocityRatio  15
+freeModeMomentumBounce         30
+freeModeMomentumBounceRatio    22
+
+freeModeMinimumVelocity        12
+ 
+
+
+Loop (环路)
+
+ loop                     515   是否循环
+ loopAdditionalSlides     173   额外添加的个数
+ loopedSlides             158   
+ loopFillGroupWithBlank   31    在最后添加空白滑块
+
+
+
+
+
+
+
+Progress（进度）
+
+watchSlidesProgress     6251   其实就是wrapper的translate值的百分值，
+watchSlidesVisibility   343
+
+
+
+
+Clicks (点击)
+
+preventClicks             411  用于防止触摸时触发链接跳转。
+preventClicksPropagation  107  阻止click冒泡。拖动Swiper时阻止click事件。
+slideToClickedSlide       149  点击的slide会居中
+ 
+
+
+
+
+Touches(触发条件)
+
+！！！ shortSwipes      33     默认允许短切换
+
+touchRatio             295   触摸距离与slide滑动距离的比率。
+simulateTouch         143   设置为false后鼠标拖动无效
+allowTouchMove        87    是否允许触摸
+followFinger         24     手指滑动时slide不会动，当你释放时slide才会切换。
+
+longSwipes           24     
+longSwipesMs         18     5秒内都算短滑动
+longSwipesRatio     28      滑动百分比 设置滑动10% 切换
+threshold           34      拖动的临界值  拖动100px以上才移动  
+touchAngle          40      拖动角度
+
+
+
+touchStartPreventDefault  2        阻止`touchstart` (`mousedown`)的默认事件
+touchStartForcePreventDefault  0   强制阻止`touchstart` 
+touchMoveStopPropagation  112      阻止touchmove冒泡事件。
+resistance               18        边缘抵抗
+resistanceRatio           30
+iOSEdgeSwipeDetection    21
+iOSEdgeSwipeThreshold     25
+passiveListeners         26 
+touchReleaseOnEdges     45
+touchEventsTarget       25   接受touch事件的目标
+ 
+
+
+
+
+
+Swiping / No swiping(禁止切换)
+
+preventInteractionOnTransition   18
+noSwiping          207
+noSwipingSelector  13  设置不可触摸滑动的元素，例如input
+noSwipingClass     70  不可拖动块的类名
+allowSlideNext    54   禁止 右滑
+allowSlidePrev    22   禁止 左滑
+swipeHandler      55
+ 
+
+
+
+Observer （监视器）
+
+observer        374
+observeParents  529
+
+
+
+Namespace （命名空间）
+wrapperClass    109    设置wrapper的css类名
+slideClass     711     设置slide的类名。
+slideActiveClass  29   设置活动块的类名。
+slideVisibleClass  11
+slideDuplicateClass 26
+slideNextClass 28
+slidePrevClass 12
+slideDuplicatedActiveClass 11
+slideDuplicatedNextClass   6
+slideDuplicatedPrevClass   5
+containerModifierClass     4
+
+
+
+Callbacks （回调函数）
+
+init 335                		回调函数，初始化后执行。
+touchStart(event) 616   		触摸时触发
+touchMove(event) 79     		滑动时触发
+touchEnd(event)  82     		释放即执行
+slideChangeTransitionStart 207  输出过渡后的引索
+slideChangeTransitionEnd  467   滑块切换结束时执行
+imagesReady  110                图像加载完成后执行
+transitionStart 53              过渡开始时触发。  切换前消失
+transitionEnd  63
+touchMoveOpposite(event)  32    设置了很小的允许拖动角度
+sliderMove(event) 44
+click(event)  68
+tap(event)  56                   在移动端  用tap代替click作为点击事件            
+doubleTap(event) 18              双击
+progress(progress) 60
+reachBeginning()   20           到达开始时执行  第一个
+reachEnd()  38                  最后一个
+beforeDestroy()  49             销毁Swiper时执行
+setTransition(transition)  112  每当设置Swiper开始过渡动画时执行。transtion获取到的是Swiper的speed值。
+
+resize()    276                 窗口变化时执行
+setTranslate(translate)  25     当设置wrapper的偏移量时执行 
+
+
+slideNextTransitionStart57 
+slideNextTransitionEnd  28
+slidePrevTransitionStart  17
+slidePrevTransitionEnd   22
+fromEdge  6                
+
+slideChange  43    activeIndex发生改变 执行
+
+autoplayStart 3
+autoplayStop 2
+autoplay  13
+
+Properties （Swiper属性）
+
+mySwiper.activeIndex  305  返回当前活动块(激活块)的索引。loop模式下注意该值会被加上复制的slide数。
+mySwiper.realIndex    51   当前活动块的索引  在loop模式下不会将复制的块的数量计算在内。
+mySwiper.previousIndex  41  返回上一个活动块的索引，切换前的索引。
+mySwiper.width  30          容器的宽度
+mySwiper.height  24
+mySwiper.touches 29
+	mySwiper.touches.startX    触摸开始点的X值
+	mySwiper.touches.startY    触摸开始点的Y值
+	mySwiper.touches.currentX    触摸当前点的X值
+	mySwiper.touches.currentY    触摸当前点的Y值
+	mySwiper.touches.diff    当前滑动方向的触摸滑动距离
+
+mySwiper.params 34          获取参数
+mySwiper.$el   41           获取Dom7对象
+mySwiper.$wrapperEl 40      通过mySwiper.wrapperEl得到wrapper的HTML元素。
+mySwiper.slides  59         获取Swiper的slides的Dom7/jQuery对象
+mySwiper.translate  39       获取位移   实时位移可以使用 swiper.getTranslate()
+mySwiper.progress  96       获取Swiper的progress值。
+mySwiper.isBeginning 14
+mySwiper.isEnd 24
+mySwiper.animating  25
+mySwiper.clickedIndex 42      返回最后点击 的Slide 引索
+mySwiper.clickedSlide 21      返回最后点击（非拖动）的Slide的HTML元素。
+mySwiper.allowSlideNext  7   允许切换到上一个
+mySwiper.allowSlidePrev  5   允许切换到上一个
+mySwiper.allowTouchMove  9   允许触摸移动
+
+Methods （Swiper方法）
+
+
+mySwiper.slideNext(speed, runCallbacks)  135   让Swiper贴合边缘
+mySwiper.slidePrev(speed,runCallbacks)  60     滑动到前一个滑块
+mySwiper.slideTo(index, speed, runCallbacks)  855  切换到指定
+mySwiper.slideToLoop(index, speed, runCallbacks)  28  
+mySwiper.destroy(deleteInstance, cleanupStyles)  121  销毁Swiper
+mySwiper.getTranslate()  26             实时的wrapper位移
+mySwiper.setTranslate(translate) 63     设定偏移量
+mySwiper.updateSize()  21              重新计算Swiper的尺寸
+mySwiper.updateSlides()  32             
+mySwiper.updateProgress()  202        
+mySwiper.updateSlidesClasses() 19      更新类名
+mySwiper.update(updateTranslate) 78 
+mySwiper.detachEvents()  32            移除所有监听事件
+mySwiper.attachEvents()  30            重新绑定
+mySwiper.appendSlide(slides)   55      添加到结尾
+mySwiper.prependSlide(slides)  28      
+mySwiper.addSlide(index, slides); 5    删除指定位置slide
+mySwiper.removeSlide(index)   49       移除所有slides。
+mySwiper.removeAllSlides()    28
+mySwiper.on(event,handler)   48
+mySwiper.once(event,handler) 13
+mySwiper.off(event)  6              移除事件的所有句柄
+mySwiper.off(event, handler) 28
+mySwiper.setGrabCursor()  11
+mySwiper.unsetGrabCursor()  5
+mySwiper.updateAutoHeight(speed)  11
+mySwiper.slideToClosest(speed, runCallbacks); 10
+
+
+
+组件
+
+
+Autoplay (自动切换)
+
+autoplay  1147
+delay    122
+stopOnLastSlide  121
+disableOnInteraction  400
+reverseDirection  17
+waitForTransition   27
+mySwiper.autoplay.running 34
+mySwiper.autoplay.start()  98
+mySwiper.autoplay.stop()  80
+
+Effects (切换效果)
+
+effect  1486     淡出  立方  翻转
+fadeEffect  293
+cubeEffect  451  立方体旋转
+coverflowEffect   574
+flipEffect  150
+
+
+Pagination（分页器）
+
+pagination 210
+el  648
+type  320  样式有 点 数字 进度条
+clickable      309             点击分页器的指示点分页器会控制Swiper切换。
+renderBullet(index, className)  350  自定义小点
+renderProgressbar()  170
+bulletElement 93               设定分页器指示器（小点）的HTML标签。   
+hideOnClick      98            隐藏/显示分页器
+progressbarOpposite  10
+dynamicMainBullets 30          点的数量    
+dynamicBullets    33           分页器小点的数量会部分隐藏。
+
+
+renderFraction()      65 
+
+renderCustom()       60
+formatFractionCurrent 3
+formatFractionTotal 5
+bulletClass 36   pagination分页器内元素的类名。
+ 
+
+bulletActiveClass  19
+ 
+modifierClass  12
+
+currentClass  15
+
+totalClass  14
+
+hiddenClass  7
+
+progressbarFillClass 10
+
+clickableClass  14
+
+mySwiper.pagination.el  9        获取分页器导航的容器元素。
+mySwiper.pagination.bullets  41  获取小点数组
+mySwiper.pagination.render() 19  渲染分页器
+mySwiper.pagination.update() 23  更新分液器
+
+
+Navigation Buttons（前进后退按钮）
+
+navigation112   有时你的按钮不想放在container之内，点击时可能会有蓝色的边框，加上样式outline: none 可以去除。
+nextEl 413  
+prevEl 123  上一个按钮的css选择器或HTML元素。
+
+hideOnClick 67
+disabledClass 18
+hiddenClass  7
+mySwiper.navigation.nextEl 37  
+mySwiper.navigation.prevEl 94
+mySwiper.navigation.update()  37
+
+
+Scollbar（滚动条）
+
+scrollbar  80
+el  321
+hide   130   是否自动隐藏
+draggable   40  设置滚动条长度
+snapOnRelease 68
+
+
+
+dragSize                10
+mySwiper.scrollbar.el   9
+mySwiper.scrollbar.dragEl 10
+mySwiper.scrollbar.updateSize() 28
+
+
+
+
+Keyboard（键盘）
+
+keyboard 150 是否开启键盘控制Swiper切换
+enabled   5
+onlyInViewport  7
+mySwiper.keyboard.enabled 27
+mySwiper.keyboard.enable()  24
+mySwiper.keyboard.disable()  17
+keyPress()   9
+
+
+
+
+
+Mousewheel (鼠标)
+mousewheel  124  开启鼠标滚轮控制Swiper切换
+mySwiper.mousewheel.disable() 173
+
+Lazy Loading(延迟加载)  
+lazy 257  延迟加载默认值，使preloadImages无效
+
+Zoom (调焦)
+zoom  174
+maxRatio50
+
+
+Controller (双向控制)
+controller 179
+control  310
+inverse  6
+
+
+
+Hash Navigation (锚导航)
+
+hashNavigation  280
+watchState     101
+replaceState   111
+
+
+
+
+
+cdn
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.x.x/css/swiper.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.x.x/css/swiper.min.css">
+	 
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.x.x/js/swiper.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.x.x/js/swiper.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.x.x/js/swiper.esm.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.x.x/js/swiper.esm.bundle.js"></script>
+
+
+
+bootcss	
+	<link href="https://cdn.bootcss.com/Swiper/4.4.2/css/swiper.min.css" rel="stylesheet">
+	<script src="https://cdn.bootcss.com/Swiper/4.4.2/js/swiper.min.js"></script>
+
+
+
+
+模板
+		<!DOCTYPE html>
+		<html lang="en">
+		    
+		    <head>
+		        <meta charset="utf-8">
+		        <title>
+		            Swiper demo
+		        </title>
+		        <!-- Link Swiper's CSS -->
+		        <link rel="stylesheet" href="./swiper/css/swiper.min.css">
+		        <link rel="stylesheet" href="./swiper/css/animate.min.css">
+		        <style>
+		        </style>
+		    </head>
+		    
+		    <body>
+		        <!-- Swiper JS -->
+		        <script src="./swiper/js/swiper.min.js">
+		        </script>
+		        <script src="./swiper/js/swiper.animate.min.js">
+		        </script>
+		        <!-- Initialize Swiper -->
+		        <script>
+		            /*
+		    var mySwiper = new Swiper('.swiper-container',{
+		    on:{
+		      init: function(){
+		        swiperAnimateCache(this); //隐藏动画元素 
+		        this.emit('slideChangeTransitionEnd');//在初始化时触发一次slideChangeTransitionEnd事件
+		      }, 
+		      slideChangeTransitionEnd: function(){ 
+		        swiperAnimate(this); //每个slide切换结束时运行当前slide动画
+		        this.slides.eq(this.activeIndex).find('.ani').removeClass('ani');//动画只展示一次
+		      } 
+		    }
+		  });
+		*/
+		            
+		        </script>
+		    </body>
+		
+		</html>
+		
+
+swiper animate 使用方法
+
+	1. 先加载
+		animate.min.css
+		swiper.animate.min.js
+	
+	2. 初始化时隐藏元素并在需要的时刻开始动画。
+		var mySwiper = new Swiper ('.swiper-container', {
+		    on:{
+		      init: function(){
+		        swiperAnimateCache(this); //隐藏动画元素 
+		        swiperAnimate(this); //初始化完成开始动画
+		      }, 
+		      slideChangeTransitionEnd: function(){ 
+		        swiperAnimate(this); 		//每个slide切换结束时也运行当前slide动画
+		        //this.slides.eq(this.activeIndex).find('.ani').removeClass('ani'); 动画只展现一次，去除ani类名
+		      } 
+		    }
+		  }) 
+
+	3. 在需要运动的元素上增加类名ani 和其他的插件类似 需要指定几个参数
+		swiper-animate-effect 切换效果  例如 fadeInUp
+		swiper-animate-duration 持续时间
+		swiper-animate-delay  延迟时间
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+例子： 
+
+断点
+var swiper = new Swiper('.swiper-container', {
+  slidesPerView: 4,
+  spaceBetween: 40,
+ 
+  breakpoints: { 
+    //当宽度小于等于320
+    320: {
+      slidesPerView: 1,
+      spaceBetween: 10
+    },
+   //当宽度小于等于480
+    480: { 
+      slidesPerView: 2,
+      spaceBetween: 20
+    },
+    //当宽度小于等于640
+    640: {
+      slidesPerView: 3,
+      spaceBetween: 30
+    }
+  }
+})
+
+
+
+loopAdditionalSlides  额外添加的个数
+loop模式下会在slides前后复制若干个slide,，前后复制的个数不会大于原总个数。
+默认为0，前后各复制1个。0,1,2 --> 2,0,1,2,0
+例：取值为1，0,1,2 --> 1,2,0,1,2,0,1
+例：取值为2或以上，0,1,2 --> 0,1,2,0,1,2,0,1,2
+
+
+ 

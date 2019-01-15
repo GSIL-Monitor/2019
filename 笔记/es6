@@ -1,0 +1,1982 @@
+
+觉得自己是“知道”的，所以就放过去的
+
+
+/*
+
+
+
+代码单元（code unit）按惯例应翻译为码元
+
+es6 是JavaScript语言的下一代标准
+
+Babel是一个广泛使用的ES6转码器  可以将ES6代码转为ES5代码
+
+
+手册 https://juejin.im/post/5b7b95206fb9a019bd2463d8
+
+
+
+
+
+
+目录
+
+	
+	字符串--
+
+		includes()
+		let const
+	
+	函数--
+		默认参数   default
+		不定参数   rest
+	
+
+	数组-- 
+		for-of
+		创建数组
+		拓展的方法
+		数组缓冲区
+		视图
+		读取与写入数据
+
+
+	对象-- 
+		for-in 
+
+
+	箭头函数   arrow function
+	字符串模板 template string
+	结构赋值   destructuring
+
+	...拓展运算符
+	import导入模块、export导出模块
+	map set--
+	Symbol--
+
+	promise
+	 
+
+	class---
+	迭代---
+	async---
+	
+
+	模块--
+		AMD（异步模块定义）：专为异步浏览器加载而设计
+		CommonJS：设计用于从文件系统与Node同步加载
+	
+	代理--
+	proxy
+	Reflect
+
+
+
+
+
+
+
+
+
+
+/**/
+
+
+字符串-------------------------------------------------------------------------------------------------
+
+	let 声明的变量拥有自己的块级作用域，且修复了var声明变量带来的变量提升问题。
+	
+		不存在变量提升
+		暂时性死区
+		不允许重复声明
+	
+	为什么需要块级作用域	
+		内层变量可能会覆盖外层变量。 变量提升覆盖了外层同名变量
+		循环变量泄露为全局变量
+	
+	
+	for(let i = 0; i<3; i++){ //这里的i 和循环体内的i在各自作用域
+		let i = "abc";
+		console.log(i)
+	}
+	
+	
+	    const 不能用在for循环里
+	
+		let const 能够在 for-in 与 for-of 循环内工作 因为循环为每次迭代创建了一个新的变量绑定  而不是试图去修改已经绑定的变量的值
+	
+	
+	
+	
+	
+	
+	
+	在 ES6 之前， JS 的字符串以 16 位字符编码（ UCS-2 ）为基础
+	
+	码元 
+		代码单元
+		每个 16 位序列都是一个码元（ code unit ），用于表示一个字符
+	
+	UTF-16 代码点
+		全球唯一标识符被称为代码点（ code points ），是从 0 开始的简单数字  用一个数字来对应一个字符  代码点可以由多个码元组成
+	
+		65536表示单个16位码元      范围   多语言基本平面 <  65536 < 拓展平面      
+		
+		字符串内的任意单个字符都可以用一个码元（共 16 位）或两个码元（共 32 位）来表示，前者对应基本平面字符，而后者对应扩展平面字符    
+	
+	
+	
+	
+	var s = 'The';
+	s.charAt(1)  // h
+	
+	String.fromCharCode(65,66,67)  //"ABC"
+	
+	String.fromCodePoint(65, 90);   // "AZ"
+	
+	
+	
+	正则表达式 u 标志
+	
+	 	当一个正则表达式设置了 u 标志时，它的工作模式将切换到针对字符，而不是针对码元 
+	
+	
+	
+	
+	                   
+	string.indexOf(searchvalue,start)
+	
+	includes() 包含    
+	startsWith() 开始 
+	endsWith() 结束   方法会将字符串长度减去该参数，
+	repeat(3) 重复3次
+	.toFixed(2) //保留两位小数
+	
+	padStart() padEnd() 
+	接受两个参数
+	 	1.字符串的最小长度， 
+	 	2.用来补全的字符串 省略第二个参数，默认使用空格补全长度。 
+	
+		'zhangxinxu'.padStart(15, false); 
+		第二个参数可以是 false null []  {}
+			 
+		'zhangxinxu'.padStart(15, {});
+		// 结果是'[objezhangxinxu'，只显示了'[object Object]'前5个字符
+		
+		例子
+		var month = String(new Date().getMonth() + 1).padStart(2, '0');    // 结果是'07'
+	
+	字符串模板 template string	
+		/*
+		
+		
+		
+		var message = "Multiline \
+		string";
+		console.log(message); // "Multiline string
+		反斜线被视为续延符号而不是新行的符号
+		
+		
+		
+		字符串模板  插入html到文档中  
+			传统写法
+				$("#result").append(
+				  "There are <b>" + basket.count + "</b> " +
+				  "items in your basket, " +
+				  "<em>" + basket.onSale +
+				  "</em> are on sale!"
+				);
+				
+			
+			es6的写法  用`反引号标识起始   用${}引用变量  保留原格式
+				$("#result").append(`
+				  There are <b>${basket.count}</b> items
+				   in your basket, <em>${basket.onSale}</em>
+				  are on sale!
+				`);
+			
+			 不做解析 保留格式
+				const template = `<div>
+				<span>hello world</span>     
+				</div>`; 
+		
+			模版字符串 调用函数
+				function string(){
+				    return "zzw likes es6!";
+				}
+				console.log(`你想说什么?
+				            嗯，${string()}`);
+			
+		
+		标签模板
+		标签模板 是函数调用的一种特殊形式  标签值的就是 函数 紧跟在后面的模板字符串就是他的参数
+		如果模板字符串中有变量  会将模板字符串先处理成多个参数 在调用函数
+		
+		function message(literals, value1, value2) {
+		    console.log(literals); // [ "", ", I am ", "" ]
+		    console.log(value1); // Hi
+		    console.log(value2); // Kevin
+		}	
+		let x = 'Hi', y = 'Kevin';
+		var res = message`${x}, I am ${y}`;
+		console.log(res);
+		
+		
+		
+		例子：
+		
+		一秒打印一次 时分秒
+		setInterval(() => {
+		        const now = new Date()
+		        const hours = now.getHours().toString()
+		        const minutes = now.getMinutes().toString()
+		        const seconds = now.getSeconds().toString()
+		        console.log(`${hours.padStart(2, 0)}:${minutes.padStart(2, 0)}:${seconds.padStart(2, 0)}`)
+		    }, 1000)
+		
+		
+		
+		生成函数
+			let str="return"+"`Hello! ${name}`";
+		    let func=new Function("name",str);  //形参  函数
+		    console.log(func("zzw")); //实参
+		
+			let str = '(name) => `Hello ${name}!`';
+			let func = eval.call(null, str);
+			func('Jack') // "Hello Jack!"
+		
+		function my (strings) { console.log(strings) } 
+		my`test`;
+		
+		
+		
+		
+		
+		
+		
+		*/
+			
+	
+	
+
+
+函数---------------------------------------------------------------------------------------------
+
+     function action(num) {
+        num = num || 200
+        //当传入num时，num为传入的值
+        //当没传入参数时，num即有了默认值200
+        return num
+    }
+
+
+参数的默认值不允许访问在函数体内部声明的任意变量
+
+默认值   
+	function foo(num=200){
+		return num;
+	}      
+
+例子
+function getvalue(value){
+	return value + 5;
+}
+function add(first,second = getvalue(first)){
+	return first + second;
+}
+add(1,1);  //2
+add(1);    //7
+
+
+
+rest 
+
+rest 和 arguments 对象的区别
+	1. rest参数只包含哪些没有对应形参的实参 arguments包含传给函数的所有实参
+	2.arguments不是数组   rest是Array的实例 可以直接使用数组的方法 slice pop shift
+	3.arguments对象还有一些附加的属性 （如callee属性）
+
+
+
+函数构造器的增强能力
+	
+	var add = new Function("first", "second", "return first + second");//它们就是目标函数的 参数与函数体	
+	var add = new Function("first", "second = first","return first + second");//默认参数
+	var pickFirst = new Function("...args", "return args[0]");
+	console.log(add(1, 1)); // 2
+
+
+new.target  地判断函数是否被使用new 进行了调用
+
+箭头函数  没有 new arguments prototype
+var getTempItem = id => ({ id: id, name: "Temp" }); //括号内是一个对象字面量而不是函数体
+立即调用函数 只能用这种 (() => {/*函数体*/})();
+
+
+
+
+
+
+
+
+数组----------------------------------------------------------------------------------------------
+
+for-of 
+优点：
+	1.最简洁的遍历数组元素语法 避开了for-in的所有缺陷
+	2.与foreach不同的是 可以正确响应 break continue  return 
+	3.支持  数组  类数组  nodelist 字符串  map set 
+
+
+创建数组 
+	Array.of  将参数中所有值作为元素形成数组。
+	
+		const a = new Array(2)   //[空，空]
+		const c = Array.of(2)    //[2]
+		const d = Array.of("2")  //["2"]
+		
+	
+	Array.from() 
+		Array.from(arrayLike[, mapFn[, thisArg]]) 是将类数组 可迭代对象 转换成数组。
+		
+		arrayLike	
+			function test(a, b) {
+			  let arr = Array.from(arguments)
+			  console.log(arr)
+			}
+			test(1, 2) //[1, 2]
+
+			空值换成undefined
+			console.log(Array.from([1, , 3])); // [1, undefined, 3]
+		
+		mapFn 映射转换  对每一个元素进行操作 
+		
+			console.log(Array.from([1, 2, 3], (n) => n * 2)); // [2, 4, 6]
+		
+		thisArg  用于指定 map 函数执行时的 this 对象
+			let map = {
+			    do: function(n) {
+			        return n * 2;
+			    }
+			}
+			let arrayLike = [1, 2, 3];
+			console.log(Array.from(arrayLike, function (n){return this.do(n);}, map)); 
+			//[2, 4, 6]
+
+转换可迭代对象
+
+	转换map
+		let map = new Map();
+		map.set('key0', 'value0');
+		map.set('key1', 'value1');
+		console.log(Array.from(map)); // [['key0', 'value0'],['key1','value1']]
+	
+	转换set
+		let arr = [1, 2, 2, 3, 3];
+		let set = new Set(arr);
+		console.log(Array.from(set)); // [1, 2, 3]
+	
+	转换字符串
+		let str = 'abc';
+		console.log(Array.from(str)); // ["a", "b", "c"]
+	
+
+拓展的方法
+
+查找
+	find()
+		找出第一个符合条件的数组成员。
+		
+		const arr = [1, "2", 3, 3, "2"]
+		console.log(arr.find(n => typeof n === "number")) // 1
+		
+		[1, 4, -5, 10].find((n) => n < 0) //-5
+	
+	
+	findindex(callback[, thisArg])   
+		符合条件的第一个元素 返回他的下标
+		const arr = [1, "2", 3, 3, "2"]
+		console.log(arr.findIndex(n => typeof n === "number")) // 0
+
+
+
+填充
+	fill(value, start, end)
+		let arr = Array.of(1, 2, 3, 4);
+		// 参数1：用来填充的值
+		// 参数2：被填充的起始索引
+		// 参数3(可选)：被填充的结束索引 不包括  默认为数组末尾 
+		console.log(arr.fill(0,1,3)); //  [1, 0, 0, 4]
+	
+		const arr = [1, 2, 3]
+		console.log(arr.fill(4)) // [4, 4, 4] 不指定开始和结束，全部替换
+		
+		const arr1 = [1, 2, 3]
+		console.log(arr1.fill(4, 1)) // [1, 4, 4] 指定开始位置，从开始位置全部替换
+		
+		const arr2 = [1, 2, 3]
+		console.log(arr2.fill(4, 0, 2)) // [4, 4, 3] 指定开始和结束位置，替换当前范围的元素
+	
+	copyWithin()方法总是会一直复制到数组末尾
+	
+		将数组的前两个元素复制到数组的最后两个位置
+		let numbers = [1, 2, 3, 4];
+		// 从索引 2 的位置开始粘贴
+		// 从数组索引 0 的位置开始复制数据
+		console.log(numbers.copyWithin(2, 0));  // [1, 2, 1, 2]
+
+ 
+
+遍历
+	entries() 遍历 数组键值对
+		for(let [key, value] of ['a', 'b'].entries()){
+		    console.log(key, value);
+		}
+		// 0 "a"
+		// 1 "b"
+		
+	
+	key() 遍历 数组键
+		for(let key of ['a', 'b'].keys()){
+		    console.log(key);
+		}
+		// 0
+		// 1
+	
+	
+	value() 遍历 数组值
+		for(let value of ['a', 'b'].values()){
+		    console.log(value);
+		}
+		// "a"
+		// "b"
+		 
+		// 数组含空位
+		console.log([...[,'a'].values()]); // [undefined, "a"]
+
+
+
+包含
+	includes() 数组是否包含指定值
+		// 参数1：包含的指定值
+		[1, 2, 3].includes(1);    // true
+		 
+		// 参数2：可选，搜索的起始索引，默认为0
+		[1, 2, 3].includes(1, 2); // false
+		 
+		// NaN 的包含判断
+		[1, NaN, 3].includes(NaN); // true
+	
+
+扁平
+flat()
+	[1, 2, [3, 4]].flat()
+	// [1, 2, 3, 4]
+	
+	自动跳过空位
+	[1, 2, , 4, 5].flat()
+	// [1, 2, 4, 5]
+
+flatMap()
+	先对数组中每个元素进行了的处理，再对数组执行 flat() 方法。
+
+
+
+数组空位
+ 	空位不是undefined  空位是没有任何值
+
+
+
+类型化数组 
+	类型化数组是有特殊用途的数组，被设计用来处理数值类型数据  其设计概念是：单个数值可以被视为由“位”构成的数组
+	设计用于配合网页上的 <canvas> 元素  快速的按位运算能力
+	所有的类型化数组都基于数组缓冲区
+
+	数值数据类型  使用 64 位来存储一个数值的浮点数表示形式
+	
+	1. 8 位有符号整数（int8）
+	2. 8 位无符号整数（uint8）
+	3. 16 位有符号整数（int16）
+	4. 16 位无符号整数（uint16）
+	
+	5. 32 位有符号整数（int32）
+	6. 32 位无符号整数（uint32）
+	7. 32 位浮点数（float32）
+	8. 64 位浮点数（float64）
+
+
+
+
+
+数组缓冲区
+	内存中的一段地址
+	定型数组的基础  只能修改数据 不能修改大小
+	
+
+	创建数组缓冲区
+		let buffer = new ArrayBuffer(10);
+		console.log(buffer.bytelength) //10
+
+	分割
+		let buffer1 = buffer.slice(1, 3);
+		console.log(buffer1.byteLength); // 2
+
+
+视图 
+	用来操作内存的接口
+	使用视图操作数组缓冲区 读写数据
+	DataView 类型是一种通用的数组缓冲区视图,其支持所有8种数值型数据类型。
+
+
+	let buffer = new ArrayBuffer(10),  //数组缓冲区
+	view = new DataView(buffer);       //通用视图
+	
+
+获取视图信息
+
+	let buffer = new ArrayBuffer(10),
+		view1 = new DataView(buffer),           //包含所有字节
+		view2 = new DataView(buffer, 5, 2);     //三个参数 绑定的缓冲区 起始位置 bytelength  包含位置 5 与位置 6 的字节    
+	console.log(view2.byteOffset); // 5
+	console.log(view2.byteLength); // 2
+	
+
+
+读取与写入数据
+
+let buffer = new ArrayBuffer(2),
+view = new DataView(buffer);
+view.setInt8(0, 5);
+view.setInt8(1, -1);
+console.log(view.getInt8(0)); // 5
+console.log(view.getInt8(1)); // -1
+
+每个 setInt8() 操作对缓冲区造成的变化
+	new ArrayBuffer(2)   //0000000000000000
+	view.setInt8(0, 5);  //0000010100000000
+	view.setInt8(1, -1); //0000010111111111
+
+
+
+
+类型化数组即为视图
+	类型化数组实际上也是针对数组缓冲区的特定类型视图
+
+	定型数组
+		数组缓冲区特定类型的视图 
+
+	创建特定类型视图
+		let buffer = new ArrayBuffer(10),
+		view1 = new Int8Array(buffer),
+
+
+类型化数组与常规数组 
+
+	相似点
+		都有length属性 
+		相同的迭代器 entries()  keys()  value()
+		都可以使用 of() 与 from()
+	
+	区别：
+		类型化数组并不是从 Array 对象派生的
+			let ints = new Int16Array([25, 50]);
+			console.log(ints instanceof Array); // false
+			console.log(Array.isArray(ints)); // false
+		
+		返回值会是某种类型化数组
+		不接受字符串  只接受数字
+
+附加方法	
+	subarray() 方法则是将当前类型化数组的一部分提取为新的类型化数组。
+
+	let ints = new Int16Array([25, 50, 75, 100]),
+		subints3 = ints.subarray(1, 3);
+	console.log(subints3.toString()); // 50,75
+
+
+
+对象--------------------------------------------------------------------------------------------------- 
+for-in 循环遍历对象属性  不适用数组
+
+for (var index in myArray) { // 千万别这样做 
+
+ console.log(myArray[index]);
+}
+//赋值给 index的是字符串012 不是数字012  “2” + 1 == “21”
+
+属性简写
+	允许属性直接写变量名 
+	const age = 12;
+	const name = "tom"
+	const person = {age,name} //这里是变量名
+
+方法简写  
+	省略function
+	sayHi:function(){
+	    console.log("Hi");
+	  }
+	
+	sayHi(){console.log("Hi");}
+
+
+
+需计算属性名
+var suffix = " name";
+var person = {
+	["first"+suffix]:"abc",
+	["last"+suffix]:"123"	
+}
+console.log(person["first name"]);  //"abc"
+console.log(person["last name"]);   //"123"
+
+
+Object.is(+0, -0)  //false
+Object.is(NaN,NaN) //true  类型相同并且值也相等
+
+
+Object.assign()  
+混入（mixin 迷信）是js中组合对象时最流行的模式  在一次混入中
+一个对象会从另一个对象中接受属性和方法  返回一个新对象
+
+
+	let target = {a:1}
+	let obj1 = {b:2}
+	let obj2 = {c:3}
+	Object.assign(target, obj1, obj2);  //第一个参数是目标对象 后面的参数是源对象
+	{a: 1, b: 2, c: 3}
+	注意点：
+	1. null undefined 不能作为目标对象 会报错   可以作为源对象 会跳过  不会报错
+	2. assign是浅拷贝  如果属性值为对象时，仅复制其引用
+	3. 同名属性替换  
+	4. 会将数组处理成对象  Object.assign([2,3], [5]);  // [5,3]     会将[2,3] 转为 {0:2,1:3} 然后同名属性替换
+
+无需继承 直接合并
+	function assign1(rec, sup){
+		Object.keys(sup).forEach(function(key){
+			rec[key] = sup[key]
+		});
+		return rec
+	}
+	
+
+
+	function EventTarget(){}
+	EventTarget.prototype = {
+		constructor:EventTarget,
+		emit:function(){},
+		on:function(){}
+	};
+	var my ={};
+	assign1(my, EventTarget.prototype);
+	my.emit("somethingChanged")
+	
+
+	getOwnPropertyDescriptor()// 获取自身属性对应的属性描述符
+	getOwnPropertyNames()  //获取自身属性名的数组 包括不可枚举 不包括symbol
+
+
+属性的枚举顺序
+	const state = {
+      id: 1,
+      5: 5,
+      name: "eryue",
+      3: 3
+    }
+    
+    Object.getOwnPropertyNames(state) 
+    //["3","5","id","name"] 枚举key
+
+    Object.assign(state, null)
+    //{"3":3,"5":5,"id":1,"name":"eryue"} 
+
+设置原型
+	Object.setPrototypeOf(obj, prototype)
+
+super
+	指向当前 对象原型 的指针  也就是 Object.getPrototypeOf(this) 的值
+	
+	let person = {
+		getGreeting() {
+		return "Hello";
+		}
+	};
+	
+	let friend = {
+		getGreeting(){
+			// 这相当于 
+			// Object.getPrototypeOf(this).getGreeting.call(this)
+			return super.getGreeting()
+		}
+	}
+	Object.setPrototypeOf(friend, person)
+	friend.getGreeting() //"hello"
+
+
+
+
+
+
+
+结构赋值   destructuring
+
+	数组解构
+	
+		基本
+		let [a,b,c] = [1,2,3]
+		
+		可嵌套
+		let [a,[[b],c]] = [1,[[2],3]]
+		
+		可忽略
+		let [a, ,b] = [1,2,3]
+		
+		不完全解构
+		let [a=1,b] = [] //a=1, b=undefined
+		
+		剩余运算符
+		let [a,...b] = [1,2,3] //a=1 b=[2,3]
+		
+		字符串
+		let [a, b, c, d, e] = 'hello';
+		
+		默认值
+		let [a = 3, b = a] = [];     // a = 3, b = 3
+		let [a = 3, b = a] = [1];    // a = 1, b = 1
+		let [a = 3, b = a] = [1, 2]; // a = 1, b = 2
+		
+		
+	
+	对象解构
+	
+	
+		不同的本地变量名 
+		
+			let node = {
+				type:"str",
+				name:"foo"
+			};
+			let {type:localtype, name:localname} = node ;
+			console.log(localtype);
+			console.log(localname);
+			
+			//type: localType 这种语法表示要读取名为 type的属性 并把他的值存储到localtype中
+			//let { type: localType, name: localName = "bar" } = node;  添加默认值
+		
+		
+		嵌套对象解构
+			对象的属性可能还是一个对象
+		
+		
+		let node = {
+			type:"str",
+			name:"foo",
+			loc:{
+				start:{
+					line:1,
+					column:1
+				},
+				end:{
+					line:1,
+					column:4
+				}
+			}
+		};
+		
+		let {loc:{start}} = node;
+		start.line;
+		start.column;
+		
+		// loc:{start} 表示到node对象的 loc属性的内部去寻找 start属性
+		
+		//检查的位置：赋值的目标
+		//每当 冒号在解构赋值中出现  冒号的左边表示需要检查的位置  冒号的右侧是赋值的目标 如果右侧是{} 表示目标嵌套在对象的更深一层中
+	
+	
+	参数解构  场景 cookies
+	
+
+
+
+...拓展运算符   
+	把一个数组转化为用逗号分隔的参数序列
+	
+		const color = ['red', 'blue', 'white'];
+		console.log(...color); //red blue white
+	
+	合并数组
+		var arr1 = ['a', 'b'];
+		var arr2 = ['c'];
+		var arr3 = ['d', 'e'];
+		[...arr1, ...arr2, ...arr3]
+		//["a", "b", "c", "d", "e"]
+	合并对象
+		let age = {age: 15};
+		let name = {name: "Amy"};
+		let person = {...age, ...name};
+
+
+
+
+
+
+
+map set--
+	Maps类似Object，更适合KV结构
+	Sets类似Array，但是不允许有重复值
+	
+	一个 Object 的键只能是字符串或者 Symbols，但一个 Map 的键可以是任意值。
+	
+
+
+	查找对应成绩             键       值
+		var m = new Map([['Michael', 95], ['Bob', 75], ['Tracy', 85]]);
+		m.get('Michael'); // 95
+	
+	
+	var m = new Map(); // 空Map
+	m.set('Adam', 67); // 添加新的key-value
+	m.set('Bob', 59);
+	m.has('Adam'); // 是否存在key 'Adam': true
+	m.get('Adam'); // 67
+	m.delete('Adam'); // 删除key 'Adam'
+	m.get('Adam'); // undefined
+	
+	
+	
+	数组去重
+	
+	var mySet = new Set([1, 2, 3, 4, 4]);
+	[...mySet]; // [1, 2, 3, 4]
+	并集
+	
+	var a = new Set([1, 2, 3]);
+	var b = new Set([4, 3, 2]);
+	var union = new Set([...a, ...b]); // {1, 2, 3, 4}
+	交集
+	
+	var a = new Set([1, 2, 3]);
+	var b = new Set([4, 3, 2]);
+	var intersect = new Set([...a].filter(x => b.has(x))); // {2, 3}
+	差集
+	
+	var a = new Set([1, 2, 3]);
+	var b = new Set([4, 3, 2]);
+	var difference = new Set([...a].filter(x => !b.has(x))); // {1}
+	
+	
+
+
+Symbol-- 
+
+新的基本类型 符号   起初被设计用于创建对象私有成员
+
+ 所有Symbol()生成的值都是独一无二的，可以从根本上解决对象属性太多导致属性名冲突覆盖的问题
+
+
+语法
+Symbol([description]) //description是可选的
+
+// 设置对象属性只读。
+Object.defineProperty(obj, name, {writable: false})
+
+// 创建一个 symbol 并放入 Symbol 注册表，key 为 "foo"
+var globalSym = Symbol.for("foo"); 
+Symbol.keyFor(globalSym); // "foo"
+
+// 创建一个 symbol，但不放入 symbol 注册表中
+var localSym = Symbol(); 
+Symbol.keyFor(localSym); // undefined，所以是找不到 key 的
+
+
+场景：
+作为属性名
+
+	let sy = Symbol("key1")
+	
+	
+	写法一：
+		let syobj = {};
+		syobj[sy] = "kk"; //只能用[] 不能用点.
+		console.log(syobj) //{Symbol(key1): "kk"}
+	
+	写法二：
+		let syobj ={
+			[sy]:"kk"
+		};
+		console.log(syobj)
+		
+Object.getOwnPropertySymbols(syObject);    // [Symbol(key1)]
+
+
+
+
+
+promise 
+
+
+
+
+ 
+
+
+事件回调
+
+	在事件后面添加一个回调函数  事件执行完毕 触发回调函数  返回结果
+
+发布订阅
+	是对事件回调的拆解和拓展  提供回调函数(订阅)  可以选择任意时刻触发回调（发布）
+
+
+异步
+	一端完整的任务A 执行到一半  暂停  去执行另一任务B 完成后再回到断点处 继续执行A
+
+
+
+
+先理解js事件循环机制 promise属于微任务   settimeout属于宏任务
+
+
+
+
+Promise 是异步编程的一种解决方案。
+
+
+
+
+
+
+
+class---
+
+es5中仿类结构
+	创建一个构造器，然后将方法指派到  该构造器的原型上。这种方式通常被称为创建一个自定义类型
+
+
+
+
+类定义 
+	匿名类
+	let example = class{
+		constructor(a){
+			this.a = a;
+		}
+	}
+
+	命名类
+	let example = class example{
+		constructor(a){
+			this.a = a;
+		}
+	}
+
+类声明   
+	不可重复声明。
+	class example {  
+		constructor(a){
+		this.a = a;
+		}
+	}
+
+类属性 
+
+	example.prototype={
+		//methods
+	}
+
+	原型属性中添加方法 
+		Object.assign(example.prototype,{//methods})
+	
+	静态属性
+	
+		class Example {
+		// 新提案
+		    static a = 2;
+		}
+		// 目前可行写法
+		Example.b = 2;
+	
+	公共属性
+		class example{}
+		example.prototype.a = "abc";
+	
+	name 属性
+		let example = class myname{
+			constructor(a){
+				this.a = a;
+			}
+		}
+		console.log(example.name) // myname   返回class后面的类名
+	
+		let Example=class {
+		    constructor(a) {
+		        this.a = a;
+		    }
+		}
+		console.log(Example.name); // Example
+	
+
+
+类方法
+
+	constructor方法  默认方法   创建类的实例化对象时被调用
+		class example{
+			constructor(){
+				console.log("hello")
+			}
+		}
+		new example();
+	
+	返回对象 
+		class Test {
+		    constructor(){
+		        // 默认返回实例对象 this
+	
+		    }
+		}
+		console.log(new Test() instanceof Test); // true
+	
+	静态方法 
+		class example{
+			static sum(a,b){
+				console.log(a+b);
+			}
+		}
+	
+		example.sum(1, 2); // 3
+	
+	原型方法
+		class example {
+			sum(a,b){
+				console.log(a+b)
+			}
+		}
+		let exa = new example();
+		exa.sum(1,2)
+	
+	实例方法
+		class example{
+			constructor(){
+				this.sum = (a,b) =>{console.log(a+b)}
+			}
+		}
+		let a = new example();
+		a.sum(1,2)
+	
+	this指向
+		类的方法内部如果含有this，它默认指向类的实例
+
+
+	
+
+类的实例化
+	必须通过 new 关键字。
+
+
+
+es5 
+	function PersonType(name) {
+	    this.name = name;
+	    }
+	PersonType.prototype.sayName = function() {
+	    console.log(this.name);
+	    };
+	let person = new PersonType("Nicholas");
+	
+	person.sayName(); // 输出 "Nicholas"
+	console.log(person instanceof PersonType); // true
+	console.log(person instanceof Object); // true
+
+
+es6
+
+	class personclass{  
+		//等价于persontype构造器  
+		constructor(name){
+			this.name = name;
+		}
+		//等价于 persontype.prototype.sayname 
+		sayname(){
+			console.log(this.name)
+		}
+	}
+	let person = new personclass("sky")
+	person.sayname();
+
+
+
+
+区别：
+	没有提升  运行在严格模式下
+	类的所有方法不可枚举   所有方法没有[[construct]] 因此使用new调用方法会抛出错误
+	调用构造器不使用new 会抛出错误
+
+
+
+一级公民的类
+	能被当作值来使用 就是一级公民 
+	类可以是参数  函数的返回值  能用来给变量赋值
+
+	function createobject(classdef){
+		return new classdef();
+	}
+	let obj  = createobject(class{
+		sayhi(){
+			console.log("hi");
+		}
+	})
+	obj.sayhi();
+	
+
+单例
+	是指在一个类只能有一个实例，即使多次实例化该类，也只返回第一次实例化后的实例对象。单例模式不仅能减少不必要的内存开销, 并且在减少全局的函数和变量冲突也具有重要的意义
+
+
+	let person = new class{
+		constructor(name){
+			this.name = name;
+		}
+		sayname(){
+			console.log(this.name);
+		}
+	}("sea");
+	person.sayname();
+	
+
+	保证一个类仅有一个实例 修改该实例， 会影响到其它的实例引用。
+	
+		class Singleton {
+		    constructor(data) {
+		        if (Singleton.prototype.Instance === undefined) {
+		            this.data = data;
+		            Singleton.prototype.Instance = this;
+		        }
+		        return Singleton.prototype.Instance;
+		    }
+		}
+		
+		let ob1 = new Singleton("one");
+		let ob2 = new Singleton("two");
+		let ob3 = new Singleton("Three");
+		
+		
+		console.log(ob1 === ob2);  // => true
+		console.log(ob1 === ob3);  // => true
+		
+		ob3.init = 'Object flg';
+		console.log(ob1);
+		/* => 
+		{
+		  data:"one",
+		  init:"Object flg",
+		  __proto__:Object
+		}
+		*/
+		
+	
+
+
+
+访问器属性
+
+get set  拦截该属性的存取行为。
+
+	var log = ['test'];
+	var obj = {
+	  get latest () {
+	    if (log.length == 0) return undefined;
+	    return log[log.length - 1]
+	  }
+	}
+	console.log (obj.latest); // Will return "test".
+
+	使用defineProperty在存在的对象上定义 getter
+	
+		var o = { a:0 }
+		Object.defineProperty(o, "b", { get: function () { return this.a + 1; } });
+		console.log(o.b) // Runs the getter, which yields a + 1 (which is 1)
+
+ 
+需要计算的成员名
+
+	可计算成员是指使用方括号包裹一个表达式，如下面定义了一个变量m，然后使用[m]设置为类A的原型方法
+	let m = "sayname"
+	class A {
+		constructor(name){
+			this.name= name;
+		}
+	
+		[m]() {
+			return this.name;
+		}
+	}
+	let a = new A("sea");
+	console.log(a.sayname())
+
+
+访问器+计算属性名	
+	let methodName ='sayName';
+	let propertyName = 'name';
+	
+	class PersonClass{
+	    constructor(name){
+	        this.name = name;
+	    }
+	    get [propertyName](){
+	        return name;
+	    }
+	    set [propertyName](value){
+	        name = value;
+	    }
+	    [methodName](){
+	        return console.log(this.name);
+	    }
+	}
+	let person = new PersonClass('hello world');
+	person.sayName(); //hello world
+	console.log(person.name); //hello world
+	
+
+
+
+
+生成器方法
+	class A{
+		*print_id(){
+			yield 1;
+			yield 2;
+			yield 3;
+		}
+	}
+	let a = new A();
+	a.print_id().next()
+	
+静态成员
+
+静态成员是指在方法名或属性名前面加上static关键字，和普通方法不一样的是，
+static修饰的方法不能在实例中访问，只能在类中直接访问
+
+class A{
+	constructor(name){
+		this.name = name;
+	}
+	static create(name){
+		return new A(name)
+	}
+}
+let a = A.create("sea")
+console.log(a.name)
+
+let t = new A() //静态方法不能复制给t
+console.log(t.create("sea")) // 报错
+
+es5 静态成员
+
+	function persontype(name){
+		this.name = name;
+	
+	}
+	//静态方法
+	persontype.create = function(name){
+		return new persontype(name);
+	}
+	
+	//实例方法
+	persontype.prototype.sayname = function(){
+		console.log(this.name);
+	}
+	var person = persontype.create("sea");
+	
+
+es6 静态方法
+class personclass{
+	//等价于persontype构造器
+	constructor(name){
+		this.name = name;
+	}
+	
+	//等价于 实例方法
+	sayname() {
+		console.log(this.name);
+	}
+
+	//等价于 persontype.create
+	static create(name){
+		return new personclass(name);
+	}
+}
+let person = personclass.create("sea")
+
+
+
+
+继承
+
+	super使用的几点要求：
+	
+		1、只可以在派生类中使用super
+	
+		2、在构造函数中访问this之前要调用super()，负责初始化this。
+	
+	class A {
+	  constructor() {
+	    console.log(new.target.name);
+	  }
+	}
+	class B extends A {
+	  constructor() {
+	    super();
+	  }
+	}
+	new A() // A
+	new B() // B
+	
+	
+	
+	
+	class Rec{
+	    constructor(width,height){
+	        this.width = width;
+	        this.height = height;
+	    }
+	
+	    getArea(){
+	        return this.width*this.height;
+	    }
+	
+	}
+	
+	class Square extends Rec{
+	    constructor(width,height){
+	        super(width,height);
+	    }
+	
+	}
+	
+	let square = new Square(100,100);
+	console.log(square.getArea()); //10000
+
+
+	继承静态成员
+	
+	父类中的静态成员，也可以继承到派生类中
+	静态成员只能通过类名进行访问，而不是使用对象实例进行访问
+	
+		class Rectangle {
+		    constructor(length, width) {
+		        this.length = length;
+		        this.width = width;
+		    }
+		    getArea() {
+		        return this.length * this.width;
+		    }
+		    static create(length, width) {
+		        return new Rectangle(length, width);
+		    }
+		}
+		class Square extends Rectangle {
+		    constructor(length) {
+		        super(length, length);
+		    }
+		}
+		var rect = Square.create(3, 4);
+		console.log(rect instanceof Rectangle); // true
+		console.log(rect instanceof Square); // false
+		
+	
+	屏蔽类方法
+	
+		派生类中有基类方法 会覆盖基类方法  或者说重写基类方法
+		
+		class Component {
+		  constructor([a, b] = props) {
+		    this.a = a
+		    this.b = b
+		  }
+		  //父类的add方法，求和
+		  add() {
+		    return this.a + this.b
+		  }
+		}
+		
+		class T extends Component {
+		  constructor(props) {
+		    super(props)
+		  }
+		  //重写add方法，求积
+		  add() {
+		    return this.a * this.b
+		  }
+		}
+		let t = new T([2, 3])
+		console.log(t.add()) // 6
+	
+	
+	
+	
+	
+	
+	
+	
+	派生自表达式的类
+	 	就是指父类可以是一个表达式。
+	
+		let A_mixin = {
+			A() {
+				return json.stringify(this);
+			}
+		};
+		
+		let B_mixin = {
+			B() {
+				return this.length * this.width;
+			}
+		};
+		
+		function mixin(...mixins){
+			var base = function(){};
+			Object.assign(base.prototype, ...mixins)
+			return base;
+		}
+		class square extends mixin(A_mixin, B_mixin){
+			constructor(length) {
+				super();
+				this.length = length;
+				this.width = length;
+			}
+		}
+		var x = new square(3);
+		console.log(x.B()); // 9
+		console.log(x.A()); // "{"length":3,"width":3}
+		
+	
+	继承内置对象
+		class MyArray extends Array {
+		// 空代码块
+		}
+		var colors = new MyArray();
+		colors[0] = "red";
+		console.log(colors.length); // 1
+		colors.length = 0;
+		console.log(colors[0]); // undefined
+		
+	
+	
+	
+	Symbol.species属性
+	没有用到
+	
+	
+	
+	new.target
+	
+		new.target通常表示当前的构造函数名。通常我们使用new.target来阻止直接实例化基类
+		class A {
+			constructor() {
+				//如果当前的new.target为a类 就抛出异常
+				if(new.target === A) {
+					throw new Error("错误^.^")
+				}
+			}
+		}
+		let a = new A();
+		console.log(a)
+	
+
+
+
+迭代---
+Iterator 迭代器 是一个对象。
+	迭代过程：
+		1. 通过 Symbol.iterator 创建一个迭代器 指向当前数组结构的起始位置
+		2. 通过 next() 向下迭代 指向下一个位置
+		3. 当 done 为true时 遍历结束
+	
+	例子
+		const items = [1,2,3]
+		const it = items[Symbol.iterator]();
+		 
+		it.next();
+		>{value: 1, done: false}
+		
+	
+	var a = "🙈🙉🙊🐵🐒🐶🐕🐩🐺🐱😺😸😹😻😼😽🙀😿😾🐈🐯🐅🐆🐴🐎🐮🐂🐃🐄🐷🐖🐗🐽🐏🐑🐐🐪🐫🐘🐭🐁🐀🐹🐰🐇🐻🐨🐼🐾🐔🐓🐣🐤🐥🐦🐧🐸🐊🐢🐍🐲🐉🐳🐋🐬🐟🐠🐡🐙🐚🐌🐛🐜🐝🐞🦋"
+	
+	for-of 用来代替for-in forEach
+	
+		for (let item of [1,2,3]){
+			console.log(item)
+		}
+	
+		const map = new Map();
+		map.set(0, "zero")
+		map.set(1, "one")
+		for (let item of map){
+			console.log(item)
+		}
+		//只遍历map.keys()  或 map.values()
+		for(let key of map.keys()){
+			console.log(key)
+		}
+	
+	
+	es5 实现迭代器
+		function createiterator(items){
+			var i = 0;
+			return {
+				next(){
+					var done = (i >= items.length);
+					var value = !done ? items[i++] : undefined;
+					return{
+						value,
+						done
+					}
+				}
+			}
+		}
+		
+		const a = createiterator([1,2,3])
+		console.log(a.next()); //{value: 1, done: false}
+	
+	
+	for循环中使用迭代器
+	
+		function *createiterator(items){  
+			for (let i=0; i<items.length; i++){
+				yield items[i];
+			}
+		}
+		const a = createiterator([1,2,3]);
+		a.next()
+		
+	
+	
+	generator* 生成器 返回一个迭代器的函数  
+	
+	
+		Generator 函数是一个状态机，封装了多个内部状态。
+		执行 Generator 函数会返回一个遍历器对象，也就是说，Generator 函数除了状态机，还是一个遍历器对象生成函数。
+		返回的遍历器对象，可以依次遍历 Generator 函数内部的每一个状态。 
+		
+		
+		生成器函数表达式
+		
+			let createIterator = function *(items) {  // function后面的* 让函数变成一个生成器
+				for (let i = 0; i < items.length; i++) {
+					yield items[i];
+					}
+				};
+			let iterator = createIterator([1, 2, 3]);
+			console.log(iterator.next());
+			
+		对象中添加生成器函数
+		var o = {
+			*createiterator(items){
+				for (let i=0; i<items.length; i++){
+					yield items[i];
+				}
+			}
+		}
+		let iterator = o.createiterator([1,2,3])
+	
+	
+	创建可迭代对象
+	
+		let o = {
+			items:[1,2,3],
+			*[Symbol.iterator](){
+				for (let item of this.items){
+					yield item;
+				}
+			}
+		}
+		for (let x of o) {
+		console.log(x);
+		}
+	
+	
+	集合的迭代器
+		entries() 返回一个包含键值对的迭代器
+		values()  返回 值 的迭代器
+		keys()    返回 键 的迭代器
+	
+	
+	
+		数组 第一项是数值索引
+			const arr = ['a', 'b', 'c'];
+	   			for(let v of arr.entries()) {
+	   		  	console.log(v)
+	   		}
+	    	// [0, 'a'] [1, 'b'] [2, 'c']
+		
+		map  第一项 是键
+			const arr = new Map();
+	   	    arr.set('a', 'a');
+	   	    arr.set('b', 'b');
+	   	    for(let v of arr.entries()) {
+	   	      console.log(v)
+	   	    }
+	   	    // ['a', 'a'] ['b', 'b']
+		set  第一项是值 因为它的值也会被视为键 
+		
+			const arr = new Set(['a', 'b', 'c']);
+	    	for(let v of arr.keys()) {
+	    	  console.log(v)
+	    	}
+	    	// 'a' 'b' 'c'
+	
+	
+			const arr = new Set(['a', 'b', 'c']);
+	   		for(let v of arr.entries()) {
+	   		  	console.log(v)
+	   		}
+	   		// ['a', 'a'] ['b', 'b'] ['c', 'c']
+	
+	
+	
+		集合的默认迭代器
+			values() 方法是 数组 与 Set 的默认迭代器，
+			entries() 方法则是 Map 的默认迭代器
+		
+		字符串迭代
+			var message = "a b"
+			for (let c of message){
+				console.log(c)
+			}
+		
+		
+		nodelist迭代器
+			var divs = document.getElementsByTagName("div");
+			for (let div of divs) {
+			console.log(div.id);
+			}
+		
+		传递参数给迭代器
+		function *createiterator(){
+			let first = yield 1;
+			let second = yield first + 2;
+			yield second + 3;
+		}
+		let iterator = createiterator();
+		iterator.next();//第一个不接受任何参数
+		iterator.next(4);
+		iterator.next(5);
+		
+		
+		在迭代器中抛出错误  
+			console.log(i.throw(new Error('error'))); // error
+		
+		生成器返回语句  
+			function *createIterator() {
+			      let first = yield 1;
+			      return; //后面的不执行
+			      yield first + 2;
+			    }
+		
+
+		生成器委托  	yield*
+			function * createNumberIterator() {
+			    yield 1;
+			    yield 2;
+			}
+			function * createColorIterator() {
+			    yield "red";
+			    yield "green";
+			}
+			function * createCombinedIterator() {
+			    yield * createNumberIterator();
+			    yield * createColorIterator();
+			    yield true;
+			}
+			var iterator = createCombinedIterator();
+			console.log(iterator.next()); // "{ value: 1, done: false }"
+				
+
+
+async---
+
+它就是 Generator 函数的语法糖。
+
+https://segmentfault.com/a/1190000007535316
+ 软件开发流程 http://blog.51cto.com/cloumn/blog/390
+
+
+
+
+
+
+
+
+
+
+
+
+模块--
+
+	CommonJS模块输出的是一个值的拷贝，ES6模块输出的是值的引用。
+	CommonJS模块是运行时加载，ES6模块是编译时输出接口
+	
+	每一个模块只加载一次（是单例的）
+	
+	何为模块
+		模块的顶级作用域的变量 不会自动添加到共享的全局作用域   
+		模块顶级作用域 的this  值为 undefined 
+		模块的真实力量是按需导出与导入代码的能力
+	
+	基本的导出
+		使用 export 关键字将已发布代码部分公开给其他模块
+		任意没有被显式导出的变量、函数或类都会在模块内保持私有
+		
+		// 导出数据
+		export var color = "red";
+		
+		// 导出函数
+		export function sum(num1, num2) {return num1 + num1;}
+		
+		// 导出类
+		export class Rectangle {}  //必须要有名字
+		
+		
+		// 定义一个函数……
+		function multiply(num1, num2) {return num1 * num2;}
+		
+		// ……稍后将其导出
+		export { multiply };
+		
+	
+	
+	
+	
+	导入
+	
+		从给定模块导入对应的绑定
+		
+		导入单个绑定
+			import { sum } from "./example.js";
+			console.log(sum(1, 2)); 
+		
+		导入多个绑定
+			import { sum, multiply, magicNumber } from "./example.js";
+		
+		完全导入一个模块
+			import * as example from "./example.js";
+			//该模块的所有导出都会作为对象的属性存在
+			
+			console.log(example.multiply(1, 2)); // 2
+		
+			在此代码中 example.js 中所有导出的绑定 都会被加载到一个名为example对象中 
+			具名导出 (sum函数) 都成为example对象的可用属性 这种导入称为 命名空间导入
+			example对象并不存在与example.js文件中 而是作为一个命名空间被创建使用 其中包含example.js的所有导出成员
+		
+		重命名导入导出
+		
+			function sum(num1, num2){
+				return num1 + num2;
+			}
+			export {sum as add}  sum是本地名称 add是导出名称
+		
+		
+		
+	
+	
+	模块的默认值
+	
+		在每个模块中只能设置一个默认导出，将 default 关键字用于多个导出会是语法错误
+		
+		
+		导出默认值
+		
+			export default function(num1, num2) {  //此函数并不需要有名称，因为它就代表这个模块自身。
+				return num1 + num2;
+			}
+		
+			default后放置标识符
+				function sum(num1, num2) {
+					return num1 + num2;
+				}
+				export default sum;
+			
+			重命名导出
+			
+				function sum(num1, num2) {
+					return num1 + num2;
+				}
+				export { sum as default };
+		
+		导入默认值
+			import sum from "./example.js";
+		
+		
+			export let color = "red";
+			export default function(num1, num2) { //对应下面的sum
+				return num1 + num2;
+			}
+			import sum, { color } from "./example.js";
+		
+		
+			// 等价于上个例子
+			import { default as sum, color } from "example";
+			console.log(sum(1, 2)); // 3
+			console.log(color); 
+		
+	
+	绑定的再导出
+		import { sum } from "./example.js";
+		export { sum }
+		
+		export { sum } from "./example.js";
+		export { sum as add } from "./example.js";
+	
+	
+	
+	
+	加载模块
+	
+		在 script 标签中使用模块
+			<script type="module" src="module1.js"></script>      /*
+			
+			<script type="module">
+			import { sum } from "./example.js";
+			let result = sum(1, 2);
+			</script>   //                   
+		
+		加载次序	
+			1. 下载并解析 module1.js ；
+			2. 递归下载并解析在 module1.js 中使用 import 导入的资源；
+			3. 解析内联模块；
+			4. 递归下载并解析在内联模块中使用 import 导入的资源；
+		
+		
+		异步模块加载
+			<script type="module" async src="module1.js"></script>
+			<script type="module" async src="module2.js"></script>
+		
+		将模块作为 Worker 加载
+		
+			// 用脚本方式加载 script.js
+			let worker = new Worker("script.js");
+		
+			// 用模块方式加载 module.js
+			let worker = new Worker("module.js", { type: "module" });
+		
+		模块路径 模块说明符
+			相对模块说明符
+			以 / 为起始，表示从根目录开始解析；
+			以 ./ 为起始，表示从当前目录开始解析；
+			以 ../ 为起始，表示从父级目录开始解析；
+		
+	
+
+
+代理--
+	proxy
+	Reflect
+
+
+简单的代理
+	let target = {}
+	let proxy = new proxy(target,{});
+	proxy.name = "proxy";
+	console.log(proxy.name); // "proxy"
+	console.log(target.name); // "proxy"
+	target.name = "target";
+	console.log(proxy.name); // "target"
+	console.log(target.name); // "target"
+	
+basic
+const target = {
+	name:"qiao",
+	age:1
+};
+
+const handler = {
+	get(target,key,proxy){
+		const today = new Date();
+		console.log(`GET request made for ${key} at ${today}`);
+			return Reflect.get(target,key,proxy);
+	}
+}
+const proxy = new Proxy(target,handler);
+proxy.name;
+
+
+
+
+
+面向对象 图画的好  https://juejin.im/post/5b8a8724f265da435450c591
+
+ 
+
+冴羽es6 https://juejin.im/post/5bfe05505188252098022400#heading-21
+
+菜鸟 http://www.runoob.com/w3cnote/es6-let-const.html
+
+阮一峰  http://es6.ruanyifeng.com/
+
+
+深入理解es6
+ 
+ 
+ 
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,82 @@
+
+注册表
+C:\WINDOWS\System32\regedt32.exe
+
+cmd
+C:\WINDOWS\System32\cmd.exe
+
+internet选项
+C:\WINDOWS\System32\inetcpl.cpl
+
+本地组策略编辑器
+C:\Windows\System32\gpedit
+
+
+环境变量
+ sysdm.cpl
+
+
+
+服务
+services.msc
+
+	Software Protection  安装相关服务
+
+	设备管理注册服务
+
+
+
+window installer 服务无法启动
+	DISM/Online /Cleanup-image /Scanhealth
+	部署映像服务和管理工具  未检测到组件存储损坏
+	
+	DISM/Online /Cleanup-image /Restorehealth
+	部署映像服务和管理工具  还原操作已完成
+
+
+	Sfc /scannow
+	开始系统扫描的验证阶段。 Windows 资源保护未找到任何完整性冲突。
+
+
+
+启动或关闭window功能  一片空白  是因为 window install 服务未开启  
+
+
+
+
+
+获取管理员权限
+
+本地组策略--计算机配置--window设置--安全设置--本地策略--安全选项
+
+
+
+dll文件没有被指定在Windows运行
+for %1 in (%windir%\system32\*.dll) do regsvr32.exe /s %1  
+
+
+系统修复
+sfc /scannow
+
+
+
+
+
+
+
+
+
+社区 
+	https://answers.microsoft.com/zh-hans/windows/forum?sort=LastReplyDate&dir=Desc&tab=All&status=all&mod=&modAge=&advFil=&postedAfter=&postedBefore=&threadType=All&isFilterExpanded=false&page=1
+
+Microsoft Visual C++ 2010  2012 2015
+	https://support.microsoft.com/zh-cn/help/2977003/the-latest-supported-visual-c-downloads
+
+
+
+
+
+
+
+
+ed2k://|file|cn_windows_10_consumer_edition_version_1809_updated_sept_2018_x64_dvd_051b7719.iso|4808400896|B740D15C0A6056F4955A37792AB92501|/

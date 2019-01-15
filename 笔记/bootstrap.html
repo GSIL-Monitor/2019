@@ -1,0 +1,602 @@
+
+
+bootstrap
+
+表单 表格 按钮 图片
+
+
+
+
+模板
+
+容器
+网格
+颜色
+图片
+背景
+图标
+表格
+分页
+面包屑
+按钮
+下拉菜单
+输入框+文本按钮
+表单
+进度条
+提示框
+模态框
+轮播
+导航
+
+
+
+
+css CDN
+	
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+js CDN
+	
+	<script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+模板
+		
+	<!doctype html>
+		<html lang="en">
+		  <head>
+		    <!-- Required meta tags -->
+		    <meta charset="utf-8">
+		    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		
+		    <!-- Bootstrap CSS -->
+		    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		
+		    <title>Hello, world!</title>
+		  </head>
+		  <body>
+		    <h1>Hello, world!</h1>
+				
+				<!-- Optional JavaScript -->
+		    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+			<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+		    <script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+		    <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+		  </body>
+			</html>		
+	
+
+
+
+
+容器
+	.container类用于固定宽度并支持响应式布局
+	.container-fluid始终保持100%的宽度，占据全部视口
+	
+	container容器 有15px的padding，还有一个会随着浏览器宽度变化而变化的margin
+	container-fluid 整个容器就只有固定的15px的padding，并没有再加margin
+	
+网格
+
+	.col- 针对所有设备
+	.col-sm- 平板 - 屏幕宽度等于或大于 576px
+	.col-md- 桌面显示器 - 屏幕宽度等于或大于 768px)
+	.col-lg- 大桌面显示器 - 屏幕宽度等于或大于 992px)
+	.col-xl- 超大桌面显示器 - 屏幕宽度等于或大于 1200px)
+
+	被挤下来 是因为尺寸大了 可以减小padding  
+
+
+列偏移 
+.col-md-offset-4 类将 .col-md-4 元素向右侧偏移了4个列（column）的宽度。
+
+col-md-offset-*，是利用margin-left实现的，col-md-push-*/col-md-pull-*是利用相对定位实现的。
+
+
+
+	等宽
+		<div class="row">
+		  <div class="col">.col</div>
+		  <div class="col">.col</div>
+		  <div class="col">.col</div>
+		</div>
+	
+	不等宽
+		<div class="row">
+		  <div class="col-sm-4">.col-sm-4</div>
+		  <div class="col-sm-8">.col-sm-8</div>
+		</div>	
+	
+颜色
+  <p class="text-muted">  柔和 灰色</p>
+  <p class="text-primary">重要 蓝色</p>
+  <p class="text-success">成功 绿色</p>
+  <p class="text-info">   信息 蓝绿</p>
+  <p class="text-warning">警告 黄色</p>
+  <p class="text-danger"> 危险 红色</p>
+  <p class="text-secondary">副标题 灰色</p>
+  <p class="text-dark">深灰色文字。</p>
+  <p class="text-light">浅灰色文本（白色背景上看不清楚）。</p>
+  <p class="text-white">白色文本（白色背景上看不清楚）。</p>
+
+text-vertical-center  文本垂直居中
+ 
+颜色
+  primary: #007bff;
+  
+  secondary: #6c757d;
+  
+  success: #28a745;
+  
+  info: #17a2b8;
+  
+  warning: #ffc107;
+  
+  danger: #dc3545;
+  
+  light: #f8f9fa;
+  
+  dark: #343a40;
+  
+  
+  blue: #007bff;
+  
+  indigo: #6610f2;
+  
+  purple: #6f42c1;
+  
+  pink: #e83e8c;
+  
+  red: #dc3545;
+  
+  orange: #fd7e14;
+  
+  yellow: #ffc107;
+  
+  green: #28a745;
+  
+  teal: #20c997;
+  
+  cyan: #17a2b8;
+  
+  white: #fff;
+  
+  gray: #6c757d;
+  
+  gray-dark: #343a40;
+  
+
+  breakpoint-xs: 0;
+  
+  breakpoint-sm: 576px;
+  
+  breakpoint-md: 768px;
+  
+  breakpoint-lg: 992px;
+  
+  breakpoint-xl: 1200px;
+
+
+
+
+
+
+
+
+图片
+	.img-rounded 添加圆角 
+	 
+	.img-circle 圆形图片 
+	 
+	.img-thumbnail 添加边框
+	 
+	.img-responsive 图片响应式  
+
+
+背景
+.jumbotron  灰色大背景
+
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1>菜鸟教程</h1> 
+    <p>学的不仅是技术，更是梦想！！！</p>
+  </div>
+</div>
+
+图标
+	Font Awesome库
+
+表格
+	table
+	.table-bordered  边框表格
+	.table-striped   条纹表格
+	.table-dark      黑色表格
+	table-responsive 响应式
+	hover鼠标悬停表格
+		<table class="table table-hover">
+		    <thead>
+		      <tr>
+		        <th>Firstname</th>
+		        <th>Lastname</th>
+		        <th>Email</th>
+		      </tr>
+		    </thead>
+		    <tbody>
+		      <tr>
+		        <td>John</td>
+		        <td>Doe</td>
+		        <td>john@example.com</td>
+		      </tr>
+		      <tr>
+		        <td>Mary</td>
+		        <td>Moe</td>
+		        <td>mary@example.com</td>
+		      </tr>
+		      <tr>
+		        <td>July</td>
+		        <td>Dooley</td>
+		        <td>july@example.com</td>
+		      </tr>
+		    </tbody>
+		</table>
+
+分页
+	pagination
+	page-item
+	
+	<ul class="pagination">
+	  <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+	  <li class="page-item"><a class="page-link" href="#">1</a></li>
+	  <li class="page-item active"><a class="page-link" href="#">2</a></li>
+	  <li class="page-item"><a class="page-link" href="#">3</a></li>
+	  <li class="page-item"><a class="page-link" href="#">Next</a></li>
+	</ul>
+
+基本上都是要加容器 
+disable active 可以加在任何class后面
+加 lg sm  就是设置大小
+加颜色 就是 重要 成功 信息
+
+
+
+
+
+面包屑导航
+
+ 	<ul class="breadcrumb">
+    <li class="breadcrumb-item"><a href="#">Photos</a></li>
+    <li class="breadcrumb-item"><a href="#">Summer 2017</a></li>
+    <li class="breadcrumb-item"><a href="#">Italy</a></li>
+    <li class="breadcrumb-item active">Rome</li>
+	</ul>
+
+按钮
+	<div class="container">
+	  <h2>按钮样式</h2>
+	  <button type="button" class="btn">基本按钮</button>
+	</div>
+	   btn-primary 主要按钮
+	   
+	   btn-secondary 次要按钮
+	   btn-success 成功
+	   btn-info 信息
+	   btn-warning 警告
+	   btn-danger 危险
+	   btn-dark 黑色
+	   btn-light 浅色
+	   btn-link 链接      
+	   btn-lg 大按钮
+	   btn-sm 小按钮
+
+	   空心按钮 btn-outline-primary
+
+	按钮组
+		btn-group
+	
+	垂直的按钮组
+		<div class="btn-group-vertical">
+			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+				下拉
+				<span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu">
+				<li><a href="#">下拉链接 1</a></li>
+				<li><a href="#">下拉链接 2</a></li>
+			</ul>
+		</div>
+	
+
+下拉菜单
+ .dropdown       包裹全部
+ .dropdown-menu  目录
+	<div class="dropdown">
+	  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+	    Dropdown button
+	  </button>
+	  <ul class="dropdown-menu">
+			<li><a href="#">下拉链接 1</a></li>
+			<li><a href="#">下拉链接 2</a></li>
+		</ul>
+	</div>
+	
+	class="dropdown-divider"  水平分割线              
+
+
+输入框
+	input-group
+	input-group-text  设置样子
+	input-group-sm/lg 设置大小
+
+输入框+文本 邮箱
+ 
+
+	<label for="demo">这里输入您的邮箱:</label>
+	    <div class="input-group mb-3">
+	      <input type="text" class="form-control" placeholder="Email" id="demo" name="email">
+	      <div class="input-group-append"> 
+	        <span class="input-group-text">@runoob.com</span>
+	      </div>
+	    </div>
+	 input-group-append  中间连接处
+	
+
+输入框+按钮 搜索
+	<div class="input-group mb-3">
+    <input type="text" class="form-control" placeholder="Search">
+    <div class="input-group-append">
+      <button class="btn btn-success" type="submit">Go</button>  
+     </div>
+	</div>
+
+
+下拉菜单+输入框  
+ 	<div class="input-group mt-3 mb-3">
+      <div class="input-group-prepend">
+        <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown">
+          选择网站
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="https://www.google.com">GOOGLE</a>
+          <a class="dropdown-item" href="http://www.runoob.com">RUNOOB</a>
+          <a class="dropdown-item" href="https://www.taobao.com">TAOBAO</a>
+        </div>
+      </div>
+      <input type="text" class="form-control" placeholder="网站地址">
+    </div>
+
+表单
+ <form>
+  <div class="form-group">
+    <label for="email">Email address:</label>
+    <input type="email" class="form-control" id="email">
+  </div>
+  <div class="form-group">
+    <label for="pwd">Password:</label>
+    <input type="password" class="form-control" id="pwd">
+  </div>
+  <div class="form-check">
+    <label class="form-check-label">
+      <input class="form-check-input" type="checkbox"> Remember me
+    </label>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+ </form>                          
+
+form-horizonta  水平表单   
+
+
+
+进度条
+
+  <div class="progress">
+    <div class="progress-bar progress-bar-striped progress-bar-animated" style="width:40%"></div>
+</div>           进度40%           条纹                   动画
+
+
+提示框
+	.alert  
+	.alert-success
+	.alert-info
+
+模态框
+	modal
+	modal-dialog  对话框
+	modal-sm
+	
+	
+	<!-- 按钮：用于打开模态框 -->
+	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+	  打开模态框
+	</button>
+	 
+	<!-- 模态框 -->
+	<div class="modal fade" id="myModal">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	 
+	      <!-- 模态框头部 -->
+	      <div class="modal-header">
+	        <h4 class="modal-title">模态框头部</h4>
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	      </div>
+	 
+	      <!-- 模态框主体 -->
+	      <div class="modal-body">
+	        模态框内容..
+	      </div>
+	 
+	      <!-- 模态框底部 -->
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+	      </div>
+	 
+	    </div>
+	  </div>
+	</div>
+
+
+
+轮播图
+	                       关键词   滑动
+<div id="demo" class="carousel slide" data-ride="carousel">
+	 
+	  <!-- 指示符 -->   三个点
+	  <ul class="carousel-indicators">
+	    <li data-target="#demo" data-slide-to="0" class="active"></li>
+	    <li data-target="#demo" data-slide-to="1"></li>
+	    <li data-target="#demo" data-slide-to="2"></li>
+	  </ul>
+	 
+	  <!-- 轮播图片 -->
+	  <div class="carousel-inner">
+	    <div class="carousel-item active">
+	      <img src="https://static.runoob.com/images/mix/img_fjords_wide.jpg">
+	    </div>
+	    <div class="carousel-item">
+	      <img src="https://static.runoob.com/images/mix/img_nature_wide.jpg">
+	    </div>
+	    <div class="carousel-item">
+	      <img src="https://static.runoob.com/images/mix/img_mountains_wide.jpg">
+	    </div>
+	  </div>
+	 
+	  <!-- 左右切换按钮 -->
+	  <a class="carousel-control-prev" href="#demo" data-slide="prev">
+	    <span class="carousel-control-prev-icon"></span>
+	  </a>
+	  <a class="carousel-control-next" href="#demo" data-slide="next">
+	    <span class="carousel-control-next-icon"></span>
+	  </a>
+	 
+	  </div>
+.carousel
+	创建一个轮播
+	.carousel-indicators
+	为轮播添加一个指示符，就是轮播图底下的一个个小点，轮播的过程可以显示目前是第几张图。
+	.carousel-inner
+	添加要切换的图片
+	.carousel-item
+	指定每个图片的内容
+	.carousel-control-prev
+	添加左侧的按钮，点击会返回上一张。
+	.carousel-control-next
+	添加右侧按钮，点击会切换到下一张。
+	.carousel-control-prev-icon
+	与 .carousel-control-prev 一起使用，设置左侧的按钮
+	.carousel-control-next-icon
+	与 .carousel-control-next 一起使用，设置右侧的按钮
+	.slide
+	切换图片的过渡和动画效果，如果你不需要这样的效果，可以删除这个类。	               
+
+
+导航
+	nav
+	 
+	垂直导航 .flex-column
+	
+	居中导航 .justify-content-center
+	
+	选项卡   .nav-tabs
+	
+	胶囊导航 .nav-pills
+	
+	
+	胶囊下拉菜单
+	<ul class="nav nav-pills">
+	     
+	    <li class="nav-item dropdown">
+	      <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Dropdown</a>
+	      <div class="dropdown-menu">
+	        <a class="dropdown-item" href="#">Link 1</a>
+	        <a class="dropdown-item" href="#">Link 2</a>
+	        <a class="dropdown-item" href="#">Link 3</a></div>
+	    </li>
+	    <li class="nav-item">
+	      <a class="nav-link" href="#">Link</a>
+	    </li>
+	    <li class="nav-item">
+	      <a class="nav-link disabled" href="#">Disabled</a>
+	    </li>
+	  </ul>
+	
+	动态选项卡
+	<!-- Nav tabs -->
+	<ul class="nav nav-tabs">
+	  <li class="nav-item">
+	    <a class="nav-link active" data-toggle="tab" href="#home">Home</a>
+	  </li>
+	  <li class="nav-item">
+	    <a class="nav-link" data-toggle="tab" href="#menu1">Menu 1</a>
+	  </li>
+	  <li class="nav-item">
+	    <a class="nav-link" data-toggle="tab" href="#menu2">Menu 2</a>
+	  </li>
+	</ul>
+	 
+	<!-- Tab panes -->
+	<div class="tab-content">
+	  <div class="tab-pane active container" id="home">...</div>
+	  <div class="tab-pane container" id="menu1">...</div>
+	  <div class="tab-pane container" id="menu2">...</div>
+	</div>                                
+	
+	固定导航栏
+	<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+	  <a class="navbar-brand" href="#">Logo</a>
+	  <ul class="navbar-nav">
+	    <li class="nav-item">
+	      <a class="nav-link" href="#">Link</a>
+	    </li>
+	    <li class="nav-item">
+	      <a class="nav-link" href="#">Link</a>
+	    </li>
+	  </ul>
+	 </nav>
+		
+小工具
+
+	 mx-auto  居中对齐:
+     边框圆角
+    	rounded 
+    	rounded-top 
+    	rounded-right 
+    	rounded-bottom 
+    	rounded-left 
+    	rounded-circle 
+    	rounded-0 
+
+
+链接和排版
+使用@basefontfamily  @basefontsize @basefontheight 属性作为我们排版的基础
+
+
+格栅系统 
+	栅格系统为十二列  默认没有启用响应式布局  如果小于768就会在垂直方向上堆叠
+	<div class="row"></div>
+
+
+流式格栅系统 
+	流式栅格系统对每一列的宽度使用百分比而不是像素数量
+
+<div class="rowfluid"></div>
+
+ 
+
+布局
+<div class="container"></div>
+
+<div class="container-fluid">
+
+响应式设计
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+
+/* 大屏幕 */
+@media (min-width: 1200px) { ... }
+ 
+/* 平板电脑和小屏电脑之间的分辨率 */
+@media (min-width: 768px) and (max-width: 979px) { ... }
+ 
+/* 横向放置的手机和竖向放置的平板之间的分辨率 */
+@media (max-width: 767px) { ... }

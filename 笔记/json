@@ -1,0 +1,159 @@
+
+json.parse    解析成对象
+	var str = '{"name": "Geoff Lui", "age": 26}';
+	
+	var obj = JSON.parse(str, fun);
+	
+	function fun(name, value){
+		
+		if( name == "age" )
+			value = 14;
+		return value;
+	}
+	
+	console.log(obj);
+	
+
+
+
+json.stringify    解析成字符串
+
+ 
+
+$.xml2json(str);
+
+ 
+
+$.json2xml(obj);
+
+
+
+
+表示法 是指一个可以表示数字或单词等数据的字符系统  
+这字符表示的是什么意思 它代表什么
+
+
+可移植性 在平台和系统间传输信息的兼容性 是数据交换格式所追求的重要指标
+
+数据交换格式 在不同系统或平台间 交换数据的文本
+
+
+
+正确的json语法  
+	只能只用 "双引号"   
+
+
+媒体类型
+	json的 MIME类型 是 application/json
+
+
+
+语法验证  关注json格式的验证
+
+一致性验证 关注独特数据结构的验证
+
+
+
+原始数据类型
+
+	数字
+	浮点
+	字符和字符串
+	布尔
+
+
+json数据类型  
+	对象  
+	数组
+	字符串
+	数字
+	布尔
+	null
+	
+
+json本身就是对象  
+
+json 中 true false null  必须小写
+
+
+如何阻止	CSRF攻击？
+将敏感数组作为一个值存入json对象  这样数组将不再是合法的javascript
+
+
+
+和人不同 代码只能以一种它能读取的格式来查看 某样东西  也就是数据交换格式的用武之地
+
+
+
+
+json和ajax
+	var xhr = new XMLHttpRequest();  //实例化一个对象
+	var url = "www.xxx.com";
+	
+	xhr.onreadystatechange = function(){   //状态改变 触发函数
+		if(xhr.readyState === 4 && xhr.status === 200){ 
+			var parseobj = JSON.parse(xhr.responseText);
+			var strjson = JSON.stringify(parseobj);
+		}
+	}
+	xhr.open("GET", url, true);
+	xhr.send();	
+
+
+
+	var url = "www.xxx.com";
+	$.getJSON(url, function(data){
+		// 和上面相比这个简洁的多
+	})
+
+jQuery.getJSON() 是 jQuery.ajax()函数的简写形式  
+
+
+跨域资源共享  CORS
+
+	Access-Control-Allow-Origin:*  此处的星号*表示 任意域名都是允许的
+	安全防护
+	Access-Control-Allow-Origin:http://www.xxx.com  
+	浏览器会解除 www.xxx.com 以外的站点去获取资源
+
+
+json-p 
+	指带有padding的json  <script>不受同源策略的限制 
+	
+	function getanimal(data){
+		var myanimal = data.animal;
+		console.log(myanimal)
+	}
+	
+	getanimal(
+		{
+			"animal":"cat"
+		})
+	
+	创建标签<script> 动态添加到<head>
+		var script = document.createElement("script");
+		script.type = "text/javascript";
+		script.src = "http://xxx.com/animal.json";
+		document.getElementsByTagName('head')[0].appendChild(script);
+		
+	告知服务器函数的名字
+		script.src = "http://xxx.com/animal.json?callback=getthing"
+	
+	json-p 中动态命名函数
+	getthing(
+		{
+			"animal":"cat"
+		}
+	)
+
+
+概念
+
+	同源策略 
+		出于安全考虑 浏览器仅会请求同一个域的脚本
+	
+	跨域资源共享 CORS
+		通过设置响应头 使得跨域请求资源可以成功 
+	
+	jsonson-p
+		使用<script>标签 绕过同源策略的限制 从不同域名的服务器上请求json

@@ -1,0 +1,331 @@
+	
+       
+所有的函数都是Function的实例对象  apply和call方法也在Function的prototype中
+		apply()
+			语法：func.apply(thisArg, [argsArray])
+
+		call()
+			语法：fun.call(thisArg, arg1, arg2, ...)
+			你可以使用call()来实现继承：写一个方法，然后让另外一个新的对象来继承它（而不是在新对象中再写一次这个方法）。
+				
+			使用call方法调用父构造函数
+				function Product(name, price) {
+ 					 this.name = name;
+ 					 this.price = price;
+ 					}
+                                                                                                       	
+				function Toy(name, price) {
+				  Product.call(this, name, price);
+				  this.category = 'toy';
+				}
+				var car = new Toy('robot', 40);
+				car.name
+
+
+				var animals = [
+				  {species: 'Lion', name: 'King'},
+				  {species: 'Whale', name: 'Fail'}
+				];
+				
+				for (var i = 0; i < animals.length; i++) {
+				  (function (i) { 
+				    this.print = function () { 
+				      console.log('#' + i  + ' ' + this.species + ': ' + this.name); 
+				    } 
+				    this.print();
+				  }).call(animals[i], i);
+				}				
+				
+
+			
+			猫吃鱼，狗吃肉，奥特曼打小怪兽。
+			
+			有天狗想吃鱼了
+			
+			猫.吃鱼.call(狗，鱼)
+			
+			狗就吃到鱼了
+			
+			猫成精了，想打怪兽
+			
+			奥特曼.打小怪兽.call(猫，小怪兽)
+
+
+
+
+
+
+
+		bind()     将函数绑定到某个对象 
+		复制了一份的时候,把参数传入到了f1函数中,x===>10,y===>20, 
+		    //bind方法是复制的意思,参数可以在复制的时候传进去,也可以在复制之后调用的时候传入进去
+		    //apply和call是调用的时候改变this指向
+		    //bind方法,是复制一份的时候,改变了this的指向
+		
+			function f1(x, y) {
+			      console.log((x + y) + ":=====>" + this.age);
+			    }
+			    function Person() {
+			      this.age = 1000;
+			    }
+			    Person.prototype.eat = function () {
+			      console.log("这个是吃");
+			    };
+			    var per = new Person();
+			
+			    var ff = f1.bind(per, 10, 20);
+			    ff();
+			
+
+
+		 
+		toLocaleString()返回整段函数代码的字符串
+		//valueOf()  
+		在数值运算里，会优先调用valueOf() 
+		在字符串运算里，会优先调用toString() 
+		var x = {toString: function() {return "foo"; },
+		valueOf: function() {return 42; }};
+		console.log ("x="+x.valueOf());
+		console.log ("x="+x.toString());
+	
+
+
+
+
+
+
+
+
+
+func.call(this, arg1, arg2);
+func.apply(this, [arg1, arg2])
+	call 需要把参数按顺序传递进去，而 apply 则是把参数放在数组里。　　
+	参数固定用 call
+	不确定参数用 apply，把参数 push 进数组传递进去。当参数数量不确定时，函数内部也可以通过 arguments 这个伪数组来遍历所有的参数。
+	函数存在「定义时上下文」和「运行时上下文」以及「上下文是可以改变的」 
+
+
+
+F.apply(a,b)
+//对象a调用了对象F，并将参数b传入到这个对象F（或者F的方法）中;
+
+	f.call(o,1,2);
+	f.apply(o,[1,2]);
+
+
+
+
+call例子
+
+
+
+	判断是不是数组
+		function isArray(obj){ 
+		    return Object.prototype.toString.call(obj) === '[object Array]' ;
+		}
+	
+	call() 如果参数为空、null和undefined，则默认传入全局对象。
+	
+		var n = 123;
+		var obj = { n: 456 };
+		
+		function a() {
+		  console.log(this.n);
+		}
+		
+		a.call() // 123
+		a.call(null) // 123
+		a.call(undefined) // 123
+		a.call(window) // 123
+		a.call(obj) // 456
+	
+	call的参数不是对象，会被自动转成包装对象（Number的实例）
+		var f = function () {
+		  return this;
+		};
+		
+		f.call(5)
+		// Number{5}
+	
+	指定函数add内部的this绑定当前环境（对象）
+	
+		function add(a, b) {
+		  return a + b;
+		}
+		
+		add.call(this, 1, 2) // 3 
+		
+	
+	
+	
+	调用对象的原生方法
+		var obj = {};
+		obj.hasOwnProperty('toString') // false
+		
+		// 覆盖掉继承的 hasOwnProperty 方法
+		obj.hasOwnProperty = function () {
+		  return true;
+		};
+		obj.hasOwnProperty('toString') // true
+		
+		Object.prototype.hasOwnProperty.call(obj, 'toString') // false
+	
+
+
+
+	[1, 2, 3].slice(0, 1) // [1]
+	// 等同于
+	Array.prototype.slice.call([1, 2, 3], 0, 1) // [1]
+	
+
+	var slice = Function.prototype.call.bind(Array.prototype.slice);
+	slice([1, 2, 3], 0, 1) // [1]
+	
+	
+	var push = Function.prototype.call.bind(Array.prototype.push);
+	var pop = Function.prototype.call.bind(Array.prototype.pop);
+	
+	var a = [1 ,2 ,3];
+	push(a, 4)
+	a // [1, 2, 3, 4]
+	
+	pop(a)
+	a // [1, 2, 3]
+
+
+
+apply例子
+	function fruits() {}
+	 
+	fruits.prototype = {
+	    color: "red",
+	    say: function() {
+	        console.log("My color is " + this.color);
+	    }
+	}
+	 
+	var apple = new fruits;
+	apple.say();    //My color is red
+	
+	banana = {
+	    color: "yellow"
+	}
+	apple.say.call(banana);     //My color is yellow
+	apple.say.apply(banana);    //My color is yellow
+
+	
+	数组追加
+		var array1 = [12 , 'foo' , {name :'Joe'} , -2458]; 
+		var array2 = ['Doe' , 555 , 100]; 
+		Array.prototype.push.apply(array1, array2);
+
+	找到数组最大元素
+		var a = [10,2,4,15,9]
+		Math.max.apply(null,a)
+
+	将数组的空元素 变为undefined
+		Array.apply(null,[1,,2])
+		// [1, undefined, 2]
+
+	数组的forEach方法会跳过空元素，但是不会跳过undefined
+		var a = ["a", ,"b"];
+		function print(i){
+			console.log(i)
+		}
+		a.forEach(print) 
+		//a
+		//b
+
+	Array.prototype.slice.apply({0: 1, length: 1}) // [1]
+	Array.prototype.slice.apply({0: 1}) // []
+	Array.prototype.slice.apply({0: 1, length: 2}) // [1, undefined]
+	Array.prototype.slice.apply({length: 1}) // [undefined]
+
+
+
+bind  Bind本身不调用该函数，它只能用于在调用函数之前绑定上下文和其他参数的值
+ 
+例子
+
+	传入新函数的任何实参都将传入原始函数
+		function f(y) {return this.x+y} //待绑定对象
+		var o = {x:1};//将要绑定的对象
+		var g = f.bind(o);//把f()绑定到o上面 通过调用g() 来调用 o.f(X)
+		g(2)  //3
+		
+	
+	如果bind方法不存在 就用apply
+		functon bind(f,o){
+			if(f.bind){return f.bind(o)}
+				else{return funcion (){
+					return f.apply(o,arguments)
+				}}
+		}
+	
+	bind 累加 
+	
+		var sum = function(x,y){return x+y}; //返回两个实参的和
+		//创建一个类似sum的新函数 但this的值绑定null  第一个参数绑定到1
+		var summ = sum.bind(unll,1);
+		summ(2) // 3   x绑定到1，并传入2作为实参y
+		
+		function f(y,z){return this.x+y+z }
+		var g = f.bind({x:1},2)
+		g(3)// 6   this.x绑定到1，y绑定到2，z绑定到3
+		
+	
+	日期对象不能直接赋值
+		
+	var d = new Date();
+	d.getTime() // 1481869925657
+	
+	var print = d.getTime;
+	print() // Uncaught TypeError: this is not a Date object.
+	
+	var print = d.getTime.bind(d);
+	print() // 1481869925657
+	
+	
+	将这些参数绑定原函数的参数
+	
+		var add = function (x, y) {
+		  return x * this.m + y * this.n;
+		}
+		
+		var obj = {
+		  m: 2,
+		  n: 2
+		};
+		
+		var newAdd = add.bind(obj, 5);
+		newAdd(5) // 20
+	
+	
+	
+	改变this
+		var counter = {
+		  count: 0,
+		  inc: function () {
+		    this.count++;
+		  }
+		};
+		
+		var func = counter.inc.bind(counter);
+		func();
+		counter.count // 1
+		
+		var counter = {
+		  count: 0,
+		  inc: function () {
+		    this.count++;
+		  }
+		};
+		
+		var obj = {
+		  count: 100
+		};
+		var func = counter.inc.bind(obj);
+		func();
+		obj.count // 101
+		
+

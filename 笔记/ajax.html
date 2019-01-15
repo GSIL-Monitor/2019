@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="jquery-3.3.1.min.js"></script>
+</head>
+<body>
+    <label for="UserId">请输入用户的ID编号:</label><input type="text" id="UserId" name="UserId" style="width:20px" />
+    <input type="button" id="btnClick" value="提交" />
+    <div id="loadMes" style="display:none">我正在努力加载中哦.....</div>
+    <div id="loadData"></div>
+</body>
+</html>
+<script type="text/javascript">
+   function addScriptTag(src) {
+  var script = document.createElement('script');
+  script.setAttribute("type","text/javascript");
+  script.src = src;
+  document.body.appendChild(script);
+}
+
+window.onload = function () {
+  addScriptTag('http://example.com/ip?callback=foo');
+}
+
+function foo(data) {
+  console.log('Your public IP address is: ' + data.ip);
+};
+</script>

@@ -1,0 +1,4 @@
+ctrl + b: 跳到变量申明处
+
+ctrl + shift + up: 行移动
+shift + alt + up: 块移动 

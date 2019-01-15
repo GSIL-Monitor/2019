@@ -1,0 +1,11 @@
+res.header("Access-Control-Allow-Origin","*");
+这是为了设置允许跨域的客户端请求地址 
+
+
+res.header("Access-Control-Allow-Headers", "X-Requested-With,Origin,Content-Type,Accept");  
+响应首部 Access-Control-Allow-Headers 用于 preflight request（预检请求）中，列出了将会在正式请求的 Access-Control-Expose-Headers 字段中出现的首部信息。
+
+res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS"); 
+这是为了设置是否同意这些方法来修改服务器资源 
+
+https://blog.csdn.net/HaoDaWang/article/details/78483671

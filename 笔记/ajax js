@@ -1,0 +1,449 @@
+
+http://httpbin.org/
+练习 靶场 http://httpbin.org/get
+
+
+
+
+
+Ajax 
+    技术提供了一种新的前后端数据交互方式，不需要刷新页面，
+    而且不阻塞页面执行流程，异步的去请求去获取、交互数据。
+JSON 
+    用来描述前后端数据交互的内容格式，
+    有了 JSON 这样的一套统一的描述规则，前后端解析数据的成本变低，使用非常简单。
+    JSON 属于 JavaScript 的一个子集。
+
+
+
+xmlHttpRequest 属性
+   onreadystatechange 存储函数  readyState状态改变就调用该函数   属性的值可以是函数  因为函数是对象
+
+   
+   readyState 返回一个 0 ~ 4 的值 用来表示状态码
+   
+   status 返回http状态码 200  
+
+   responseText  响应文本 
+
+
+
+
+
+
+
+流程 
+
+浏览器 ----------------------------------->>服务器
+    一个事件被触发                           处理HttpRequest
+    创建 XMLHttpRequest 对象                创建response
+    向服务器发送 HttpRequest                 
+    处理服务器返回的data  <<-----------------把data发回给浏览器
+
+
+创建对象
+     var = new XMLHttpRequest();
+
+使用 XMLHttpRequest 对象的 open() 和 send() 方法将请求发送到服务器
+
+    XMLHttpRequest.open("GET","test1.txt",true);
+        open(method,url,async)，规定请求的类型、URL 以及是否异步处理请求
+    
+        method：请求的类型；GET 或 POST
+         
+        url：文件在服务器上的位置
+         
+        async：true（异步）或 false（同步）
+    
+    XMLHttpRequest.send();
+        send(string)，将请求发送到服务器。
+        string：仅用于 POST 请求
+
+
+
+服务器响应
+
+    使用 XMLHttpRequest 对象的 responseText 或 responseXML 属性。
+    
+        responseText：获得字符串形式的响应数据。
+     
+        responseXML：获得 XML 形式的响应数据。
+
+
+处理服务器响应
+
+    XMLHttpRequest 对象的readyState属性，就是用来标识当前XMLHttpRequest对象处于什么状态的
+    0   unsent  创建，但尚未调用 open() 方法。
+    1   OPENED  open() 方法已经被调用。
+    2   headers_received    send() 方法已经被调用，并且头部和状态已经可获得。
+    3   LOADING 下载中； responseText 属性已经包含部分数据。
+    4   DONE    下载操作已完成。
+    
+    if (httpRequest.readyState === 4) {
+      // 一切都很好，收到回复
+    } else {
+      // 还没准备好
+    }
+    
+    每当 readyState 改变时，会触发 onreadystatechange 事件
+    
+    if (httpRequest.status === 200) {
+      // 完美!
+    } else {
+      // 有一个问题的请求
+      //例如响应可能包含404（找不到）
+      //或500（内部服务器错误）响应代码
+    }
+
+
+
+
+
+
+
+
+
+javascript ajax
+
+        0：创建服务
+        1：打开服务
+        2：发送服务
+        3：服务器响应
+        4：加载成功
+
+
+弹出响应的内容
+    var xhr = new XMLHttpRequest();  //创建XMLHttpRequest
+    xhr.open("get","data.txt");      //open方法初始化请求参数（第一个参数是请求方法，第二个参数是url）
+    xhr.send();     //发送请求
+    xhr.onreadystatechange = function(){ //readyState值改变，事件会被触发
+        if(xhr.readyState === 4 && xhr.status === 200){ //判断readyState属性和status属性是否符合要求
+            alert(xhr.responseText);   //提示框弹出响应的内容
+        }
+    }
+
+封装ajax
+    function ajax(method,url,next){        
+    var xhr = new XMLHttpRequest();
+    xhr.open(method,url);
+    xhr.send();
+    xhr.onreadystatechange = function(){ 
+        if(xhr.readyState === 4 && xhr.status === 200){ //判断readyState属性和status属性是否符合要求
+           next(xhr.responseText);    
+        }
+    }
+    }
+    document.querySelector("button").onclick = function(){
+        ajax("get","data.txt",function(res){alert(res)});  //
+    }
+    
+getAllResponseHeaders()  所有头信息
+getResponseHeader('Content-Type') 指定头信息
+abort()  取消当前请求
+setRequestHeader()  设置头信息
+open("get","data.txt",true)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+jQuery ajax 
+
+$.ajax()-- 
+
+$.get()--
+
+$.getJSON()--
+$.getScript()
+
+
+
+
+url ： 请求的 url，默认是当前页面的 url。 
+success ： 当请求成功时触发的回调函数，从服务器返回的任何数据都会以参数形式带入回调 函数。 
+contentType ： 设置请求的 Content-Type头字段。如果请求包含数据，默认值为 application/ x-www-form-urlencoded，大多数情况下都是使用这个值。 
+data ： 是发送给服务器的数据，如果它不是字符串，jQuery 会将其做序列化处理并进行 URL 编码。 
+type ： HTTP 的发送方式 ：GET、POST 或 DELETE。默认为 GET。 
+dataType ： 希望从服务器返回的数据类型。jQuery 需要知道这个设置以便知道如何处理返回结 果。如果没有指定 dataType， jQuery 将会根据 MIME 的类型来猜测响应数据的类型， 可选的值包括 ：
+ 
+text ： 纯文本响应，不需要做额外处理。 script ： jQuery 将响应结果看做 JavaScript 代码并执行它。 json ： jQuery 将响应结果看做 JSON，并将其转换为对象。 jsonp ： 处理 JSONP 请求，后续会讨论到。
+
+
+
+
+     
+$.ajax()-- 
+
+$.ajax({
+      type: "post",
+      url: "item.json",//地址，就是json文件的请求路径
+      dataType:'html',
+      success: function(data) { }, //当请求成功时调用的函数
+     complete: function(XMLHttpRequest, textStatus) { }, //当请求完成时调用的函数
+     error: function(){}
+});
+
+
+
+直接打开 index.html文件 是不行的 需要服务器
+  js_ajax  jQuery_ajax 例子
+  https://www.cnblogs.com/huanying2015/p/8126007.html
+https://developer.mozilla.org/en-US/docs/Web/Guide/AJAX/Getting_Started
+
+
+
+
+$.get()--    
+
+$.get(URL,data,function(data,status,xhr),dataType)
+   
+    status - 包含请求的状态（"success"、"notmodified未修改"、"error"、"timeout"、"parsererror"）
+
+    请求 "data.txt" 并连同请求发送一些额外的数据（忽略返回结果）：
+    
+    $.get("data.txt", { name:"Donald", town:"Ducktown" });
+    
+    请求 "data.txt" 并提醒请求的结果：
+    
+    $.get("data.txt", function(data){
+    alert("Data: " + data);
+    });
+    
+
+var URL = "http://httpbin.org/get";   
+    $("button").click(function(){
+        $.get("URL",function(data){  //get方法可以请求数据，第一个参数是请求的url，这里是文件路径，因为是根目录，做一只写文件名就可以了。
+            alert(data);   //data是形参，可以换成其他名字，data就是从后台获取的数据了。
+    })})
+    
+    
+  
+$.getJSON()--
+
+$(selector).getJSON(url,data,success(data,status,xhr))
+
+    第一个data 发送的数据
+    
+    success(data,status,xhr) 
+        data：接受的数据
+    
+
+
+$(selector).getScript(url,success(response,status))
+    执行脚本返回结果
+
+
+
+
+
+
+
+
+
+
+
+
+
+ajax事件处理程序 AjaxEvent
+
+    ajaxComplete(回调函数)  当每一个Ajax请求完成后注册一个回调函数
+        例子：
+        /*公用html*/
+            <div class="trigger">Trigger</div>
+            <div class="result">2</div>
+            <div class="log">3</div>
+        /*公用html*/ //
+    
+            $(document).ajaxComplete(function() {
+             $(".log" ).text( "Triggered ajaxComplete handler." );
+            });
+            $( ".trigger" ).click(function() {
+             $( ".result" ).load( "data.txt" );
+            });
+        
+    
+    load()  从服务器加载数据，并把返回的数据放入被选元素中。 
+        
+    语法：$(selector).load(URL,data,callback);
+    
+        例子
+            <div id="div1"><h2>使用 jQuery AJAX 修改文本</h2></div>
+            <button>获取外部文本</button>
+             
+            $("button").click(function(){
+                $("#div1").load("/try/ajax/demo_test.txt #p1");
+              });
+            结果： h2 替换为 <p id="p1">这是段落的一些文本。</p>
+    
+    
+    xhr.status      200  404 
+    xhr.statusText  ok   Not Found
+    
+    
+    .ajaxError( handler(event, jqXHR, ajaxSettings, thrownError) )
+    例子：
+        如果出错将文本加入到div
+        $(document).ajaxError(function() {
+          $( "div" ).text( "出错了" );
+        });
+        
+    .ajaxSend( handler(event, jqXHR, ajaxOptions) )  请求发送之前绑定一个要执行的函数
+    例子：
+        $(document).ajaxSend(function() {
+          $( ".log" ).text( "Triggered ajaxSend handler." ); //对应 2 发送阶段 只要发送请求就会触发
+        });
+        $( ".trigger" ).click(function() {
+          $( ".result" ).load();
+        });
+    
+
+
+     $("#divload").ajaxStart(function(){ //对应 3  当前第一个AJAX请求开始时执行的处理函数                                           
+         $(".log").html("正在请求数据..."); 
+     }); 
+     $("#divload").ajaxStop(function(){ //对应 4   当前最后一个AJAX请求结束时执行的处理函数
+         $(".log").html("数据请求完成！"); 
+     }); 
+  
+
+
+
+
+
+ajax解决跨域 
+    JSONP
+        它的基本思想是，网页通过添加一个<script>元素，向服务器请求JSON数据，这种做法不受同源政策限制；服务器收到请求后，将数据放在一个指定名字的回调函数里传回来。
+    WebSocket
+    
+    CORS
+        跨域资源共享 http://www.ruanyifeng.com/blog/2016/04/cors.html
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1：ajax的概念和原理
+2：会使用主流库的封装的ajax方法以及参数，
+类似jQuery的$.ajax();
+3:会写原生的ajax;大概这样var xmlHttpRequest = null;
+
+
+
+
+function ajaxRequest() {
+    if (window.ActiveXObject) 
+    {
+        xmlHttpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+    } else if (window.XMLHttpRequest) 
+    {
+        xmlHttpRequest = new XMLHttpRequest();
+    }
+    if (null != xmlHttpRequest) {
+        var v1 = document.getElementById("value1").value;
+        var v2 = document.getElementById("value2").value;
+         //xmlHttpRequest.open("GET", "AjaxServlet?v1=" + v1 + "&v2=" + v2, true);
+        xmlHttpRequest.open("POST", "AjaxServlet", true);
+
+        // 当发生状态变化时就调用这个回调函数
+        xmlHttpRequest.onreadystatechange = ajaxCallBack;
+
+        // 使用post提交时必须加上下面这行代码
+        xmlHttpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        // 向服务器发出一个请求
+        xmlHttpRequest.send("v1=" + v1 + "&v2=" + v2);
+    }
+}
+
+function ajaxCallBack() {
+    if (xmlHttpRequest.readyState == 4) {
+        if (xmlHttpRequest.status == 200) {
+            var content = xmlHttpRequest.responseText;
+            document.getElementById("div1").innerHTML = content;
+        }
+    }
+}
+4：ajax的阶段性参数readyState的含义，  
+
+
+6：如何处理多个ajax都成功之后再调用某个回调函数？
+  1：promise
+  2：类似jquery的延时对象，利用$.when()
+
+
+
+

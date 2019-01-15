@@ -1,0 +1,590 @@
+
+
+git 安装
+
+
+
+
+
+
+
+version database 版本数据库
+checkout 签出
+Stage 缓存区 
+repository  仓库
+
+fix 修复
+conflict 冲突
+
+
+
+管理历史记录的数据库  存储着内容修改的历史记录
+
+远程数据库
+	为了多人共享而建立的数据库
+
+本地数据库
+	为了方便用户个人使用
+
+
+修改记录
+	把变更保存到数据库 需要提交  
+	数据库会生成 前后文件的 差异记录 revision
+	
+	提交修改修改格式
+		第1行：提交修改内容的摘要
+		第2行：空行
+		第3行以后：修改的理由
+
+
+工作树 
+	大家实际操作的目录叫工作树
+
+	数据库 <---提交--- 索引 <---注册--- 工作树
+
+	索引为了向数据库提交 做准备的区域 没有加入索引的文档不能提交
+
+共享数据库
+	把本地的修改记录 push到远程数据库 两者的修改记录才能保持一致
+	克隆远程数据库
+	我需要pull 别人提交到远程数据库的变更内容
+
+工作流
+
+	你的本地仓库有git维护的 三棵树 组成
+	1. 你的工作目录 他持有实际文件
+	2. 缓存区 临时保存你的改动
+	3. head 指向你最近一次提交后的结果
+	
+	工作目录 ----add---> 缓存区(index) ----coomit---> head
+	
+
+添加 和 提交
+	git add <filename>   把文件添加到 缓存区
+	git commit -m "代码提交信息" 已经提交到了head 还没到远程仓库
+	git push origin master 执行这条命令 将会从head中 推送到 远程仓库
+
+
+分支 
+	分支用来隔离特性 在其它分支上进行开发 完成后再将它合并到主分支上
+
+	创建一个叫dev 的分支  并切换过去 git checkout -b dev   master和dev指向相同的提交   head指向dev  
+    当前分支dev  进行开发 每提交一次 dev向前走一次  而mater指针不变
+	完成后切换回主分支  git checkout master  当前指针master  合并dev  git merge dev
+	dev可以删除   git branch -d dev   
+	也可以推送到远程仓库 git push origin <branch>
+
+
+
+
+
+更新 和 合并
+	更新你的本地仓库至最新改动 git pull
+	合并其它分支到当前分支 git merge <branch>
+	在合并之前 使用如下命令查看 git diff <source_branch> <target_branch>
+
+	合并分支时，加上--no-ff参数就可以用普通模式合并，合并后的历史有分支，能看出来曾经做过合并，而fast forward合并就看不出来曾经做过合并。  
+	例句：git merge --no-ff -m "merged bug fix 101" issue-101
+
+替换本地改动
+	git checkout --<filename> 此命令会使用 HEAD 中的最新内容替换掉你的工作目录中的文件。已添加到缓存区的改动，以及新文件，都不受影响。
+
+	替换所有 git fetch origin  git reset --hard origin/master
+
+
+
+
+
+
+创建代码仓库
+
+git init
+	它用来将已存在但还没有版本控制的项目转换成一个 Git 仓库   git init <directory> 
+	
+	或者创建一个空的新仓库  git init --bare <directory>  
+
+	创建裸仓库
+		中央仓库应该总是创建成裸仓库，因为向非裸仓库推送分支有可能会覆盖已有的代码变动
+		中央仓库是裸仓库，开发者的本地仓库是非裸仓库
+		一般来说，用 —bare 标记初始化的仓库以 .git 结尾。
+		cd path/above/repo
+		
+		git init --bare my-project.git  //开发者会将 my-project.git 克隆到本地的开发环境中
+
+
+git clone  克隆到本地
+
+	仓库间协作
+	 	Git 的协作和 SVN 截然不同。SVN 依赖于中央仓库和工作副本之间的关系，而 Git 协作模型是基于仓库和仓库之间的交互的
+		
+		例子：
+			git clone ssh://john@example.com/path/to/my-project.git
+			//命令在本地机器的 my-project 目录下初始化了一个新的 Git 仓库，并且导入了中央仓库中的文件
+			//同时注意 .git 拓展名克隆时会被去除。它表明了本地副本的非裸状态。
+			cd my-project
+			
+			# 开始工作
+
+
+
+git config
+	配置将保存到三个独立的文件中
+		/etc/gitconfig 文件: 包含系统上每一个用户及他们仓库的通用配置。 系统层面的设置  如果使用带有 --system 选项的 git config 时，它会从此文件读写配置变量。
+		
+		/.git/config – 特定仓库的设置。
+	
+    	~/.gitconfig – 特定用户的设置。这也是 --global 标记的设置项存放的位置。
+	
+		.git/config 的配置变量会覆盖 /etc/gitconfig 中的配置变量   本地仓库设置覆盖用户设置，用户设置覆盖系统设置
+
+	查看git配置信息  git config --list    手册 git help config
+
+	查看用户名 git config user.name  
+	查看邮箱   git config user.emaill 
+	
+
+	切换账号  告诉Git你是谁
+		git config --global user.name "c1178396429"
+		git config --global user.email "2109200262@qq.com"
+
+	添加一些快捷方式 
+		git config --global alias.st status
+		git config --global alias.co checkout
+
+
+保存更改
+	git add <file> 添加文件
+	
+		git add -p
+			y 将这块更改加入缓存，
+			n 忽略这块更改，
+			s 将它分割成更小的块，
+			e 手动编辑这块更改，
+			q 退出
+			
+		git add * 添加所有文件
+	
+	git commit 
+		命令将缓存的快照提交到项目历史
+		git commit -m "<message>"
+		1 file changed, 2 insertions(+)
+		1个文件被改动    插入了两行内容
+		
+		快照总是提交到 本地仓库  
+    	缓存区是工作目录和项目历史之间的缓冲地带，每个开发者的本地仓库是他们贡献的代码和中央仓库之间的缓冲地带。
+	
+	
+	
+	
+		提交格式
+		更改test.js
+			更新sayHello()函数以输出用户名
+			将sayGoodbye()函数更改为更友好的消息
+	
+
+
+检查仓库状态
+	
+	git status 列出已缓存、未缓存、未追踪的文件
+		.gitignore    *.txt 忽略所有TXT格式的文件
+	
+	git log  显示项目历史列表
+		使用默认格式显示完整地项目历史。如果输出超过一屏，你可以用 空格键 来滚动，按 q 退出
+	
+
+	git log -n 3       只会显示 3 个提交
+	git log --oneline  将每个提交压缩到一行
+	git log --stat     包含哪些文件被更改了，以及每个文件相对的增删行数。
+	git log -p         显示每个提交全部的差异（diff），这也是项目历史中最详细的视图。
+    git log <file>     只显示特定文件的提交
+
+	git log <since>..<until>      只显示发生在 <since> 和 <until> 之间的提交。两个参数可以是提交 ID、分支名、HEAD 或是任何一种引用。
+	git log --author="<pattern>"  搜索特定作者的提交。<pattern>
+	git log --grep="<pattern>"    匹配特定 <pattern> 的提交
+
+	~字符 用于表示提交的父节点的相对引用  3157e~1 指向 3157e 前一个提交  HEAD~3 前三个提交
+	..句法是比较分支
+
+
+
+检出之前的提交
+git checkout  检出之前的提交是一个只读操作
+
+	git checkout master 切换到master分支
+	
+	git checkout -b dev 等价 git branch dev git checkout dev  创建分支并切换过去
+
+	在开发的正常阶段，HEAD 一般指向 master 或是其他的本地分支，但当你检出之前提交的时候，HEAD 就不再指向一个分支了——它直接指向一个提交。这被称为「分离 	HEAD」状态
+	
+	git checkout --<filename> 此命令会使用 HEAD 中的最新内容替换掉你的工作目录中的文件。已添加到缓存区的改动，以及新文件，都不受影响。
+	
+	
+	查看之前的版本
+	 	git checkout a1e8fb5   你可以查看文件，编译项目，运行测试，甚至编辑文件
+			b7119f2 继续做些丧心病狂的事
+			872fa7e 做些丧心病狂的事
+			a1e8fb5 对 hello.py 做了一些修改
+			435b61d 创建 hello.py
+			9773e52 初始导入
+	获取它的旧版本
+		git checkout a1e8fb5 hello.py
+	最近的版本
+		git checkout HEAD hello.py
+    
+    
+    	
+
+
+回滚错误的修改  
+
+	撤销修改 
+		已修改 未添加
+			git checkout -- file  丢弃工作区的修改
+		已修改 已添加
+			git reset HEAD <file> 把暂存区的修改撤销掉
+		已修改 已提交
+			git reset --hard HEAD^ 删除上一个提交
+	
+
+
+	git revert 命令用来撤销一个已经提交的快照  是添加了一个撤销了更改的 新 提交   而不是从项目历史中移除这个提交
+		确保你只对本地的修改使用 git reset    
+		修复一个公共提交，git revert 命令正是被设计来做这个的
+
+
+	git reset 危险的操作 它应该只被用于 本地 修改——你永远不应该重设和其他开发者共享的快照。
+	移除修改
+		没有 --hard 标记时 git reset 通过取消缓存或取消一系列的提交，然后重新构建提交来清理仓库。
+
+		而加上 --hard 标记对于  作了大死  之后想要重头再来尤其方便。
+		
+
+		git reset main.py 取消main.py缓存
+
+		git reset --hard HEAD~2  删掉前面的两个提交
+
+		使用git log    使用了 git reset --hard HEAD~2 回到过去 用 git reset --hard 1094a  回到未来  git reflog 查哈希值
+
+
+		git reset --hard 重设缓冲区和工作目录，
+		匹配最近的一次提交。除了取消缓存之外，--hard 标记告诉 Git 还要重写所有工作目录中的更改。换句话说：它清除了所有未提交的更改，所以在使用前确定你想扔掉你所有本地的开发。
+	
+
+		模式名称	HEAD的位置	索引 	工作树
+		soft	修改	       不修改	不修改
+		mixed	修改	       修改	    不修改
+		hard	修改        修改	    修改
+		
+		主要使用的场合：
+		
+			复原修改过的索引的状态(mixed)
+			彻底取消最近的提交(hard)
+			只取消提交(soft)
+		
+
+
+
+	git clean  
+		将未跟踪的文件从你的工作目录中移除 rm 命令一样 
+
+		reset 只影响被跟踪的文件，所以 需要 git clean 
+
+		git clean -f          强制删除未跟踪的文件
+		git clean -df         移除未跟踪的文件，以及目录。
+		git clean -xf         移除当前目录下未跟踪的文件，以及 Git 一般忽略的文件
+		git clean -f <path>   移除未跟踪的文件，但限制在某个路径下。
+
+
+	例子：
+		# 编辑了一些文件1
+		# 新增了一些文件2
+		# 『糟糕』
+		
+		# 清缓存 回到2
+		git reset --hard
+		
+		# 移除未跟踪的文件
+		git clean -df
+
+
+重写项目历史
+git commit --amend  合并缓存的修改和上一次的提交，用新的快照替换上一个提交
+ 
+git rebase  分支移到一个新的基提交的过程
+
+	# 开始新的功能分支
+	git checkout -b new-feature master
+	# 编辑文件
+	git commit -a -m "Start developing a feature"
+	在 feature 分支开发了一半的时候，我们意识到项目中有一个安全漏洞:
+	
+	# 基于master分支创建一个快速修复分支
+	git checkout -b hotfix master
+	# 编辑文件
+	git commit -a -m "Fix security hole"
+	# 合并回master
+	git checkout master
+	git merge hotfix
+	git branch -d hotfix
+	将 hotfix 分支并回之后 master，我们有了一个分叉的项目历史。我们用 rebase 整合 feature 分支以获得线性的历史，而不是使用普通的 git merge。
+	
+	git checkout new-feature
+	git rebase master
+	它将 new-feature 分支移到了 master 分支的末端，现在我们可以在 master 上进行标准的快速向前合并了:
+	
+	git checkout master
+	git merge new-feature
+	
+
+
+git rebase -i
+	用 -i 标记运行 git rebase 开始交互式 rebase。
+	交互式 rebase 给你在过程中修改单个提交的机会，而不是盲目地将所有提交都移到新的基上。你可以移除、分割提交，更改提交的顺序。
+	它就像是打了鸡血的 git commit --amend 一样。
+
+
+git reflog  显示本地仓库的引用日志。  
+
+
+
+保持同步
+
+远程连接更像是书签
+	git remote -v        列出你和其他仓库之间的远程连接。 同时显示每个连接的 URL。
+	git remote add <name> <url> 创建一个新的远程仓库连接。在添加之后，你可以将 <name> 作为 <url> 便捷的别名在其他 Git 命令中使用。
+	git remote rm <name> 移除名为的远程仓库的连接。
+	
+	git remote rename <old-name> <new-name> 将远程连接从 <old-name> 重命名为 <new-name>。
+	
+	名为 origin 的远程连接
+		当你用 git clone 克隆仓库时，它自动创建了一个名为 origin 的远程连接，指向被克隆的仓库
+	
+
+
+fetch 下来的内容表示为一个远程分支，因此不会影响你的本地开发
+
+	git fetch <remote>   拉取仓库中所有的分支。同时会从另一个仓库中下载所有需要的提交和文件。
+	
+	git fetch <remote> <branch>  和上一个命令相同，但只拉取指定的分支。
+
+
+如果想要查看远程分支  git branch -r
+ 
+
+
+git pull 
+
+	同步你的本地仓库和远程仓库事实上是一个分两步的操作：先 fetch，然后 merge  但是 git pull 将这两个命令合二为一。
+	
+	git pull <remote>  拉取当前分支对应的远程副本中的更改，并立即并入本地副本
+	git pull --rebase <remote>  和上一个命令相同，但使用 git rebase 合并远程分支和本地分支，而不是使用 git merge。
+	 
+	
+	如何和一个中央仓库的 master branch 同步：
+	
+		git checkout master
+		git pull --rebase origin
+
+git push
+	
+	
+	git push 是你将本地仓库中的提交转移到远程仓库中时要做的事。
+	
+	git push <remote> <branch>  将指定的分支推送到 <remote> 上
+	例：git push origin dev  把dev推送到远程库
+	
+
+	git push <remote> --force  强制推送
+	
+	只推送到裸仓库  你只应该推送到那些用 --bare(空的) 标记初始化的仓库   永远不要推送到其他开发者的仓库
+	
+	
+	git push -u origin master
+	我们第一次推送master分支时，加上了-u参数，Git不但会把本地的master分支内容推送的远程新的master分支，还会把本地的master分支和远程的master分支关	联起来，在以后的推送或者拉取时就可以简化命令。
+	
+
+
+git diff
+	git diff    #是工作区(work dict)和暂存区(stage)的比较
+	git diff --cached    #是暂存区(stage)和分支(master)的比较
+	
+
+
+
+
+当手头工作没有完成时，先把工作现场git stash一下，然后去修复bug，修复后， 用 git stash list 查看列表 用git stash pop 回到工作现场。
+
+	git stash
+		可以把当前工作现场“储藏”起来，等以后恢复现场后继续工作
+
+
+
+	bug分支
+		首先确定要在哪个分支上修复bug  在该分支上创建临时分支 修改并提交
+		修复完成后，切换到master分支，并完成合并，最后删除issue-101分支：
+
+
+	git stash list
+		stash@{0}: WIP on dev: f52c633 add merge
+
+	恢复现场 两种方法
+		1. git stash apply stash@{0} 但是恢复后，stash内容并不删除，你需要用git stash drop来删除
+		2. git stash pop，恢复的同时把stash内容也删了
+
+
+
+git branch
+	git branch -D <name> 强行删除。
+
+
+
+
+git rev-parse
+
+	显示分支
+		$git rev-parse --symbolic --branches
+	
+	显示里程碑
+		$git rev-parse --symbolic --tags
+	
+	显示引用
+		$git rev-parse --symbolic --glob=refs/*
+		refs/heads/master
+		refs/remotes/origin/HEAD
+		refs/remotes/origin/master
+	
+	显示ＳＨＡ１值
+		$git rev-parse HEAD
+		$git rev-parse master refs/heads/master
+		$git rev-parse $git rev-parse A^{} A^0 A^{commit}
+
+	显示工作区根目录
+		git rev-parse --show-toplevel
+
+
+	手册
+		git rev-parse --help
+
+
+
+
+
+
+添加远程库
+	要关联一个远程库，使用命令git remote add origin git@server-name:path/repo-name.git；
+	
+	关联后，使用命令git push -u origin master 推送master分支的所有内容
+
+	每次本地提交后 用 git push origin master  推送最新修改
+
+
+集中化的版本控制系统
+CVCS 有一个单一的集中管理的服务器，保存所有文件的修订版本，而协同工作的人们都通过客户端连到这台服务器，取出最新的文件或者提交更新
+
+
+------------------------------------------重点----------------------------------------------
+分布式版本控制系统
+	每一次的克隆操作，实际上都是一次对代码仓库的完整备份。
+
+
+直接记录快照，而非差异比较 
+	它主要对当时的全部文件制作一个快照并保存这个快照的索引。
+
+近乎所有操作都是本地执行
+	要浏览项目的历史，Git 不需外连到服务器去获取历史，然后再显示出来——它只需直接从本地数据库中读取。 你能立即看到项目历史。 提交不需要网络 直到有网络连接时再上传
+
+Git 保证完整性
+	Git 中所有数据在存储前都计算校验和，然后以校验和来引用。 这意味着不可能在 Git 不知情时更改任何文件内容或目录内容
+	Git 数据库中保存的信息都是以文件内容的哈希值来索引，而不是文件名
+
+Git 一般只添加数据
+
+Git 有三种状态
+	modified   如果自上次取出后，作了修改但还没有放到暂存区域，就是  已修改状态。 
+	staged     如果作了修改并已放入暂存区域，就属于                 已暂存状态。
+	committed  如果 Git 目录中保存着的特定版本文件，就属于          已提交状态 
+
+
+基本的 Git 工作流程
+	1. 在工作目录中修改文件。
+	
+	2. 暂存文件，将文件的快照放入暂存区域。
+	
+	3. 提交更新，找到暂存区域的文件，将快照永久性存储到 Git 仓库目录。
+
+----------------------------------------------------------------------------------
+
+
+工作目录
+	你的本地目录
+
+缓存区
+	是一个文件 保存了下次将提交的文件列表信息，一般在 Git 仓库目录中
+
+.Git 仓库目录
+	是 Git 用来保存项目的元数据和对象数据库的地方。 这是 Git 中最重要的部分，从其它计算机克隆仓库时，拷贝的就是这里的数据。
+
+
+工作区的文件 add到缓存区  缓存区是.git文件夹里面的文件  缓存区提交记录到 master   指针head指向master
+
+Git跟踪并管理的是修改，而非文件  不添加到缓存 不能提交
+  
+
+master分支是一条线  master指向最新的提交   再用HEAD指向master  就能确定当前分支
+
+
+
+
+
+
+ 
+分支模型
+	master   主分支   发布版本号  
+	hotfix   热修复
+	release  一般的开发是在develop分支上进行的，到了可以发布的状态时再创建release分支，为release	做最后的bug修正。
+	develop  日常开发分支
+	feature  特性分支
+
+
+fork 工作流
+	每个人两个仓库 本地仓库和服务端仓库
+	开发者推送到他们 自己的 服务端仓库
+	只有项目管理者可以推送到官方仓库
+
+	中央仓库
+		「官方」仓库这个概念在 Fork 工作流中只是一个约定  	官方仓库唯一官方的原因是，它是项目维护者的仓库。
+	
+
+项目维护者初始化了中央仓库
+
+开发者 fork 仓库
+	 
+开发者将 fork 的仓库克隆到本地
+	其他工作流  使用单一的 origin 远程连接，指向中央仓库
+	Fork工作流  需要两个远程连接，一个是中央仓库，另一个是开发者个人的服务端仓库
+	约定将origin 作为你 fork 后的仓库的远端（运行 git clone 是会自动创建）
+	upstream（上游） 作为官方项目
+	git clone https://user@github.com/user/repo.git
+开发者进行自己的开发
+
+开发者发布他们的功能
+	第一，他们必须将贡献的代码推送到自己的公开仓库，让其他开发者能够访问到 
+		git push origin feature-branch   origin远端指向开发者个人的服务端仓库
+	第二，他们需要通知项目维护者， GitHub 提供了一个「New Pull Request」按钮 
+
+项目维护者整合他们的功能
+	当项目维护者收到 Pull Request 时，他们的工作是决定是否将它并入官方的代码库
+	git push origin master  origin 指向他们的公开仓库，也就是项目的官方代码库
+开发者和中央仓库保持同步
+	git pull upstream master
+
+
+
+
+
+
+
+
+
+日志位置
+	Windows logs location: `%APPDATA%\GitHub Desktop\logs\*.desktop.production.log`

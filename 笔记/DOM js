@@ -1,0 +1,1318 @@
+
+dom对象document
+dom api操作
+
+
+
+
+
+dom对象
+
+HTML DOM Document 对象
+HTML DOM 元素对象
+HTML DOM 属性对象
+HTML DOM 事件对象
+HTML DOM Console 对象
+ 
+
+
+
+
+第十章 DOM 
+
+10.1 
+ node类型
+	1.节点层次
+		文档节点只有一个子节点 html
+	
+		html有两个子节点 head body
+	
+	
+		node类型
+		节点类型常量
+		node.element_node    元素节点 <p>  <div>
+		node.text_node       元素或属性中的文字节点
+		node.comment         注释节点
+		node.document        文档节点
+	
+	 
+	2.节点关系
+		每个节点 都有一个childnode属性 其中保存着一个nodelist对象 
+		nodelist是一种类数组 可以通过[]访问 也有length属性 并不是Array实例
+		他是基于DOM结构 动态执行 查询的结果 因此DOM结构的变化 能自动反映在nodelist中
+		
+		访问保存在nodelist中的节点  方括号 和 item()
+			var firstChild = someNode.childNodes[0];
+			var secondChild = someNode.childNodes.item(1);
+			var count = someNode.childNodes.length;
+		
+		将nodelist转换为数组 Array.prototype.slice() 
+		 	var arrayOfNodes = Array.prototype.slice.call(someNode.childNodes,0);
+			手动枚举所有成员
+			function convertToArray(nodes){
+			var array = null;
+			try {
+				array = Array.prototype.slice.call(nodes, 0);  
+				} catch (ex) {
+					array = new Array();
+					for (var i=0, len=nodes.length; i < len; i++){
+						array.push(nodes[i]);
+					}
+				}
+				return array;
+			}
+		节点属性
+		childNodes 子节点集合
+			例子
+		
+				function myFunction(){  
+				  var txt = "";
+				  var c = document.body.childNodes;
+				  for (i= 0; i<c.length; i++){
+				  txt+=c[i].nodeName +"<br>";
+				
+				};
+				
+				var x = idd("div1");
+				x.innerHTML=txt;
+				}
+				</script>
+				 
+				<div id="div1">在上方输入框输入"属性名"及"属性值"，点击确定按钮查看效果。</div>
+				
+				 <button onclick="myFunction()">点我</button>  /
+		ownerdocument 返回顶层文档对象
+		textContent  文本内容
+		
+	3.操作节点
+			添加节点
+				appendChild
+					例子  
+					var p = document.createElement("p");
+					document.body.appendChild(p);
+			
+				Node.cloneNode  克隆节点
+					例子
+					var itm=document.getElementById("myList2").lastChild;
+					var cln=itm.cloneNode(true);
+					document.getElementById("myList1").appendChild(cln);
+			
+				node.insertBefore(新元素，位置谁的前面)
+			
+			替换节点
+			replaceChild(新元素，旧元素)
+			
+			删除节点
+			 例子 删除所有子节点
+				var element = document.getElementById("top");
+				while (element.firstChild) {
+				  element.removeChild(element.firstChild);
+				}
+			
+			4.其他方法
+			div.normalize();  去除div里面的空格
+		
+ document类型
+	1. Document
+	  nodeType 的值为 9 
+	  nodeName 的值为 "#document"  
+	  nodeValue 的值为 null  
+	  parentNode 的值为 null  
+	  ownerDocument 的值为 null  
+	
+	document对象是HTMLDocument对象的一个实例
+	
+	2. 文档信息
+	
+	获得文档标题   document.title
+	设置文档标题   document.title = "New page title";
+	
+	URL 域名      document.URL;  document.domain;
+	referrer      简单说 就是A页面有个链接，点击链接会跳转到B页面，此时访问B页面的referrer属性 就会返回A页面的URL
+	
+	3. 查找元素
+	
+	document.getElementById()、getElementByTagName()  、getElementByName()
+	
+	
+	4. 特殊集合
+	 document.forms 等同于  document.getElementsByTagName("form")
+	 document.images 等同于  document.getElementsByTagName("img")
+	5. 文档写入
+	document.writeln 和 document.write 一样，但是会添加一个换行符
+	
+ element类型
+
+	1. html元素
+		htmlelement类型直接继承自Elelment
+	特性
+		id         唯一标识符
+		className  类
+		title      信息
+		dir        语言方向 值为 ltr
+	2. 操作特性
+		getAttribute()  
+	3. 设置属性
+		setAttribute()  
+		removeAttribute()
+	
+	4. attributes属性
+	Element类型是使用attributes属性的唯一一个DOM节点类型
+	attributes属性包含一个节点名称地图 类似于 nodelist 
+	也是一个动态的集合  元素的每一个特性都由 一个attr节点表示 
+	getNamedItem(属性名)
+		<button onclick="myFunction()">点我</button>
+		var a=document.getElementsByTagName("BUTTON")[0];
+		a.attributes.getNamedItem("onclick").textContent;   /
+		解离 
+		a.attributes.getNamedItem("onclick")  
+		onclick="myFunction()"
+	    
+	    a.attributes.getNamedItem("onclick").textContent;
+	    "myFunction()"
+	
+	
+	removeNamedItem(属性名) 删除属性
+		<input type="button" value="OK">
+		var btn=document.getElementsByTagName("INPUT")[0];
+		btn.attributes.removeNamedItem("type");
+	
+	setNamedItem(node)
+		var h=document.getElementsByTagName("H1")[0];
+		var typ=document.createAttribute("class");
+		typ.nodeValue="democlass";
+		h.attributes.setNamedItem(typ);
+	
+	item(索引)
+		>>>a
+		>>><button onclick=​"myFunction()​">​点我​</button>​   /
+		
+		a.attributes.item(0)
+		onclick=​"myFunction()​"
+	5. 创建元素 
+	var div = document.createElement("div");
+	document.body.appendChild(div);                       
+
+
+ text类型
+	splitText(下标)  
+
+
+ comment类型
+	documen.creatComment()创建注释
+
+10.2
+
+	10.2.1 动态脚本
+		<script type="text/javascript" src="client.js"></script>   //
+		创建script元素
+			var script = document.createElement("script");
+			script.type = "text/javascript";
+			script.src = "client.js";
+			document.body.appendChild(script);
+	
+	10.2.2 动态样式
+		<link rel="stylesheet" type="text/css" href="styles.css">
+	10.2.3 操作表格
+		略
+	10.2.4 使用nodelist
+		var divs = document.getElementsByTagName("div"),
+		i,
+		len,
+		div;
+		for (i=0, len=divs.length; i < len; i++){
+		div = document.createElement("div");
+		document.body.appendChild(div);
+		}
+
+第十一章 DOM 扩展
+
+11.1 选择符
+	querySelector()
+		<div class="user-panel main">
+		var el = document.querySelector("div.user-panel.main ");
+	querySelectorAll() 
+		function myFunction() {
+		    var x = document.querySelectorAll("p");
+		    var i;
+		    for (i = 0; i < x.length; i++) {
+		        x[i].style.backgroundColor = "red";
+		    }
+		}
+	
+11.2 元素遍历
+	firstElementChild firstChild  返回第一个子元素
+	lastElementChild  lastChild   返回最后一个子元素
+
+
+11.3 html5
+
+	1. 获取所有包含class名称为 test 的元素：
+	   element.getElementsByClassName('test');
+
+	2. classlist属性
+
+		// div是具有class =“foo bar”的<div>元素的对象引用
+		div.classList.remove("foo");
+		div.classList.add("anotherclass");
+		
+		// 如果visible被设置则删除它，否则添加它
+		div.classList.toggle("visible");
+		
+		// 添加/删除 visible，取决于测试条件，i小于10
+		div.classList.toggle("visible", i < 10);
+		
+		alert(div.classList.contains("foo"));
+		
+		//添加或删除多个类
+		div.classList.add("foo","bar");
+		div.classList.remove("foo", "bar");
+
+
+	11.3.2 焦点管理
+	 什么元素获得了焦点
+		var button = document.getElementById("myButton");
+		button.focus();
+		alert(document.activeElement === button); //true
+	
+	 是否获得了焦点
+	    document.hasFocus() 返回布尔值
+	
+	11.3.3
+	 readyState属性
+		loading 正在加载文档
+		complete 已经加载完文档
+		
+		if(document.readyState == "complete"){
+	    	//执行操作
+		}
+	11.3.6  
+	 innerHTML
+	
+		div.innerHTML = "Hello & welcome, <b>\"reader\"!</b>";
+	 
+		Hello & welcome, "reader"!
+	
+			赋值操作：先对值内容进行模式匹配，然后把处理后的值赋予给innerHTML属性。
+			
+			        模式匹配结果将导致 保留 和 将字符转换为HTML实体 两个操作。
+			
+			        a. 以下情况将被保留
+			
+			             1. HTML实体（ASCII实体、符号实体和字符实体）的实体名或实体编号；
+			
+			             2. 符号实体和字符实体对应的字符；
+			
+			             3. 没有HTML实体与之对应的字符；
+			
+			             4. HTML标签。(如<img>)
+			
+			        b. 以下情况将会执行字符转换为HTML实体
+			
+			              1. ASCII实体对应的字符（<、>、& '和"）
+			
+			        也就是说除了单独的 <、>、&、'和" 会被转换为实体名外，将原封不动地将值赋予给innerHTML属性。  
+			
+			  取值操作：直接获取innerHTML属性值。
+	
+	 textContent
+		
+		div.textContent = "Hello & welcome, <b>\"reader\"!</b>";
+		
+		结果：Hello & welcome, <b>"reader"!</b>  // <br/>等元素是不生效的。
+		  
+		  赋值操作：先将ASCII实体对应的字符（<、>、&、'和"）转换为实体名，然后把处理后的值赋予给innerHTML属性。
+		
+		  取值操作：textContent的取值实际上就是对innerHTML的属性值进行一系列处理，然后返回，具体步骤如下
+		
+		        1. 对HTML标签进行剔除；
+		
+		        2. 将ASCII实体转换为相应的字符。
+		
+		       注意：
+		
+		            a. 对HTML标签是剔除不是解析，也不会出现CSS解析和渲染的处理，因此<br/>等元素是不生效的。
+		
+		            b. 不会剔除格式信息和合并连续的空格，因此\t、\r、\n和连续的空格将生效。
+		
+
+深入浅出dom https://github.com/jawil/blog/issues/9
+BOM https://www.cnblogs.com/venoral/p/5506307.html
+
+dom继承 <p> HTMLParagraphElement HTMLElement Element   Node EventTarget Function Object
+
+
+document.createElement("p") 是一个实例对象，它是由构造函数HTMLParagraphElement产生的
+function HTMLParagraphElement() { 
+    [native code] 
+}
+document.createElement("p")=new HTMLParagraphElement('p');
+
+document.createElement("p").constructor===HTMLParagraphElement 
+document.createElement("p").__proto__===HTMLParagraphElement.prototype
+
+
+十二章 dom2  dom3
+
+12.1 dom 变化
+dom1级 主要定义的是html和xml文档的底层结构  dom2 dom3 则在这个结构上引入了更多的交互能力
+
+
+12.2 样式
+访问元素的样式
+var myDiv = document.getElementById("myDiv");
+ //设置背景颜色
+myDiv.style.backgroundColor = "red";
+ //改变大小
+myDiv.style.width = "100px";
+myDiv.style.height = "200px";
+ //指定边框
+myDiv.style.border = "1px solid black";
+
+
+
+操作样式表
+	css规则
+	创建规则
+	删除规则
+元素大小
+	
+	offsetwidth=width+padding+border+滚动条宽度
+	offsetwidth图：https://developer.mozilla.org/@api/deki/files/186/=Dimensions-offset.png
+	
+	clientWidth=width+padding
+	clientWidth图：https://images0.cnblogs.com/blog/166781/201412/291654504031651.png
+ 
+	确认元素大小
+12.3 遍历
+NodeIterator
+TreeWalker
+12.4 范围
+
+	简单选择
+		selectNode() 选择整个节点
+		selectNodeContents() 选择节点的子节点
+		以下面的HTML代码为例
+		
+		<!DOCTYPE html>
+		<html>
+		    <body>
+		        <p id="p1"><b>Hello</b> world!</p>
+		    </body>
+		</html>
+		var range1 = document.createRange();
+		var range2 = document.createRange();
+		var p1 = document.getElementById("p1");
+		range1.selectNode(p1);
+		range2.selectNodeContents(p1);
+	复杂选择
+		setStart()和setEnd()方法
+		
+		<!DOCTYPE html>
+		<html>
+		    <body>
+		        <p id="p1"><b>Hello</b> world!</p>
+		    </body>
+		</html>
+		var p1 = document.getElementById("p1");
+		helloNode = p1.firstChild.firstChild;
+		worldNode = p1.lastChild;
+		
+		var range = document.createRange();
+		range.setStart(helloNode,2);
+		range.setEnd(worldNode,3);//空格0 w是1 o是2 l是3
+		就可以选择从llo到world中的o部分了	
+
+
+
+
+事件原理，闭包，调用栈，Promise，ES6， 工程化，webpack, 性能优化，跨域，安全问题， 
+Virtual DOM，Diff 算法， 移动端布局，浏览器渲染原理，Event Loop 等
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+
+
+dom  bom  事件 
+
+
+
+事件处理程序：事件触发时运行的代码块    也叫事件监听器 既监听也处理
+事件对象 event  每个事件都是继承自Event 类的对象
+
+Event() 构造函数, 创建一个新的事件对象 Event。
+
+EventTarget是一个由可以接收事件的对象实现的接口
+
+
+
+document-->Node---> EventTarget
+
+以下接口都从Node继承 方法和属性：
+
+	Document, Element,  (which Text, Comment, and CDATASection inherit), ProcessingInstruction, DocumentFragment, DocumentType, Notation, Entity, EntityReference
+
+
+
+
+window 对象表示一个包含DOM文档的窗口，其 document 属性指向窗口中载入的 DOM文档
+
+Document接口表示任何在浏览器中已经加载好的网页，并作为一个入口去操作网页内容（也就是DOM tree）
+
+HTMLElement 接口是所有HTML元素的基础接口
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+Element.prototype Node.prototype EventTarget.prototype Object.prototype
+
+
+
+
+﻿
+
+​document.__proto__ >HTMLDocument.__proto__ >>Document.__proto__>>Node.__proto__>>EventTarget.__proto__
+
+
+document.body.__proto__->HTMLBodyElement.prototype->HTMLElement.prototype->Element.prototype->Node.prototype->EventTarget.prototype->Object.prototype
+
+
+document.documentElement.__proto__->HTMLHtmlElement.prototype->HTMLElement.prototype->Element.prototype->Node.prototype->EventTarget.prototype->Object.prototype
+
+
+
+
+
+
+
+事件委托 
+需要先了解事件绑定、事件监听、事件派发
+事件委托就是利用冒泡的原理，把事件加到父元素或祖先元素上，触发执行效果
+/*
+    <ul id="list">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+    </ul>
+ 
+*/
+var list = document.querySelector('#list')
+console.log(list)
+list.addEventListener('click',function (e){
+if(e.target.tagName === 'li'){
+console.log('当前元素事件触发成功')
+}
+})
+
+
+ 
+
+
+
+
+
+
+
+dom对象
+	getElementByName  
+	getElementByTagName  
+	
+	getAttribute
+	setAttribute
+
+	访问子节点childNodes
+	访问父节点parentNode
+    访问兄弟节点 previousSibling   nextSibling
+
+    插入节点 
+    删除节点
+    替换节点
+    
+    创建元素节点
+    创建文本节点
+
+    节点属性
+    	节点名 nodename
+    		元素节点----> 标签名
+    		属性节点----> 属性名
+    		文本节点----> #text
+    		文档节点----> #document
+    	节点值 nodevalue
+    		元素节点 的nodevalue是 undefined 或 null
+    		文本节点 的值是文本自身
+    		属性节点的值 是属性值
+    	节点类型
+
+    		元素  1
+    		属性  2 
+    		文本  3
+    		注释  8
+    		文档  9
+
+
+
+dom操作 
+
+	获取节点
+		document
+			getElementById   元素id
+			getElementByName 元素name属性
+			getElementByTagName 元素标签
+		节点指针
+			firstChild
+			lastChild
+			childNodes
+			previousSibling
+			nextSibling
+			parentNode
+
+	节点操作
+		创建节点
+			createElement
+			createAttribute
+			createTextNode
+		插入节点
+			appendChild   后插
+			insertBefore  前插
+		
+		替换节点 replaceChild
+
+		复制节点 cloneNode
+
+		删除节点 removeChild
+
+	属性操作
+		获取属性 getAttribute
+		设置属性 setAttribute
+		删除属性 removeAttribute
+
+	文本操作
+		splitText(3)  分割
+		xml
+			appendData()	向节点追加数据。
+			deleteData()	从节点删除数据。
+			insertData()	向节点中插入数据。
+			replaceData()	替换节点中的数据。
+			replaceWholeText(text)	使用指定文本来替换此节点以及所有相邻的文本节点。
+			splitText()	在指定的偏移处将此节点拆分为两个节点，同时返回包含偏移处之后的文本的新节点。
+			substringData()	从节点提取数据。
+	
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+DOM
+wangdoc.com
+Node接口
+	所有的节点都继承自node
+
+	属性
+	Node.prototype.nodeType  
+		 1	元素节点
+		 2	属性节点
+		 3	文本节点
+		 4	字符数据节点（文本不会被解析器解析）
+		 5	实体引用节点
+		 6	实体节点
+		 7	处理指令节点
+		 8	注释节点
+		 9	文档节点（DOM树的根节点）
+		 10	向为文档定义的实体提供接口
+		 11	表示邻接节点和它们的子树。
+
+	Node.prototype.nodeName  节点名称
+		文档节点（document）：#document
+		元素节点（element）：大写的标签名
+		属性节点（attr）：属性的名称
+		文本节点（text）：#text
+		文档片断节点（DocumentFragment）：#document-fragment
+		文档类型节点（DocumentType）：文档的类型
+		注释节点（Comment）：#comment
+ 
+	Node.prototype.textContent  设置或返回当前节点和所有后代文本节点的内容
+
+	document.baseURI  当前网页的绝对路径
+
+	ownerDocument 返回顶层文档对象
+
+	nextSibling      下一个兄弟节点 
+	    遍历所有子节点
+		var e = document.documentElement.firstChild;
+		while (e !==null){
+
+			var ev = e.nextSibling.nodeName
+			console.log(ev.length)
+	
+		}
+	previousSibling  上一个兄弟节点
+
+	
+	parentNode  返回父节点 
+		对一个节点来说 父节点只可能有三种 元素节点  文档节点  文档片段节点(documentfragment)
+
+	parentElement 返回父元素  不是元素返回 null  
+
+	childNodes 返回一个类数组 (nodelist)  成员包括当前节点的所有子节点
+
+	方法  
+	
+		锚点—— 节点操作
+
+
+nodelist  
+
+	nodelist是一种类数组 
+		var children = document.body.childNodes;
+	
+	NodeList.prototype.length  节点数量
+		document.querySelectorAll('div').length
+	
+	NodeList.prototype.forEach()  遍历成员
+	
+	NodeList.prototype.item( )
+		document.body.childNodes.item(0)  返回第一个成员
+
+htmlcollection接口
+	是一个节点对象集合 只能包含元素节点 (element) 比如 document.links docuement.forms document.images  不能包含其它节点 
+
+	没有forEach 只能使用for循环
+
+
+	HTMLCollection.prototype.length  成员数量
+	HTMLCollection.prototype.item()  成员位置
+	
+	namedItem
+		<img id="pic" src="http://example.com/foo.jpg">
+		
+		var pic = document.getElementById('pic');
+		document.images.namedItem('pic') === pic // true
+
+parentNode接口 
+	parentNode.children 返回一个HTMLcollection实例 成员是当前节点的子节点
+	firstElementChild  当前节点 第一个元素子节点
+	lastElementChild   当前节点 最后一个元素子节点 
+ 	
+ 	childElementCount  所有子节点的数目
+ 	追加子节点   prepend >>当前节点<< append
+
+childNode接口
+	插入同级节点   before()>> 当前节点 <<after()
+	替换   el.replaceWith(p)  el被 p 替换
+Document节点
+	document对象继承了EventTarget接口、Node接口、ParentNode接口。这意味着，这些接口的方法都可以在document对象上调用。
+	
+	document.addEventListener()
+	
+	document.createElement()	创建 元素节点。
+	document.createAttribute()	创建 属性节点
+	document.createTextNode()	创建 文本节点
+	document.getElementById()	返回对拥有指定 id 的第一个对象的引用。
+Element节点
+	Element对象继承了Node接口
+	<button>元素的节点对象由HTMLButtonElement构造函数生成。因此，元素节点不是一种对象，而是一组对象
+	Element.draggable   是否可拖动
+	element.attributes	返回一个元素的属性数组
+	element.childNodes	返回元素的一个子节点的数组
+	element.children	返回元素的子元素的集合
+	element.querySelector()	   匹配第一个子元素  
+	element.querySelectorAll() 匹配所有
+	element.innerHTML	       设置或者返回元素的内容。
+属性操作
+    Element.getAttribute()  获取属性  只返回字符串
+	Element.getAttributeNames()  所有属性的名字 返回 数组
+	Element.attributes()         所有属性的名字 返回类数组
+	Element.setAttribute() 
+	Element.hasAttribute()  返回一个布尔值
+	Element.hasAttributes() 返回一个布尔值
+	Element.removeAttribute() 
+	
+	dataset 自定义属性 
+
+
+
+
+
+
+
+
+
+
+事件 
+
+监听事件
+	监听load事件 显示欢迎信息 那么当浏览器加载完一个网页之后 就会显示欢迎信息
+
+	内联属性(避免使用)
+		/* <button onclick='alert("你点击了这个按钮");'>点击这个按钮</button>  */
+		javascript和html代码耦合在了一起  不便于维护和开发   
+
+	dom属性绑定
+		element.onclick=function(event){
+			alert("你点击了这个按钮")
+		}
+		上面的代码就是监听element节点的click事件 有较好的兼容性 缺点是 如果在后面的代码中
+		再次为此节点绑定一个回调函数 会覆盖之前的回调函数内容 
+
+	使用事件监听函数
+		var btn=document.getElementById("btn")
+
+		btn.addEventListener("click",function(){
+			alert('你单击了这里')		
+		},false);
+		参数 
+			event 不使用 "on" 前缀
+			function 指定要事件触发时执行的函数
+			useCapture  true  false  捕获 冒泡 
+		
+		
+		//ie的方法
+		//attachEvent('onclick',function(){{alert('1')}});
+
+移除事件监听
+	绑定的回调函数不能是匿名函数  
+	var btn =document.getElementById('btn');
+	btn.addEventListener('click',fun,false);
+
+	var fun = function(){
+		alert('这个按钮只能点一次')；
+		btn.removeEventListener('click', fun,false)
+	};
+
+
+触发指定事件
+
+
+
+
+事件触发过程
+	捕获阶段
+		
+		捕获阶段的任务就是建立事件传递线路 以便后面冒泡阶段顺着这条线路返回window 
+	目标阶段
+
+		目标对象同时绑定了 捕获和冒泡 写在前面的优先执行
+		/*
+		<div>
+           <p>这是一段话，这里有个<strong>加粗字体</strong>。</p>
+		</div>
+		 
+		 <script>
+		 	
+		 	//var btn =document.getElementById('btn');
+		 	document.addEventListener('click',function(e){
+		 		alert(e.target.tagName);
+		 	},false) 
+		 </script>
+		 */
+
+
+
+	冒泡阶段
+
+		/*
+		
+		</html><html lang="zh-cn">
+		<head>
+		    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		    <title>js事件机制</title>
+		    <style>
+		    * {
+		 		 box-sizing: border-box;
+		 		 margin: 0;
+		 		 padding: 20px;
+		 		 transition: background 800ms;
+		    }
+		       html{
+		       	height:100%;
+		       	background: hsl(193, 66%, 55%);
+		
+		       }
+		
+		       body{
+		       	height:100%;
+		       	background: hsl(193, 66%, 65%);
+		       }
+		
+		
+				div {
+				  height: 100%;
+				  background: hsl(193, 66%, 75%);
+				}
+				
+				ul {
+				  height: 100%;
+				  list-style: none;
+				  background: hsl(193, 66%, 85%);
+				}
+				
+				li {
+				  height: 100%;
+				  background: hsl(193, 66%, 95%);
+				}
+				
+				.highlight {
+				  background: red;
+				}
+		    </style>
+		    </head>
+		<body>
+		
+		 <div>
+		     <ul>
+		     	<li>单击一层查看事件移动到DOM树。</li>
+		     </ul>
+		</div>
+		 
+		 <script>
+		 	
+		 	//var btn =document.getElementById('btn');
+		  
+		var html = document.documentElement;
+		var body = document.body;
+		var div = body.querySelector("div");
+		var ul = body.querySelector("ul");
+		var li = body.querySelector("li");
+		var pause= 200;
+		
+		// Capture
+		html.addEventListener('click', callback, true);
+		body.addEventListener('click', callback, true);
+		div.addEventListener('click', callback, true);
+		html.addEventListener('click', callback, true);
+		ul.addEventListener('click', callback, true);
+		li.addEventListener('click', callback, true);
+		
+		// Bubble
+		html.addEventListener('click', callback, false);
+		body.addEventListener('click', callback, false);
+		div.addEventListener('click', callback, false);
+		html.addEventListener('click', callback, false);
+		ul.addEventListener('click', callback, false);
+		li.addEventListener('click', callback, false);
+		
+		function callback(e){
+			var ms = e.timeout=(e.timeout+pause)||0;
+			var target = e.currentTarget;
+			setTimeout(function(){
+				target.classList.add('highlight');
+				setTimeout(function(){
+					target.classList.remove('highlight');
+				},pause)
+			},ms)
+		}
+		
+		 </script>
+		 
+		 
+		</body>
+		</html>
+		*/
+
+	为什么不用第三个参数
+		ie不支持捕获
+	停止事件冒泡
+		/*
+		<div> 
+		这是div
+			<p>
+		    这是p
+				<span>这是span</span>
+			</p>
+		</div>
+		
+		<script>
+		
+		$("span").click(function(event){
+		    event.stopPropagation();
+		    alert("单击了span元素.");
+		  });
+		  $("p").click(function(event){
+		    alert("单击了p元素.");
+		  });
+		  $("div").click(function(){
+		    alert("单击了div元素.");
+		  });
+		</script>
+
+
+
+
+
+
+		阻止默认
+
+            event.defaultPrevented 返回一个布尔值，表明当前事件是否调用了 event.preventDefault()方法。
+
+			<body>
+		    <p>请点击复选框控件</p>
+		    <form>
+		        <label for="id-checkbox">Checkbox</label>
+		        <input type="checkbox" id="id-checkbox" name="checkbox" />
+		    </form>
+		    <script>
+		        document.querySelector("#id-checkbox").addEventListener("click", function(event){
+		            event.preventDefault();  //阻止该复选框被勾选
+		            setTimeout(function (){
+		              alert("preventDefault会阻止该复选框被勾选.")
+		            },0)
+		        }, false);
+		    </script>
+		    </body>
+		
+              */
+
+
+
+
+Event对象
+
+Event对象本身就是一个构造函数
+event = new Event(事件名称, options)
+options有两个属性：
+	bubbles 默认为false   
+	cancelable 能否用Event.preventDefault()取消这个事件
+
+例子：
+	// 创建一个支持冒泡且不能被取消的look事件
+	
+	var ev = new Event("look", {"bubbles":true, "cancelable":false});
+	document.dispatchEvent(ev);
+
+
+一般的流程是：创建 >> 初始化 >> 派发自定义事件 
+ 
+document.createEvent() >> event.initEvent(被弃用) >> element.dispatchEvent()
+
+	// 创建事件.
+	var event = document.createEvent('Event');
+	
+	// 初始化一个点击事件，可以冒泡，无法被取消
+	event.initEvent('click', true, false);   
+	
+	// 设置事件监听.
+	elem.addEventListener('click', function (e) {
+	  // e.target 就是监听事件目标元素
+	}, false);
+	
+	// 触发事件监听
+	elem.dispatchEvent(event);
+
+
+
+
+ 
+	
+
+
+
+/*
+<button>打印 Event Object</button>
+
+<script>
+
+    var btn = document.getElementsByTagName('button');
+    btn[0].addEventListener('click', function(event) {
+        console.log(event);
+    }, false);
+</script>*/
+
+
+	type(string)
+		事件的名称 比如 click
+	target(node)
+		触发事件的节点
+	
+	preventDefault(function)
+		可以禁止一切默认行为
+	stopPropagation(function)
+		停止冒泡 
+    stopImmediatePropagation (function)
+    	更加强力的阻止默认行为
+
+    
+    pageX 和 pageY (number)
+    	触发事件时 鼠标相对于页面的坐标
+    isTrusted (boolean)
+    	是用户触发  还是代码触发
+
+
+事件对象
+
+属性 
+
+	bubbles(boolean)           是不是在冒泡阶段触发的
+	
+	cancelable (boolean)       是否可以通过调用 event.preventDefault 方法来禁用默认行为。
+	
+	currentTarget(Element)     当前正在处理事件的那个元素
+	
+	defaultPrevented 布尔       为true表示已经调用了 preventDefault()     
+	
+	detail                     与事件相关的细节信息
+	
+	eventPhase (number)        当前事件触发在什么阶段   0：没有发生   捕获：1   目标：2   冒泡：3
+	
+	timeStamp                  返回一个毫秒时间戳 从网页加载成功开始计算  evt.timeStamp // 3000.6999999995896  发生了3秒
+	
+
+方法
+
+	type(string)                          事件的名称 比如 click
+	
+	target(node)                          触发事件的节点              
+
+	preventDefault(function)              可以禁止一切默认行为
+	
+	stopPropagation(function)             停止冒泡 
+    
+    stopImmediatePropagation (function)   更加强力的阻止默认行为
+
+    pageX 和 pageY (number)               触发事件时 鼠标相对于页面的坐标
+    
+    isTrusted (boolean)                   是用户触发  还是代码触发
+
+
+event.target返回触发事件的元素
+event.currentTarget返回绑定事件的元素
+
+target
+	/*
+	<ul id="ul">ul
+         <li>li<a href=""> a </a></li>
+         <li>li<a href=""> a </a></li>
+         <li>li<a href=""> a </a></li>
+     </ul>
+ 
+
+    <script>
+        var ul = document.getElementById("ul");
+        ul.onclick = function(event){
+            var tar = event.target;
+            var tagName = tar.nodeName.toLowerCase();
+            console.log("你点击了:"+tagName);
+            event.preventDefault();
+        }
+    </script>
+
+
+currentTarget
+   
+	<ul id="ul">ul
+	         <li>li<a href=""> a </a></li>
+	         <li>li<a href=""> a </a></li>
+	         <li>li<a href=""> a </a></li>
+	     </ul>
+	 
+	
+	   <script>
+	        var ul = document.getElementById("ul");
+	        
+	        ul.onclick = function(event){
+	            var tar = event.target;
+	            var current = event.currentTarget;
+	            var tagName = tar.nodeName.toLowerCase();
+	            console.log(tar == this);
+	            event.preventDefault();
+	        }
+	    </script>
+	*/
+
+
+todolist
+
+	　<input type="text" id="text">
+	   <input type="button" value="添加" id="button">
+	   <ul>
+	       <li>第1个<button class="btn" id="1">删除</button></li>
+	       <li>第2个<button class="btn" id="2">删除</button></li>
+	       <li>第3个<button class="btn" id="3">删除</button></li>
+	   </ul>
+	 <script>
+	            var button = document.getElementById("button");
+	            var text = document.getElementById("text");
+	            var ul = document.getElementsByTagName("ul")[0];
+	            var btnClass = document.getElementsByClassName("btn");        
+	        button.onclick = function(){
+	            var deleteButton = document.createElement("button");    
+	            var value = text.value;
+	                deleteButton.setAttribute("class","btn");
+	            var deleteText = document.createTextNode("删除");
+	                deleteButton.appendChild(deleteText);
+	            var li = document.createElement("li");
+	            var liText = document.createTextNode(value);
+	                li.appendChild(liText);
+	                li.appendChild(deleteButton);
+	                ul.appendChild(li);
+	            }
+	            ul.onclick = function(event){
+	                var tar = event.target;
+	                if(tar.nodeName.toLowerCase() == "button"){
+	                    tar.parentNode.parentNode.removeChild(tar.parentNode);
+	                }
+	            }
+	    </script>
+
+jquery中的事件
+
+	绑定事件 代理
+		<body id="p" >
+		 
+		<div>
+		  	<p>Click "<i>Load samples</i>" to view and edit more JS samples.</p>
+		</div>
+		 <script>
+		 $("#p").on("click", function(){
+		alert( $(this).text() );
+		});
+		 </script>
+		    <!--<script src="app.js"></script>-->
+		    <script src="jquery-3.3.1.min.js"></script>
+		</body>
+
+	触发事件trigger方法
+		自动获取焦点
+			$("input").trigger("click").focus();  
+		
+		给事件传递参数
+			$("p").click( function (event, a, b) {
+			  // 一个普通的点击事件时，a和b是undefined类型
+			  // 如果用下面的语句触发，那么a指向"foo",而b指向"bar"
+			} ).trigger("click", ["foo", "bar"]);
+	
+
+	兼容ie
+	事件回调函数中的作用域问题
+		 <button id="element">Click Me</button>
+		
+		 var element = document.getElementById('element');
+		
+		var user = {
+		 firstname: 'Bob',
+		 greeting: function(){
+		   alert('My name is ' + this.firstname);
+		 }
+		};
+		
+		 
+		element.addEventListener('click', user.greeting);
+		//My name is undefined
+		
+		解决上面问题 使用匿名函数
+			var element = document.getElementById('element');
+			
+			var user = {
+			 firstname: 'Bob',
+			 greeting: function(){
+			   alert('My name is ' + this.firstname);
+			 }
+			};
+			 
+			element.addEventListener('click', function() {
+			  user.greeting();
+			});
+			//匿名函数的作用域被指向事件触发元素
+
+		
+
+	常用事件和机巧  木牛流马
+		load 
+			监听load事件  图片加载完触发 可以保证js不会在资源未加载完成时处理资源 导致报错
+		beforeunload
+		输入信息未保存时触发
+			window.addEventListener("beforeunload", function( event ) {
+			    event.returnValue = "放弃当前未保存内容而关闭页面？";
+			});
+		resize
+		节点尺寸发生变化 触发事件
+			复杂布局通过javascript来计算尺寸 和位置  
+			浏览器发生任何尺寸变化都触发resize 会导致变卡 崩溃 
+
+			解决方法 防抖 节流 
+			throttle 方法大体思路就是在某一段时间内无论多次调用，只执行一次函数
+			debounce 方法大体思路就是在某一段时间内等待是否还会重复调用 如果不会再调用，就执行函数
+
+		
+	用js模拟触发内置事件
+	
+	自定义事件
+		与自定义事件的函数有 Event、CustomEvent 和 dispatchEvent。
+	开发中应用事件
+		用事件解耦
+		 
+		发布（Publish）和订阅（Subscribe）模式
+		针对上面这种用法，继续抽象一下，就是发布和订阅开发模式。正如其名，这种模式有两个角色：发布者和订阅者，此外有一条信道，发布者被触发往这个信道里面发信，订阅者从这个信道里面收信，如果收到特定信件则执行某个对应的逻辑。这样，发布者和订阅者之间是完全解耦的，只有一条信道连接。这样就非常容易扩展，也不会引入额外的依赖。
+		(function($) {
+
+		  var o = $({});
+		
+		  $.subscribe = function() {
+		    o.on.apply(o, arguments);
+		  };
+		
+		  $.unsubscribe = function() {
+		    o.off.apply(o, arguments);
+		  };
+		
+		  $.publish = function() {
+		    o.trigger.apply(o, arguments);
+		  };
+		
+		}(jQuery));
+		定义一个对象作为信道，然后提供了三个方法，订阅者、取消订阅、发布者。
+
+		
+

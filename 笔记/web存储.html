@@ -1,0 +1,52 @@
+<!---抽出需求  把需求变成代码  从需求中抽出功能  实现功能   两个难点  --->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div  style="border: 2px dashed #ccc; width:320px;text-align:center;">
+		<label for="sitename">网站名： </label>
+		<input type="text" id="sitename"  >
+		<br/> 
+		<label for="siteurl">网址：&nbsp;&nbsp; &nbsp;</label>
+		<input type="text" id="siteurl" name="siteurl">
+		<br/> 
+		<input type="button" onclick="save()" value="添加记录">
+		<hr/>
+		<label for="search_site">输入网站名</label>
+		<input type="text" id="search_site" name="search_site">
+		<input type="button" onclick="find()" value="查找">
+		<p id="find_result"></p>
+	</div>
+
+<script>
+	//保存数据
+	function save(){
+		var sitename = document.getElementById('sitename').value;
+		var siteurl = document.getElementById('siteurl').value;
+		localStorage.setItem(sitename,siteurl)
+		alert("添加成功")
+
+	}
+
+
+	function find(){
+		var search_site = document.getElementById('search_site').value;
+		console.log(search_site);
+		var siteurl = localStorage.getItem(search_site);
+		console.log(siteurl);
+		var find_result = document.getElementById('find_result');
+		find_result.innerHTML = search_site+"的网址是:"+siteurl;
+
+	}
+
+</script>
+
+
+
+
+</body>
+</html>

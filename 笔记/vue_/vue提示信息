@@ -1,0 +1,5 @@
+
+
+(current: {"os":"win32","arch":"x64"}) 
+
+这是warning错误，是因为mac下需要 fsevents，这里是在windows环境，所以可以忽略这个错误。
