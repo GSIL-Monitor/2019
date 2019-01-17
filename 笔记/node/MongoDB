@@ -128,9 +128,7 @@ not only SQL 不止是数据库
 插入
 
 	插入单个文档
-		db.news.insertOne(
-		   { item: "字符串", sum: 100, tags: ["数组"], size: {uom: "cm" } }
-		)
+		db.news.insertOne({ item: "字符串", sum: 100, tags: ["数组"], size: {uom: "cm" } } )
 		
 	插入多个文档
 		db.inventory.insertMany([

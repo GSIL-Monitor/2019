@@ -430,7 +430,7 @@ watch
 	绑定值
 
 
-7 放到 prop 组件
+7 放到 'vue prop 组件',js
 
 7组件
 	用法
@@ -486,3 +486,121 @@ watch
 
 知乎日播报
 电商网站
+
+
+
+
+	
+
+vue 第十一章 插件
+	vue-router基本用法
+	
+	跳转---
+	高级用法
+
+	vuex
+	状态管理和使用场景
+	vuex基本用法
+	高级用法
+
+	实战: 中央事件总线插件 vue-bus
+
+
+	前端路由 实现有两种:
+		 1. 利用url的 hash# 通过hashChange事件监听url的改变  
+		 2. html5的history模式 让url看起来像普通网址 以 / 分割  没有#号
+	
+	vue-router基本用法  
+		路由到不同的页面 就是 动态加载不同的组件
+		以下的解释 来自实战代码 vue-book-master\router
+		{
+       		path: '/index',
+       		meta: {
+       		    title: '首页'
+       		},
+       		component: (resolve) => require(['./views/index.vue'], resolve)
+
+    	}
+    	解释: 
+    		path属性就是当前匹配的路径
+    		component 是映射组件 
+    			webpack会把每一个路由都打包为一个js文件
+    			在请求页面时 才去加载这个页面的js 也就是异步实现的懒加载(按需加载)
+
+    			
+
+    			一次性全部加载的写法:
+    				{
+    					path:'index',
+    					component: require('./views/index.vue')
+    				}
+
+				使用异步路由后 编译出的每一个页面的js 都叫chunk(块)  默认的命名是 0.main.js
+					可以在webpack配置文件的出口  通过设置chunkFilename 来修改chunk命名
+					chunkFilename:'[name].chunk.js'
+
+
+				有了chunk后 在每一个页面(.vue)里写的样式 需要配置后才能打包进main.css
+				//webpack.config.js
+				plugins: [
+				        new ExtractTextPlugin({
+				            filename: '[name].css',
+				            allChunks: true
+				        })
+				    ]				
+                
+                路由不存在 重定向到首页
+				{
+   				     path: '*',
+   				     redirect: '/index'
+   				     
+   				 }
+        
+
+   		打印 路由信息		 
+        mounted () {
+            console.log(this.$route);
+			/*
+			fullPath: "/user/123"  完整路径
+			hash: ""
+			matched: Array(1)
+			    0: {
+			    	path: "/user/:id",
+			    	components:
+						default: { __file: "K:\vue\vue-book-master\router\views\user.vue",}
+					props:''
+			    	}
+			meta: {title: "个人主页"}
+			params: {id: "123"}
+			path: "/user/123"
+			query: {}
+			__proto__: Object
+			*/
+        	}
+    	}
+
+
+
+
+
+跳转---
+ 有两种方式:
+ 	第一种 <router-link to="about"〉
+ 		to 是一个 prop，指定需要跳转的路径
+ 		其他的prop: tag  replace active-class 
+
+	第二种
+		<button @click＝'handleRouter'>跳转到 user<button> 
+		methods: { 
+			handleRouter(){this.$router.push（user/l23;}
+		}
+
+高级用法
+
+vuex
+状态管理和使用场景
+vuex基本用法
+高级用法
+
+实战: 中央事件总线插件 vue-bus
+

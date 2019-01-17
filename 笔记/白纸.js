@@ -540,14 +540,4 @@ mvc    显示 调度 数据
     
     
   
-    
 
-
- main.js
- app.vue
-
- router/index.js    
-
- page/index.vue
-
- component/musiclist.vue 
