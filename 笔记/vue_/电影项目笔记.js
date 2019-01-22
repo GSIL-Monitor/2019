@@ -1,8 +1,7 @@
 书中存放数据库文件的文件夹
 E:\db\MongoDB
 
-
-C:\Users\sky\book_service
+2019 
 K:\vue\60529 Vue.js项目开发实战源代码文件\代码\book_service\book_service
 
 
@@ -22,6 +21,14 @@ router
 	app.use('/users', usersRouter);
 
 
+
+用于存放各种modle 的modles文件夹
+article 文章
+comment 评论
+mail    信
+movie   电影
+user    用户
+recommend  推荐
 
 
 注册路由  

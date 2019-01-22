@@ -25,6 +25,9 @@ Array---
 
 正则---
 
+json---
+
+
 https://www.cnblogs.com/-bluesky/
 
 
@@ -1790,7 +1793,7 @@ Object方法
 		{ "name":"菜鸟教程" , "url":"www.runoob.com" }
 		
 	数组	
-		{"sites": [] }
+		[{"name":"小明"},{"name":"小红"}] 
 	
 	访问方式
 		superHeroes.hometown
@@ -1820,8 +1823,41 @@ Object方法
 		};
 		
 		for (i in myObj.sites) {
-		    x += myObj.sites[i] + "<br>";
+		    x += myObj.sites[i] + ",";
 		}
+
+
+	var casts = [ "Google", "Runoob", "Taobao" ]
+	for(var p in casts){
+		console.log(casts[p].name+"、")
+	}
+
+
+	遍历多层json数组
+	
+		var datas = [{
+		            "id": 0,
+		            "child": [{"msg": "111"}, {"msg": "222"}]
+		        }, {
+		            "id": 1,
+		            "child": [{"msg": "333"}, {"msg": "444"}]
+		        }, {
+		            "id": 2,
+		            "child": [{"msg": "467"}, {"msg": "589"}]
+		        }];
+		
+		var str = ""; //存放第一层遍历的值
+		var strarr = []; //存放第二层遍历的值 
+		for (var i = 0; i < datas.length; i++) {
+		    str += datas[i].id;
+		    for (var j = 0; j < datas[i].child.length; j++) {
+		        strarr.push(datas[i].child[j].msg)
+		    }
+		}
+		console.log(strarr)
+	
+
+
 
 	转换为对象
 		JSON.parse('{ "name":"runoob", "alexa":10000, "site":"www.runoob.com" }');
@@ -1830,6 +1866,8 @@ Object方法
 	转换为字符串
 		var obj = { "name":"runoob", "alexa":10000, "site":"www.runoob.com"};
 		var myJSON = JSON.stringify(obj);
+
+
 
 
 获得对象的类名    字符串处理函数

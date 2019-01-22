@@ -159,3 +159,21 @@ $ {selectedText} - 活动文件中当前选定的文本
         }
     ]
 }
+
+
+常用插件推荐
+    Auto Close Tag：自动闭合Html/XML标签；
+    Auto Rename Tag：自动完成另一侧标签的同步修改；
+    Beautify：格式化代码，支持自定义格式化代码规则；
+    Bracket Pair Colorizer：给括号加上不同的颜色，区分不同的区块；
+    Debugger for Chrome：映射vscode上的断点到chrome上，方便调试；
+    ESlint：js语法纠错，配置较为复杂；
+    GitLens：方便查看git日志；
+    HTML CSS Support：智能提示css类型以及id；
+    Html Snippet ：智能提示Html标签，以及标签含义；
+    JavaScript(es6) code snippet ：es6语法智能提示，以及快速输入；
+    jQuery Code Snippet：jQuery 代码智能提示；
+    Material Icon Theme 和 vscode-icons：最好的vscode主题；
+    open in browser：支持快捷键在浏览器中打开html文件；
+    Path Intellisense：自动提示文件路径，支持各种快速引入文件；
+    Vetur：Vue多功能集成插件。   

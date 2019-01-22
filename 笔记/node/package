@@ -240,6 +240,14 @@ npm脚本 npm scripts   http://www.ruanyifeng.com/blog/2016/10/npm_scripts.html
 		不同项目的脚本命令，只要功能相同，就可以有同样的对外接口。
 		用户不需要知道怎么测试你的项目，只要运行npm run test即可
 
+"scripts": {
+         "dev:client": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.config.client.js",
+    	"dev:server": "nodemon server/server.js",
+    	"dev": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
+}
+
+
+
 原理
 每当执行 npm run 
 	就会自动新建一个 Shell，会将当前目录的node_modules/.bin子目录加入PATH变量，执行结束后，再将PATH变量恢复原样。
@@ -251,6 +259,10 @@ npm脚本 npm scripts   http://www.ruanyifeng.com/blog/2016/10/npm_scripts.html
 
 	npm 脚本的退出码 
 		也遵守 Shell 脚本规则。如果退出码不是0，npm 就认为这个脚本执行失败。
+
+
+
+
 
 
 Shell 通配符
