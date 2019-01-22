@@ -27,7 +27,7 @@ npm run dev
 
  request to https://registry.npmjs.org/webpack failed, reason: getaddrinfo ENOTFOUND registry.npmjs.org registry.npmjs.org:443
 
-
+                                                       
 
 
 
