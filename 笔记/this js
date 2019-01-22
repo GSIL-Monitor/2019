@@ -385,11 +385,4 @@ this
 
 this 转换代码
 
-func() 等价于 func.call(undefined)
-
-func(p1, p2)  等价于  func.call(undefined,p1,p2)
-
-obj.child.method(p1, p2) 等价于  obj.child.method.call(obj.child,p1,p2)
-
-func.call(context, p1, p2) <---这才是正常调用形式  上面都是语法糖
 

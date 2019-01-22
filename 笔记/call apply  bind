@@ -1,5 +1,16 @@
+func() 等价于 func.call(undefined)
+
+func(p1, p2)  等价于  func.call(undefined,p1,p2)
+
+obj.child.method(p1, p2) 等价于  obj.child.method.call(obj.child,p1,p2)
+
+func.call(context, p1, p2)  
 	
-       
+   
+
+
+
+
 所有的函数都是Function的实例对象  apply和call方法也在Function的prototype中
 		apply()
 			语法：func.apply(thisArg, [argsArray])
