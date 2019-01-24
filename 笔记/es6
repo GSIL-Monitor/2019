@@ -2,7 +2,6 @@
 觉得自己是“知道”的，所以就放过去的
 
 
-/*
 
 
 
@@ -168,7 +167,7 @@ Babel是一个广泛使用的ES6转码器  可以将ES6代码转为ES5代码
 		var month = String(new Date().getMonth() + 1).padStart(2, '0');    // 结果是'07'
 	
 	字符串模板 template string	
-		/*
+		
 		
 		
 		

@@ -3,8 +3,9 @@
 
 
 
+阻止冒泡事件
 
-
+currentTarget
 
 
 效果-----------------
@@ -1648,7 +1649,6 @@ $("<span><b>Hello world!</b></span>").replaceAll("p");
 		只触发jquery对象集合中第一个元素的事件处理函数
 		返回的是事件处理函数的返回值 不是jquery对象 所以不可链
 
-	阻止默认操作
 		$("input").triggerHandler("focus") //只触发绑定的focus事件 不获得焦点
 
      相同事件名称 不同命名空间 
@@ -1772,14 +1772,14 @@ $("<span><b>Hello world!</b></span>").replaceAll("p");
 	        });
 	 
 	
-	阻止默认事件
+	事件
 	
 	        $("a").click(function (e) {
 	            e.preventDefault();
 	        });
 	 
 	
-	阻止默认和冒泡事件
+	和冒泡事件
 	
 	        $("a").click(function (e) {
 	            return false;
@@ -1822,23 +1822,23 @@ delegate()
 
 delegateTarget
 
-	<button> 直接绑定事件，delegateTarget 和 currentTarget 是相等的。</button> 
-	 //
-	$(function(){
-		$("button").on("click",function(event){
-			alert( "delegateTarget返回："+event.delegateTarget.nodeName+"\n currentTarget 返回"+event.currentTarget.nodeName);
+	1.<button> 直接绑定事件，delegateTarget 和 currentTarget 是相等的。</button> 
+	  
+		$(function(){
+			$("button").on("click",function(event){
+				alert( "delegateTarget返回："+event.delegateTarget.nodeName+"\n currentTarget 返回"+event.currentTarget.nodeName);
+			});
 		});
-	});
-	
-	<button> 委托事件  delegateTarget显示委托对象body   currentTarget显示触发对象button </button>
-	//
-	$(function(){
-		$("body").on("click","button",function(event){
-			alert( "delegateTarget返回："+event.delegateTarget.nodeName+"\n currentTarget 返回"+event.currentTarget.nodeName);
+		
+	2.<button> 委托事件  delegateTarget显示委托对象body   currentTarget显示触发对象button </button>
+	 
+		$(function(){
+			$("body").on("click","button",function(event){
+				alert( "delegateTarget返回："+event.delegateTarget.nodeName+"\n currentTarget 返回"+event.currentTarget.nodeName);
+			});
 		});
-	});
 	
-	例2：//
+	例 ：//
 		<div>
 	        外层div元素
 	        <span id="one">内层span元素</span>
@@ -2413,10 +2413,7 @@ $(function(){
 					$this = $this.parent();  //检索上一级匹配元素
 
 				}
-			})
-
-			
-			 
+			}) 
 		}	
 	})
 })(jQuery);
