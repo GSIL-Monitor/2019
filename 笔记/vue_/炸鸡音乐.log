@@ -1,0 +1,65 @@
+src
+  /api  
+    后端请求 ajax jsonp
+    recommend.js
+  /base 
+    基础组件
+  /common 
+    静态文件
+    js
+      jsonp.js 
+    stylus 
+      variable  为变量定义的样式文件
+      mixin     定义了一些函数
+  /components 业务组件
+
+qq音乐  K:/vue/qq音乐
+---->  K:qq音乐
+
+
+//package.json
+fastclick  模块 
+    解决移动端点击300毫秒延迟的问题
+
+
+
+//webpack.base.conf.js
+resolve: { //就不用写相对路径了
+    extensions: ['.js', '.vue', '.json'],
+    alias: {
+      '@': resolve('src'),
+      'common': resolve('src/common'),
+      'components': resolve('src/components'),
+      'base': resolve('src/base'),
+      'api': resolve('src/api')
+    }
+  },
+
+
+
+
+vue新建文件模板
+    Ctrl + Shift + P  选择vue   会出来vue.json 在里面配置就行了 
+
+Quokka.js
+  实时观看 javascript 的变量的变化
+  先shift+cmd+p （ctrl+shift+p）输入 quokka 选择 new javascript 就行了😀
+
+
+
+
+flex
+
+接口
+https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg
+
+
+
+轮播图
+ 
+  better-scroll的实现原理
+    详情描述
+        父容器固定高度，并设置属性 overflow:hidden，使得子元素高度超出容器后能被隐藏。better-scroll作用在父容器上。通过touch事件给子容器设置transform：translate()translateZ(); 
+    注意： 
+      Vue中数据更新是异步的，在数据还没有加载完之前，BScroll是无法获取目标内容容器的高度的，就会出现无法滚动的现象。
+ 

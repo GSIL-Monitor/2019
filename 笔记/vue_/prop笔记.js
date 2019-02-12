@@ -2,19 +2,12 @@
 prop
    	prop的大小写--
    	传递静态和动态prop--
-   		传入一个数字
-   		传入一个布尔值
-   		传入一个数组
-   		传入一个对象
-   		传入一个对象的所有属性
+    
    	单向数据流--
    	prop验证--
    		类型检查--
-   	非prop特性--
-   		替换/合并已有的特性
-   		禁用特性继承
-    例子
-        驼峰变横杠
+   	
+      驼峰变横杠
 	    静态prop
 	    动态prop
 	    传递数字
@@ -63,7 +56,7 @@ prop
   显示效果：
     <div id="app">
       <div class="parent">
-        <div>chi</div>
+        <div>这里修改子模版内容 显示在页面上 child </div>
       </div>
     </div>
 
@@ -102,55 +95,8 @@ prop-----
 
 
 
+ 
 
-  传递静态和动态prop--
-
-    给prop传入一个静态值
-      <blog-post title="My journey with Vue"></blog-post>
-    
-    prop 可以通过 v-bind 动态赋值 
-  
-      <!-- 动态赋予一个变量的值 -->
-      <blog-post v-bind:title="post.title"></blog-post>
-      
-      <!-- 动态赋予一个复杂表达式的值 -->
-      <blog-post v-bind:title="post.title + ' by ' + post.author.name"></blog-post>
-
-
-
-    传入一个数字
-      <!-- 这是一个 JavaScript 表达式而不是一个字符串  数字和布尔都是表达式。-->
-      <blog-post v-bind:likes="42"></blog-post>
-      
-      <!-- 用一个变量进行动态赋值。-->
-      <blog-post v-bind:likes="post.likes"></blog-post>
-    传入一个布尔值
-      <blog-post v-bind:is-published="false"></blog-post>
-      <blog-post v-bind:is-published="post.isPublished"></blog-post>
-
-    传入一个数组
-      <blog-post v-bind:comment-ids="[234, 266, 273]"></blog-post>
-      <blog-post v-bind:comment-ids="post.commentIds"></blog-post>
-    传入一个对象
-      <blog-post v-bind:author="{ name: 'Veronica', company: 'Veridian Dynamics' }"></blog-post>
-      <blog-post v-bind:author="post.author"></blog-post>
-    传入一个对象的所有属性
-      post: {id: 1, title: 'My Journey with Vue'}
-      <blog-post v-bind="post"></blog-post>
-      等价于
-      <blog-post
-        v-bind:id="post.id"
-        v-bind:title="post.title"
-      ></blog-post>
-
-
-
-  单向数据流--
-    父级 prop 的更新会向下流动到子组件中，但是反过来则不行
-    
-    每次父级组件发生更新时，子组件中所有的 prop 都将会刷新为最新的值。
-
-    这意味着你不应该在一个子组件内部改变 prop
   
   prop验证--
     Vue.component('my-component', {
@@ -165,9 +111,17 @@ prop-----
           required: true
         },
         // 带有默认值的数字
+        //如果默认值是对象 则应该声明一个方法 里面返回这个对象  
         propD: {
           type: Number,
-          default: 100
+          default: 100,
+
+          default(){
+            return {
+              //键值
+            }
+          }
+
         },
         // 带有默认值的对象
         propE: {
@@ -186,6 +140,44 @@ prop-----
         }
       }
 
+      例子
+        参考官网 ：https://cn.vuejs.org/v2/guide/components-props.html
+          <div id="app">
+            <parent></parent>
+          </div>
+          
+          var childnode = {
+            template:"<div>{{message}}</div>",
+            props:{
+              message:Number  //只接受数字
+            }
+          }
+          var parentnode ={
+            template:`
+              <div class="parent">
+                <child v-bind:message="msg"></child>
+              </div>`,
+          components:{
+          child:childnode
+          },
+          data(){
+            return {
+              msg:123   //只要输入字符串就报错
+            }
+          }
+          
+          };
+          
+          new Vue({
+            el:"#app",
+            components:{
+          parent:parentnode
+          }
+          )}
+        
+
+
+
     类型检查--
 
       function Person (firstName, lastName) {
@@ -201,35 +193,6 @@ prop-----
       })
       来验证 author prop 的值是否是通过 new Person 创建的。
   
-
-  非prop特性--
-    一个非 prop 特性是指传向一个组件，但是该组件并没有相应 prop 定义的特性。
-    
-    替换/合并已有的特性--
-      从外部提供给组件的值会替换掉组件内部设置好的值  所以如果传入 type="text" 就会替换掉原本的 type="date"
-      class 和 style 特性会稍微智能一些，即两边的值会被合并起来
-    禁用特性继承--
-      Vue.component('my-component', {
-        inheritAttrs: false,
-        // ...
-      })
-    
-    在撰写基础组件的时候是常会用到的：
-      
-      Vue.component('base-input', {
-        inheritAttrs: false,
-        props: ['label', 'value'],
-        template: `
-          <label>
-            {{ label }}
-            <input
-              v-bind="$attrs"
-              v-bind:value="value"
-              v-on:input="$emit('input', $event.target.value)"
-            >
-          </label>
-        `
-      })
 
 
 
@@ -286,39 +249,40 @@ prop-----
 
 
 
+
 静态prop
 下载 上传
 
   //子组件要显式地用 props 选项声明它接受的数据
   <div id="app">
-    <shang></shang>
+    <parent></parent>
   </div>
   
-  var xianode={
+  var childnode={
     template:"<div>{{message}}</div>",
-    props:['message']
+    props:['message']   // 接收单个值   接收一类值
   }
   
-  var shangnode ={
+  var parentnode ={
     template:`
-    <div class="shang">
-      <xia message="aaa"></xia>
-      <xia message="bbb"></xia>
+    <div class="parent">
+      <child message="aaa"></child>  //key=value
+      <child message="bbb"></child>
     </div>`,
     components:{
-    xia:xianode
+    child:childnode
   }
   }
   new Vue({
     el:"#app",
     components:{
-    shang:shangnode
+    parent:parentnode
   }
   })
 
   显示效果：
     <div id="app">
-        <div class="shang">
+        <div class="parent">
             <div> aaa </div>
             <div> bbb </div>
         </div>
@@ -338,15 +302,15 @@ prop-----
   var parentNode = {
     template: `
     <div class="parent">
-      <child v-bind:myMessage="data1"></child>
-      <child v-bind:myMessage="data2"></child>
+      <child v-bind:my-message="data1"></child> // key=变量
+      <child v-bind:my-message="data2"></child>
     </div>`,
     components: {
       'child': childNode
     },
     data(){
       return {
-        'data1':'数据1',
+        'data1':'数据1', //变量=value
         'data2':'数据2'
       }
     }
@@ -363,10 +327,10 @@ prop-----
 传递数字
 
   <div id="app">
-    <shang></shang>
+    <parent></parent>
   </div>
   
-  var xianode = {
+  var childnode = {
     template:"<div>{{message}}的类型是{{type}}</div>",
     props:['message'],
     computed:{
@@ -375,13 +339,13 @@ prop-----
          }
         }
       };
-  var shangnode ={
+  var parentnode ={
     template:`
-      <div class="shang">
-        <xia v-bind:message="data"></xia>
+      <div class="parent">
+        <child v-bind:message="data"></child>
       </div>`,
     components:{
-      xia:xianode
+      child:childnode
     },
     data(){
       return {
@@ -392,45 +356,19 @@ prop-----
     new Vue({
       el:"#app",
       components:{
-       shang:shangnode
+       parent:parentnode
     }
   })
   
-验证prop
-参考官网 ：https://cn.vuejs.org/v2/guide/components-props.html
-  <div id="app">
-    <parent></parent>
-  </div>
-  
-  var childnode = {
-    template:"<div>{{message}}</div>",
-    props:{
-      message:Number
-    }
-  }
-  var parentnode ={
-    template:`
-      <div class="parent">
-        <child v-bind:message="msg"></child>
-      </div>`,
-  components:{
-  child:childnode
-  },
-  data(){
-    return {
-      msg:123   //只要输入字符串及报错
-    }
-  }
-  
-  };
-  
-  new Vue({
-    el:"#app",
-    components:{
-  parent:parentnode
-  }
-  )}
-单向数据流
+
+
+
+单向数据流--
+    父级 prop 的更新会向下流动到子组件中，但是反过来则不行
+    
+    每次父级组件发生更新时，子组件中所有的 prop 都将会刷新为最新的值。
+
+    这意味着你不应该在一个子组件内部改变 prop
   <div id="example">
     <parent></parent>
   </div>
@@ -486,5 +424,34 @@ prop-----
 
 
 
+<input v-model="temp" /> 输入
+<p>{{temp}}</p>          显示
+prop:['childMsg']        接收 
 
 
+data  computed  watch
+>>1
+  data(){
+    return{
+      temp:this.childMsg    
+    }
+  }
+
+>>2 
+  computed:{
+    temp(){
+      return this.childMsg
+    }
+  }
+
+>>>3
+  data(){
+    return{
+      temp:this.childMsg    
+    }
+  },
+  watch:{
+    childMsg(){
+      this.temp = this.childMsg
+    }
+  }

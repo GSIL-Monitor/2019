@@ -64,36 +64,45 @@ router----
 	动态路由匹配
 
 	例子:
-		<script src="https://unpkg.com/vue/dist/vue.js"></script>
+		<div id="app">
+		  <p>
+		    <router-link to="/" exact>index</router-link>
+		    <router-link :to="{name:'user'}">User</router-link>
+		    <router-link :to="{name:'bar'}">Go to Bar</router-link>
+		  </p>
+		  <router-view></router-view>
+		</div>
+		
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
 		<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
-		
-		 <div id="app">
-		   <p>
-		     <router-link to="/user/foo">/user/foo</router-link>
-		     <router-link to="/user/bar">/user/bar</router-link>
-		   </p>
-		   <router-view></router-view>
-		 </div>
-		    
 		<script>
-		          
-		const User = {
-		  template: `<div>User {{ $route.params.id }}</div>`
-		}
-		
-		const router = new VueRouter({
-		  routes: [
-		    { path: '/user/:id', component: User }
-		  ]
+		const home = { template: '<div>home</div>'};
+		const bar = { template: '<div>bar</div>'};
+		const user = {template: `<div>
+		                           
+		                          <router-link style="margin: 0 10px" :to="'/user/' + item.id" v-for="item in userList" key="item.id">{{item.userName}}</router-link>  
+		                      </div>`,
+		  data(){
+		    return{userList:[{id:1,userName:'u1'},{id:2,userName:'u2'},{id:3,userName:'u3'}]}
+		  }
+		};
+		const app = new Vue({
+		  el:'#app',
+		  router:new VueRouter({
+		    routes: [
+		      { path: '/', name:'home', component:home },
+		      { path: '/user/:id?', name:'user', component:user},
+		      { path: '/bar', name:'bar', component:bar},
+		    ],
+		  }), 
 		})
-		
-		const app = new Vue({ router }).$mount('#app')
-		
-		</script>
+
 	
 		效果:
-			/user/foo /user/bar  点击切换
-	        User bar
+			
+			index  User   Bar  
+			
+			user1 user2 user3
 	
 	
 		模式	                            匹配路径	                 $route.params
@@ -101,7 +110,12 @@ router----
 		/user/:username/post/:post_id	/user/evan/post/123	     { username: 'evan', post_id: '123' }
 	
 	
+
+
 	
+	
+
+
 	嵌套路由
 	 
 		例子:
@@ -196,7 +210,7 @@ router----
 
 
 
-命名路由
+命名路由   如果不写名字 就要写全路径 不够灵活
 	const router = new VueRouter({
 		routes:[
 			path:'/user/:userId',
@@ -269,19 +283,25 @@ router----
 
 
 重定向 的意思是，当用户访问 /a时，URL 将会被替换成 /b
-默认打开指定页
-
-	routes: [
-	    { path: '/', redirect: '/index' }  //  让 / 重定向到 index
-	  ]
+	默认打开指定页
 	
-别名 的功能让你可以自由地将 UI 结构映射到任意的 URL，而不是受限于配置的嵌套路由结构。
+		routes: [
+		    { path: '/', redirect: '/index' }  //  让 / 重定向到 index
+		  ]
+		
+	别名 的功能让你可以自由地将 UI 结构映射到任意的 URL，而不是受限于配置的嵌套路由结构。
+	
+		const router = new VueRouter({
+		  routes: [
+		    { path: '/a', component: A, alias: '/b' }  // a b 都指向 a
+		  ]
+		})
+	
+	不存在的url 重定向到首页
+		{ path: '*', redirect: "/foo"},
 
-	const router = new VueRouter({
-	  routes: [
-	    { path: '/a', component: A, alias: '/b' }  // a b 都指向 a
-	  ]
-	})
+
+
 
 
 
@@ -361,7 +381,7 @@ const router = new VueRouter({
 			<li>foo</li>
 	
 	 
-	 	active-class 
+	 	 active-class
 	 		默认值: router-link-active 
 	 		设置 链接激活时 使用的 CSS 类名。
 	

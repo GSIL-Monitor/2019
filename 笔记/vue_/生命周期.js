@@ -1,6 +1,7 @@
 
 生命周期例子
 钩子函数对应的阶段
+生命周期 实例方法
 Object.defineProperty()
 访问器属性
 v-model实现
@@ -39,13 +40,13 @@ v-model实现
 	                console.group('beforeCreate 创建前状态===============》');
 	               console.log("%c%s", "color:red" , "el     : " + this.$el); //undefined
 	               console.log("%c%s", "color:red","data   : " + this.$data); //undefined 
-	               console.log("%c%s", "color:red","message: " + this.message)  
+	               console.log("%c%s", "color:red","message: " + this.message) //undefined 
 	        },
 	        created: function () {
 	            console.group('created 创建完毕状态===============》');
 	            console.log("%c%s", "color:red","el     : " + this.$el); //undefined
-	               console.log("%c%s", "color:red","data   : " + this.$data); //已被初始化 
-	               console.log("%c%s", "color:red","message: " + this.message); //已被初始化
+	               console.log("%c%s", "color:red","data   : " + this.$data); //已被初始化 [object Object] 
+	               console.log("%c%s", "color:red","message: " + this.message); //已被初始化 Hello Vue 
 	        },
 	        beforeMount: function () {
 	            console.group('beforeMount 挂载前状态===============》');
@@ -102,9 +103,6 @@ v-model实现
 钩子函数对应的阶段
 
 	1. 触发beforecreate钩子
-	
-		beforeCrete: 此时,$el和data都为undefined,没有初始化
-	 
 		
 		当一个vue实例被创建时 他向vue的响应式系统中 加入data对象中 能找到的所有属性
 		
@@ -121,11 +119,21 @@ v-model实现
 			
 			this.fn = this.$methods.fn = this.methods.fn; 
 	
+
+	beforeCrete: 此时,$el和data都为undefined,没有初始化
+	 el     : undefined
+ 	 data   : undefined
+ 	 message: undefined
+	 
+
+
 	2.created:     创建后data初始化了,而$el没有
+	  el     : undefined
+      data   : [object Object]
+      message: Hello Vue
 	
 	
-	
-	2.1 将模板 template  编译成  render 函数  运行render方法 返回 一个vnode对象
+	 
 	   
 	 
 	3.brforeMount: 挂载之前,$el和data都初始化了 虚拟dom
@@ -133,7 +141,9 @@ v-model实现
 		     <p>​{{ message }}​</p>​//还没有对数据进行渲染
 		  </div>​
 	
-	
+	3.5 render 渲染真实dom 替换掉虚拟dom
+
+
 	4.mounted:     Vue实例挂载完成了   真实dom   
 	 
 		  <div id=​"app">​
@@ -149,10 +159,14 @@ v-model实现
 	
 	
 	
+生命周期 实例方法
 
-
-
-
+vm.$mount 手动挂载实例 
+	const app = new Vue({
+		//el:"#app",
+		template: <div>hello</div>
+	})
+	app.$mount("#app")
 
 
 

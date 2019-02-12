@@ -3,7 +3,7 @@
 组件--
 组件注册 
 	组件名
-		组件名大小写
+		组件名大小写  一个组件是一个类   类名大写
 			my-component-name 必须包含一个连字符 这会避免在未来产生元素冲突
 			直接在 DOM (即非字符串的模板) 中使用时只有 kebab-case 是有效的。
 
@@ -59,7 +59,7 @@
 		    el:"#app",
 		 })
 		
-		解决同步: 
+		解决同步: 不能使用全局变量
 		 
 		 Vue.component("my-component", {
 		    template:'<button @click="counter++">{{counter}}</button>',

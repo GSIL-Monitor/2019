@@ -1,0 +1,217 @@
+声明式渲染
+
+<div id="app">
+  {{ message }}
+</div>
+var app = new Vue({
+  el: '#app',
+  data: {
+    message: 'Hello Vue!'
+  }
+})
+
+
+app.$data 
+	{__ob__: Observer}
+	message: "Hello Vue!"
+
+app.$el
+	<div id="app">
+	  Hello Vue!
+	</div>
+
+app.$options
+	$options指的是new Vue()括号里的东西
+	new Vue({
+  		customOption: 'foo',
+ 	    created: function () {
+        console.log(this.$options.customOption) // => 'foo'
+     }
+    })
+
+
+app.$root
+	根 Vue 实例 
+	console.log(app.$root === app) //true
+
+
+
+ codsandboxe  沙盒
+
+
+computed 不要用set设置值  
+
+watch 观察监听 不要修改值  会导致无限循环
+
+
+ watch  键是需要观察的表达式，值是对应回调函数
+	const app = new Vue({
+	  template: `
+	  <div id="app">
+		 {{text}}
+		</div>
+	  `   ,
+	  data: {
+	    text: 12222
+	  },
+	  watch: {
+	    text: (newtext, oldtext) => {
+	      console.log(`${newtext}:${oldtext}`)
+	    }
+	  }
+	});
+	app.$mount("#app")
+	app.text += 1
+
+
+取消观察
+	const app = new Vue({
+	  template: ` <div id="app"> {{text}} </div> `,
+	  data: {text: 1 },
+	});
+	
+	app.$mount("#app")
+	
+	setInterval(() => {app.text += 2 },1000)
+	
+	const unwatch = app.$watch("text", (newtext, oldtext) => {  //观察 Vue 实例变化
+	  console.log(`${newtext}:${oldtext}`)
+	})
+	
+	setTimeout(() =>{unwatch() },3000)
+	
+
+
+
+$emit  $on  
+	app.$on("test", function(a, b){
+	  console.log("a"+a+b)
+	})
+	
+	app.$emit("test", 1,2 )
+
+
+
+renderError
+	只在开发者环境下工作 也只能捕获自己的错误  
+
+
+errorCaptured  
+	捕获错误 包括子组件  通过冒泡    可用于生产
+
+
+
+
+v-bind
+	:class="{active : isActive}"
+	:class="[isActive ? 'active' : '']"
+	:class="[{active : isActive}]"
+
+v-for 循环数组和对象  
+    <ul>
+        <li v-for="(item, index) in arr" :key="item">{{item}}:{{index}}</li>
+      
+        <li v-for="(val, key, index) in obj">{{val}}:{{key}}:{{index}}</li>
+    </ul>
+
+组件
+  全局注册  
+  局部注册
+
+
+
+prop
+
+ 	子组件不能随意修改父组件的值   推荐使用单向数据流              
+
+propsdata
+	只能用在 new 创建的实例中
+	
+	//codesandbox	
+	
+	import Vue from 'vue'
+	const compoent = {
+	  props:['propOne'],
+	  template: ` <div id="app"> <span>{{propOne}}</span> </div> `,
+	}
+	
+	const Compvue = Vue.extend(compoent)
+	new Compvue({
+	    el:"#app",
+	    propsData:{
+	            propOne:123 
+	    }
+	})
+
+继承  
+	两种形式 
+	const B = Vue.extend(A)
+	const C = {extends: A}
+
+	import Vue from 'vue'
+	const A = {
+	  props: {
+	    active: Boolean,
+	    propOne: String
+	  },
+	  template: `
+	    <div>
+	      <input type="text" v-model="text">
+	      <span @click="handleChange">{{propOne}}</span>
+	      <span v-show="active">see me if active</span>
+	    </div>
+	  `,
+	  data() {
+	    return {
+	      text: 0
+	    }
+	  },
+	  mounted() {
+	        console.log('comp mounted')
+	  },
+	  methods: {
+	    handleChange() {
+	      this.$emit('change')
+	    }
+	  }
+	}
+	
+	//  第一个例子
+	const  B = Vue.extend(A)
+	new  B({
+	    el:"#app",
+	    propsData:{
+	            propOne:'用户名不存在'
+	    },
+	    data:{
+	      text: 123 // 覆盖掉compoent的text  prop不能覆盖  只能用propsdata
+	    },
+	    mounted(){
+	      console.log('instance mounted')  // comp mounted  instance mounted 
+	    }
+	})
+	
+	//第二个例子
+	const C = {
+	  extends: A,
+	  data() {
+	    return {
+	      text: 10 //修改了 A里面 text 的值 
+	    }
+	  },
+	
+	}
+	new Vue({
+	    el:"#app",
+	  components: {
+	    comp: C
+	  },
+	  template: ` <comp></comp> `   
+	})
+	
+
+v-model
+
+
+
+render  

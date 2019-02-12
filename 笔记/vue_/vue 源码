@@ -1,0 +1,9 @@
+Vue实例化过程
+	实例化之前Vue会先给Vue挂载一系列的原型方法以及静态方法、属性
+	实例化时会对选项参数进行规范化、合并等操作
+	通过自定义Render方法、template、el等生成Render函数
+	数据进行绑定 通过Watcher监听数据的变化
+	数据发生变化时，render函数会执行生成VNode对象
+	通过patch方法，对比新旧VNode对象，再通过DOM Diff算法添加、修改、删除真正的DOM元素	
+
+

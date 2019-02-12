@@ -1,4 +1,4 @@
-<!---抽出需求  把需求变成代码  从需求中抽出功能  实现功能   两个难点  --->
+<!---抽出需求  从需求中抽出功能  实现功能   两个难点  --->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -28,7 +28,11 @@
 		var sitename = document.getElementById('sitename').value;
 		var siteurl = document.getElementById('siteurl').value;
 		localStorage.setItem(sitename,siteurl)
+		sessionStorage.setItem(sitename,siteurl)
 		alert("添加成功")
+
+        // 多次添加 相同的 key value 只添加了一次  
+        // 相同的 key  会覆盖 vlaue
 
 	}
 
@@ -42,11 +46,7 @@
 		find_result.innerHTML = search_site+"的网址是:"+siteurl;
 
 	}
-
-</script>
-
-
-
-
+ 
+</script>																																				 
 </body>
 </html>

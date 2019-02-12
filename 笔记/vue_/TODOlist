@@ -1,0 +1,28 @@
+ <div id="addNew">
+     <input type="text" name="newItemInput" v-model="newItem"/>
+     <button @click="addNewItem(newItem)">新增</button>  //点击按钮 添加数据
+
+     <h2>你的待办事项:</h2>
+     <ul>
+	    <li v-for="item in todoItems">{{item}}</li>  //列表
+    </ul>
+ </div>
+ <script>
+ var addNew = new Vue({
+    el:"#addNew",
+    data:{
+        todoItems:[],
+        newItem:""
+    },
+    methods:{
+        addNewItem:function(){
+            this.todoItems.push(this.newItem);
+            showItems.$emit("addNew", this.newItem)
+        }
+    }
+})
+
+addNew.$on("addNew",function(item){
+    this.todoItems.push(item)
+})    
+ </script> 

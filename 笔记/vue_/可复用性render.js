@@ -4,6 +4,7 @@
 
 插件--
 
+
 过滤器-- 
 
 
@@ -67,14 +68,21 @@ jsx--------
 
 自定义指令
 	注册全局自定义指令 v-focus
-		Vue.directive('focus',{
-		    inserted:function(el){
-		        el.focus()
-		    }
-		  })
-		  new Vue({
-		    el:"#app"
-		  })
+
+	    <div id="app">
+	        <input v-focus>  
+	    </div>
+		Vue.directive('focus', {
+		  // 当被绑定的元素插入到 DOM 中时……
+		  inserted: function (el) {
+		    // 聚焦元素
+		    el.focus()
+		    
+		  }
+		})
+		 var app = new Vue({
+		   el:"#app",    
+		}) 
 	注册局部指令 
 		<div id="app">
   			<input v-focus>
@@ -98,9 +106,10 @@ jsx--------
 
 
 
-
 插件--
+https://www.cnblogs.com/luozhihao/p/7414419.html
 
+ 
 过滤器-- 
 	管道过滤
 	{{message | capitalize}}
@@ -1091,5 +1100,10 @@ v-model
 那么，通过 babel 转化的 jsx 就应运而生了，让人们拥有了使用 js 写 html 并且声明式又可以控制粒度的复用
 
 
+锚点连接  
+
+	第一步 <a href="#miao">去找喵星人 </a>
+	
+	第二步 <a name="miao"></a>
 
  

@@ -27,6 +27,7 @@ Array---
 
 json---
 
+sessionStorage localStorage
 
 https://www.cnblogs.com/-bluesky/
 
@@ -3628,3 +3629,9 @@ function showCoords(evt){
 }
 
 
+
+
+
+锚点---> "本地存储 localStorage".js
+
+sessionStorage localStorage

@@ -5,23 +5,201 @@ axios
 要挂到原型上 才能使用
 Vue.prototype.$axios = Axios
 
+CDN
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+
 
 
 get 
 
-http://t.weather.sojson.com/api/weather/city/101030100
+      created(){
+        this.$axios.get('https://cnodejs.org/api/v1/user/alsotang')
+        .then(res =>{
+        //res.data 是一个整体  拿到第一篇文章的标题   服务器迁移至 aws 日本机房
+        console.log(res.data.data.recent_topics[0].title);
+        
+          console.log(response.status);
+          console.log(response.statusText);
+          console.log(response.headers);
+          console.log(response.config);
+          })
+        .catch(error =>{
+          console.log(error);
+        })
+      }
+
+        this.$axios.get(url,{
+          params:{id:123}
+        })
+        .then(res => {
+          console.log(res.data)
+        }
+        .catch(error =>{
+          console.log(error);
+        }
+
+  获取用户名和头像
+      <template lang="html">
+        <div id="app">
+              <div v-for="item in userData">{{item.loginname}} 
+                <img v-bind:src="item.avatar_url" alt=""> 
+              </div>
+        </div>
+      </template>
+      <script>
+      export default {
+        name: 'App',
+        data(){
+          return {
+              userData:{ data:{}}
+          }
+        },
+        created(){
+          this.$axios.get('https://cnodejs.org/api/v1/user/i5ting')
+          .then(res =>{
+            this.userData = res.data
+          })
+          .catch(error =>{
+            console.log(error);
+          })
+        },
+      }
+      </script>
 
 
 
 post
+  qs模块 解析form-data格式 ?name=sea&age=18
+  https://www.npmjs.com/package/qs
+  
+  this.$axios.post("http://www.wwtliu.com/sxtstu/blueberrypai/login.php",
+        qs.stringify({
+            user_id:"iwen@qq.com",
+            password:"iwen123",
+            verification_code:"crfvw"
+        })
+    )
+    .then(res =>{
+        console.log(res.data);
+    })
+    .catch(error =>{
+        console.log(error);
+    })
+
+  响应数据转换  transformRequest  
+   this.$axios({
+      method:"POST",
+      url:"http://www.wwtliu.com/sxtstu/blueberrypai/login.php",
+      data:{
+        user_id:"iwen@qq.com",
+        password:"iwen123",
+        verification_code:"crfvw"
+      },
+       transformRequest:[function (data) {
+         return qs.stringify(data);
+         
+         //console.log(data); 
+         //输出:{user_id: "iwen@qq.com", password:"iwen123", verification_code: "crfvw"}
+          
+       }]
+    })
+    .then(res => {
+      console.log(res);
+    })
+    .catch(error => {
+      console.log(error);
+    })
 
 
 
 
-全局配置   
+
+
+
+
+
+跨域
+
+Access-Control-Allow-Origin
+
+第一种 meta
+	<meta name="referrer" content="never">
+
+第二种 script
+    <div id="result"></div>
+    
+    <script type="text/javascript">
+        var result = document.getElementById('result');
+        var url = 'https://c.y.qq.com/v8/fcg-bin/fcg_myqq_toplist.fcg';
+        window.MusicJsonCallback = function(data) {
+            console.log(data)
+             result.innerHTML = JSON.stringify(data);
+        }
+        
+        var script = document.createElement('script');
+        script.setAttribute('src', url);
+        document.getElementsByTagName('head')[0].appendChild(script);
+     
+    </script>
+
+第三种  修改配置文件要重启服务器  3部分
+   // main.js  
+      Vue.prototype.HOST = '/baidu_music_api'
+   // config/index.js
+      proxyTable: {
+                "/baidu_music_api": {
+                      target: "http://tingapi.ting.baidu.com",
+                      changeOrigin: true,
+                      pathRewrite: {
+                          '^/baidu_music_api': ''
+                      }
+                  }
+          },
+  // baidu.vue 
+     var url = this.HOST+"/v1/restserver/ting?method=baidu.ting.billboard.billList&type=1&size=1&offset=0";
+      this.$axios.get(url)
+      .then(res =>{
+          console.log(res);
+      })
+      .catch(error =>{
+          console.log(error);
+      })
+   
+
+
+
+ 全局配置获取baseurl 不能和 config里的proxyTable 一起使用  
+
 
 
 
 拦截器
 
+//main.js
 
+  // 添加请求拦截器
+  Axios.interceptors.request.use(function (config) {
+    // 在发送请求之前做些什么
+    if (config.method === "post") {
+      config.data = qs.stringify(config.data);
+    }
+    console.log(config);
+    return config;
+  }, function (error) {
+    // 对请求错误做些什么
+    return Promise.reject(error);
+  });
+
+  
+    // 添加响应拦截器
+    Axios.interceptors.response.use(function (response) {
+      // 对响应数据做点什么
+      if (response.status === "200") {
+        console.log("成功了 ");
+      }
+      return response
+    }, function (error) {
+      // 对响应错误做点什么
+      return Promise.reject(error);
+    });
