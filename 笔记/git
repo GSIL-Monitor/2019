@@ -672,4 +672,4 @@ fork 工作流
 
 
 日志位置
-	Windows logs location: `%APPDATA%\GitHub Desktop\logs\*.desktop.production.log`
+	Windows logs location: `%APPDATA%\GitHub Desktop\logs\*.desktop.production.log`     
