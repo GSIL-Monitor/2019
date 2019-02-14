@@ -132,70 +132,13 @@ console.timeEnd("timer");
 
 注释
   
-  //    /**/   ``反引号在~下面     
+  //    /**/   ``反引号在~下面       
 
 
 
 
 
-字符串String
-	
-	ES6模板字符串
-	var name = '小明';
-	var age = 20;
-	var message = `你好, ${name}, 你今年${age}岁了!`;
-	alert(message);	
 
-	操作字符串  大小写铭感
-	
-	var s = 'Hello, world!';
-	s.length; // 13
-	s[12]; // '!'
-	s[13]; // undefined 超出范围的索引不会报错，但一律返回undefined
-	
-	使用指定的分割符  split 
-	"Webkit Moz O ms Khtml".split()    //[ "Webkit Moz O ms Khtml" ]
-	"Webkit Moz O ms Khtml".split("")  //[W,e,b,k,i,t, ,M,o,z, ,O, ,m,s, ,K,h,t,m,l]
-	"Webkit Moz O ms Khtml".split(" ") //[ "Webkit", "Moz", "O", "ms", "Khtml" ]
-	
-	var myString = "Hello World. How are you doing?";
-	var splits = myString.split(" ", 3);  //["Hello", "World.", "How"]
-	                            
- 
-
-	
-
-	大写小写
-	var s = 'Hello';
-	s.toUpperCase(); // 返回'HELLO'
-	var lower = s.toLowerCase();
-	
-	indexOf() 首次出现的位置
-	var s = 'hello, world';
-	s.indexOf('world'); // 返回7
-	s.indexOf('World'); // 没有找到指定的子串，返回-1   
-	
-	
-	substring() 指定索引区间的子串 
-
-	var s = 'hello, world'
-	s.substring(0, 5); // 从索引0开始到5（不包括5），返回'hello'
-	s.substring(7); // 从索引7开始到结束，返回'world'
-
-
-	字符串转数字 
-	parseInt("2")
-	Number("23")
-	+"1"
-
-	判断是不是数字
-	var a ="123";
-	var b ="abc";
-	console.log( a-0 ); //123
-	console.log( b*1 ); //NAN
-
-	返回引索处的字符
-	charAt( 3 )
 	
 
 条件循环

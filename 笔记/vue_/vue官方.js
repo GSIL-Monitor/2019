@@ -25,6 +25,13 @@ cd my-project
 npm install 
 npm run dev
 
+
+
+另一种创建
+vue create my-project  没有webpack相关  
+
+
+
  
 
 |-- build                       // 项目构建相关代码

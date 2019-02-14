@@ -1,0 +1,29 @@
+
+app(object) 用来注册一个小程序  指定小程序的生命周期回调 
+
+getAPP(object) 用来获取App实例
+
+Page(Object) 函数用来注册一个页面
+
+路由
+getCurrentPages()  获取当前页面栈的实例
+
+
+
+Mustache语法
+	{{keyName}}  简单变量替换
+	
+	{{#keyName}} {{/keyName}} 以#开始、以/结束表示区块 一次或多次渲染
+	
+	{{^keyName}} {{/keyName}} 当keyName值为 false时才渲染 
+	
+	{{.}}                     表示枚举，可以循环输出整个数组                  
+	
+	{{!comments}}     表示注释
+	
+	{{>partials}}     表示子模块	
+
+
+
+.wxs文件
+
