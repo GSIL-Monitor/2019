@@ -1126,7 +1126,7 @@ flex:0 0 300px;
 
 
 
-水平垂直 中间一个块
+div水平竖直居中  
 	html, * {
 		margin: 0;
 		padding: 0;

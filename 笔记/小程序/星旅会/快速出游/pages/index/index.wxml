@@ -1,3 +1,16 @@
+<view class='swiper-tab'>
+  <view class="swiper-item">综合筛选
+    <view class="swiper-icon"></view>
+  </view>
+  
+  <view class="swiper-item">价格筛选
+    <view class="swiper-icon"></view>
+  </view>
+  <view class="swiper-item">评分筛选
+    <view class="swiper-icon"></view>
+  </view>
+</view>
+
 <view class='list'>
   <view class='list-item flex '>
     <view>
