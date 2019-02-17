@@ -87,3 +87,35 @@ mode属性
 	字体颜色 color
 	行距     line-height
 	字体大小 font-size
+
+
+进度条 
+
+		
+	<view class='column'>
+	  <button class='button' type='primary' size='mini' bindtap='startDown'>开始下载</button>
+	
+	  <progress  percent="60"  activeColor="#FF571B" stroke-width='16'> </progress>
+	</view>
+	
+	progress {
+	  margin: 10px;
+	  width:320rpx;
+	   
+	  border-radius:30px;
+	  overflow:hidden;
+	  }
+	
+	 
+	Page({
+	  data: {
+	    isDown: false,
+	    percent: 0,
+	  },
+	  startDown: function (e) {
+	    this.setData({
+	      isDown: true,
+	      percent: 100,
+	    })
+	  }
+	})	
