@@ -27,3 +27,63 @@ Mustache语法
 
 .wxs文件
 
+	module对象
+		exports: 通过该属性，可以对外共享本模块的私有变量与函数 
+		module.exports.msg = "some msg";
+	
+	require函数
+		require("./tools.wxs");	
+
+<wxs> 标签
+
+<wxs module="foo">
+var some_msg = "hello world";
+module.exports = {
+    msg : some_msg,
+}
+</wxs>
+<view> {{foo.msg}} </view>
+
+
+
+
+
+
+
+
+视图容器
+	view
+
+
+
+页面链接
+	<navigator> 
+	属性
+		url	当前小程序内的跳转链接
+
+
+轮播 
+	<swiper>
+		<block wx:for="{{movies}}">
+			<swiper-item>
+				<image src="{{item.url}}"></inage>
+			</swiper-item>
+		</block>
+	</swiper>
+	
+
+图片 image
+
+mode属性
+  center
+	'center：不缩放图片，只显示图片的中间区域'
+  scaleToFill	
+  	不保持纵横比缩放图片，使图片的宽高完全拉伸至填满 image 元素
+
+文本
+
+要设置 
+	组件间距 margin-top  
+	字体颜色 color
+	行距     line-height
+	字体大小 font-size

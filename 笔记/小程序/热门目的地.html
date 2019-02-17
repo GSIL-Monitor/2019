@@ -1,0 +1,239 @@
+<!-- index.wxml -->
+<view class="product">
+<view class='list'>
+ 
+<navigator url='' class='item'>
+  <view class='item-img'>
+    <image src='../../testImg/img9.png' mode='center' lazy-load='true'></image>
+  </view>
+
+  <view class='item-group flex flex-justify-between' >
+    <view class='title'>广州·从化温泉养生谷</view>
+    <navigator url='' class='location flex'>
+      <image src='../../images/icon-localtion.png'></image>
+      <text>广州-从化</text>
+    </navigator>
+  </view>
+
+  <view class='item-des'> 都市中的“世外桃源”，核心度假区的“度假核心”都市中的“世外桃源”，核心度假区的“度假核心”</view>
+</navigator>
+
+
+
+<navigator></navigator>
+<navigator></navigator>
+
+</view>
+</view>
+
+<!-- index.wxss -->
+<style>
+page{
+  background: #F4F4F4;
+}
+.product{
+  background:#fff;
+  padding:30rpx 20rpx
+}
+
+.product .item{
+  border-bottom:1rpx solid #E0E0E0;
+  padding-bottom:34rpx;
+  margin-bottom:20rpx;
+}
+.product .item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+.product .item-img {
+  width: 100%;
+  height: 300rpx;
+  border-radius: 12rpx;
+  overflow: hidden;
+}
+.product .item-group{
+  margin-top: 25rpx
+}
+.product .title{
+  font-size:34rpx;
+}
+
+.product .location image{
+  width:36rpx;
+  height:29rpx;
+  margin-right:12rpx;
+}
+
+.product .location{
+  color:#FF6128;
+}
+
+.product .item-des{
+  margin-top:20rpx;
+  color:#999999;
+  line-height:1.5;
+  font-size:26rpx;
+}
+
+<!-- app.wxss -->
+page{
+  background: #F4F4F4;
+}
+.product{
+  background:#fff;
+  padding:30rpx 20rpx
+}
+
+.product .item{
+  border-bottom:1rpx solid #E0E0E0;
+  padding-bottom:34rpx;
+  margin-bottom:20rpx;
+}
+.product .item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+.product .item-img {
+  width: 100%;
+  height: 300rpx;
+  border-radius: 12rpx;
+  overflow: hidden;
+}
+.product .item-group{
+  margin-top: 25rpx
+}
+.product .title{
+  font-size:34rpx;
+}
+
+.product .location image{
+  width:36rpx;
+  height:29rpx;
+  margin-right:12rpx;
+}
+
+.product .location{
+  color:#FF6128;
+}
+
+.product .item-des{
+  margin-top:20rpx;
+  color:#999999;
+  line-height:1.5;
+  font-size:26rpx;
+}
+
+
+
+.flex {
+  display: flex;
+}
+
+.flex-grow {
+  flex-grow: 1;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.flex-column, .flex-col {
+  flex-direction: column;
+}
+
+.flex-justify-start {
+  justify-content: flex-start;
+}
+
+.flex-justify-end {
+  justify-content: flex-end;
+}
+
+.flex-justify-center {
+  justify-content: center;
+}
+
+.flex-justify-between {
+  justify-content: space-between;
+}
+
+.flex-justify-around {
+  justify-content: space-around;
+}
+
+.flex-align-stretch {
+  align-items: stretch;
+}
+
+.flex-align-top {
+  align-items: flex-start;
+}
+
+.flex-align-bottom {
+  align-items: flex-end;
+}
+
+.flex-align-middle {
+  align-items: center;
+}
+
+.flex-align-baseline {
+  align-items: baseline;
+}
+
+.flex-item {
+  display: inline-block;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.flex-nowrap {
+  flex-wrap: nowrap;
+}
+
+.flex-wrap-reverse {
+  flex-wrap: wrap-reverse;
+}
+
+.flex-align-self-end {
+  align-self: flex-end
+}
+
+/*预设值的几个简便类*/
+.flex-row-start {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.flex-row-end {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.flex-row-around {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.flex-row-between {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+</style>

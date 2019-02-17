@@ -1,0 +1,50 @@
+<view class='list'>
+  <view class='list-item flex '>
+    <view>
+      <image src='../../testimg/pic13@2x.png'></image>
+    </view>
+    <view class='item-info flex flex-justify-evenly'>
+      <view class='item-title'>佛冈碧桂园凤凰湾度假别墅</view>
+      <view class='item-st flex'>
+        <view class='score'> 4.4分 </view> 
+        <text class='text'>1521人点评 </text>
+      </view>
+      <view class='flex flex-justify-between'>
+        <view class='xiaoliang'>销量：1254</view>
+        <view class='price'>￥192</view>
+      </view>
+    </view>
+  </view>
+  <view class='list-item flex '>
+    <view>
+      <image src='../../testimg/pic14@2x.png' ></image>
+    </view>
+    <view class='item-info flex flex-justify-evenly'>
+      <view class='item-title'>佛冈碧桂园凤凰湾度假别墅</view>
+      <view class='item-st flex'>
+        <view class='score'> 4.4分 </view> 
+        <text class='text'>1521人点评 </text>
+      </view>
+      <view class='flex flex-justify-between'>
+        <view class='xiaoliang'>销量：1254</view>
+        <view class='price'>￥258</view>
+      </view>
+    </view>
+  </view>
+  <view class='list-item flex '>
+    <view>
+      <image src='../../testimg/pic14@2x.png'></image>
+    </view>
+    <view class='item-info flex flex-justify-evenly'>
+      <view class='item-title'>佛冈碧桂园凤凰湾度假别墅</view>
+      <view class='item-st flex'>
+        <view class='score'> 4.4分 </view> 
+        <text class='text'>1521人点评 </text>
+      </view>
+      <view class='flex flex-justify-between'>
+        <view class='xiaoliang'>销量：1254</view>
+        <view class='price'>￥192</view>
+      </view>
+    </view>
+  </view>
+</view>

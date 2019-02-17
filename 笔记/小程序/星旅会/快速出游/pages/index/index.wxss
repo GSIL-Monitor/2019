@@ -1,0 +1,59 @@
+ page{
+   background:#F4F4F4;
+ }
+ .list-item{
+   width:750rpx;
+   height:236rpx;
+   margin-top:20rpx;
+   background: #fff;
+ }
+ .flex{
+   display: flex;
+ }
+image{
+  width:156rpx; 
+  height:156rpx;
+  margin:40rpx 30rpx;
+
+}
+
+.item-info{
+  width:100%;
+  font-size:26rpx;
+  color:#666666;
+  flex-direction: column;
+  justify-content: center;
+}
+.item-title{
+  font-size:32rpx;
+  color:#333333;
+  font-weight: Bold;
+  font-family: PingFang-SC-Bold;
+
+}
+
+.score{
+  color:#00B1FF;
+  font-size:30rpx;
+  font-weight: bold;
+  margin-right:35rpx;
+}
+.price{
+  color:#FF571B;
+  font-size:32rpx;
+  font-weight: bold;
+  margin-right:50rpx
+}
+
+.flex-justify-between {
+  justify-content: space-between;
+}
+
+.flex-justify-around {
+  justify-content: space-around;
+}
+
+
+.flex-justify-evenly {
+  justify-content: space-evenly;
+}
