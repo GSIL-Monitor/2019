@@ -14,9 +14,9 @@
 <view class='list'>
   <view class='list-item flex '>
     <view>
-      <image src='../../testimg/pic13@2x.png'></image>
+      <image src='../../testimg/pic13@2x.png' lazy-load='true'></image>
     </view>
-    <view class='item-info flex flex-justify-evenly'>
+    <view class='item-info flex '>
       <view class='item-title'>佛冈碧桂园凤凰湾度假别墅</view>
       <view class='item-st flex'>
         <view class='score'> 4.4分 </view> 
@@ -30,9 +30,9 @@
   </view>
   <view class='list-item flex '>
     <view>
-      <image src='../../testimg/pic14@2x.png' ></image>
+      <image src='../../testimg/pic14@2x.png' lazy-load='true'></image>
     </view>
-    <view class='item-info flex flex-justify-evenly'>
+    <view class='item-info flex '>
       <view class='item-title'>佛冈碧桂园凤凰湾度假别墅</view>
       <view class='item-st flex'>
         <view class='score'> 4.4分 </view> 
@@ -46,9 +46,9 @@
   </view>
   <view class='list-item flex '>
     <view>
-      <image src='../../testimg/pic14@2x.png'></image>
+      <image src='../../testimg/pic14@2x.png' lazy-load='true'></image>
     </view>
-    <view class='item-info flex flex-justify-evenly'>
+    <view class='item-info flex'>
       <view class='item-title'>佛冈碧桂园凤凰湾度假别墅</view>
       <view class='item-st flex'>
         <view class='score'> 4.4分 </view> 

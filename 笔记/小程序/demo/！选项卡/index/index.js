@@ -1,7 +1,7 @@
 var app = getApp()
 Page({
   data: {
-    navbar: ['护肤', '彩妆', '香水'],
+    navbar: ['美食抢购', '酒店抢购', '即将开抢'],
     currentTab: 0,
   },
 

@@ -51,6 +51,33 @@ module.exports = {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 视图容器
 	view
 
@@ -88,6 +115,13 @@ mode属性
 	行距     line-height
 	字体大小 font-size
 
+删除线
+text-decoration:underline; /文字排版--下划线/
+
+text-decoration:line-through;/文字排版--删除线/
+
+
+
 
 进度条 
 
@@ -119,3 +153,5 @@ mode属性
 	    })
 	  }
 	})	
+
+

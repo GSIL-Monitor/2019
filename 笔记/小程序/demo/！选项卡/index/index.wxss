@@ -7,7 +7,8 @@ page{
 .navbar{  
   flex: none;  
   display: flex;  
-  background: #fff;  
+  background: #fff; 
+  border-top:1px solid #eee; 
 }  
 .navbar .item{  
   position: relative;  
@@ -15,19 +16,126 @@ page{
   text-align: center;  
   line-height: 80rpx;  
   font-size:14px;
+  color:#333333;
 }  
+
+
 /* 顶部导航字体颜色 */
 .navbar .item.active{  
-  color: #f0145a;  
+  color: #FF571B;  
 }  
 /* 顶部指示条属性 */
 .navbar .item.active:after{  
   content: "";  
   display: block;  
   position: absolute;  
-  bottom: 0;  
+  bottom:0;  
   left: 0;  
   right: 0;  
-  height: 6rpx;  
-  background: #f0145a;  
+  margin-left:70rpx;
+  height: 4rpx; 
+  width:112rpx; 
+
+  background: #FF534C;  
 }
+
+.list-item{
+  width:750rpx;
+  height:236rpx;
+  background:#fff;
+  margin-top:20rpx;
+}
+.flex{
+  display:flex;
+}
+.flex-col{
+  flex-direction:column;
+}
+.flex-row{
+  flex-direction:row;
+}
+image{
+  width:156rpx;
+  height:156rpx;
+  margin:40rpx 25rpx;
+}
+.item-price{
+  color:#FF571B;
+  font-size:32rpx;
+  font-weight:bold;
+}
+.item-remove-price{
+  text-decoration:line-through;
+  font-size:24rpx;
+  font-weight:500;
+  color:#666666;
+  margin-top:8rpx;
+}
+
+.item-title{
+  height:31rpx;
+  font-size:32rpx;
+  font-weight:bold;
+  color:#333333;
+  margin-top:35rpx;
+  margin-bottom:20rpx;
+}
+
+text{
+  font-size:28rpx;
+  color:#FF571B;
+  font-weight:500;
+  margin-bottom:0;
+}
+.btn{
+  width:120rpx;
+  height:50rpx;
+  background:#FF571B;
+  margin-left:242rpx;
+  font-size:28rpx;
+  font-weight:500;
+  color:#fff;
+  padding:0;
+  justify-content: center;
+  align-items:center;
+}
+
+.flex-justify-evenly{
+  justify-content:space-evenly;
+}
+
+.flex-justify-between{
+  justify-content:space-between;
+}
+ 
+.item-progress{
+  width:320rpx;
+  height:32rpx;
+  border-radius:32rpx;
+}
+
+
+.progress-bg {
+  width:320rpx;
+  height:32rpx;
+  line-height: 32rpx;
+  background:rgba(255,87,27,.2);
+  border-radius:16rpx;
+  font-size:26rpx;
+  text-align: center;
+  position: relative;
+}
+
+.progress-line {
+  height:32rpx;
+  line-height: 32rpx;
+  background:#FF571B;
+  border-radius:16rpx;
+  color: #fff;
+  text-align: center;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+ 
