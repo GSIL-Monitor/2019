@@ -1,15 +1,51 @@
-<view class="navbar">  
-  <text wx:for="{{navbar}}" data-idx="{{index}}" class="item {{currentTab==index ? 'active' : ''}}" wx:key="unique" bindtap="navbarTap">{{item}}</text>  
-</view> 
-
-<view class="list">
-  <view>
-    <image src=''></image>
+<view class='index'>
+  
+  <!-- tab导航 -->
+  <view class="navbar">  
+    <text wx:for="{{navbar}}" data-idx="{{index}}" class="item {{currentTab==index ? 'active' : ''}}" wx:key="unique" bindtap="navbarTap">{{item}}</text>  
+  </view> 
+  
+  <!-- 列表 -->
+ <view class="list-item flex">
+    <image src='../testimg/xlh_pic01.png'></image>
+  <view class='item-info flex flex-col '>
+    <view class="item-title">杜米妮旺多姆酒店</view> 
+    
+    <view class='flex-group flex'>
+      <view class='progress-bg'>
+        <view class='progress-line' style='width: 58%'>
+          58%
+        </view>
+      </view>
+      <text class=''>已抢1747间</text>
+    </view>
+    <text>满100减30</text>
+    <view class='item-group flex'>
+      <view class="item-price">￥192</view>
+      <view class="item-remove-price">￥288</view>
+      <button class="btn flex">马上抢</button>
+    </view>
   </view>
-  <view>
-    <view class="title"></view>
-    <progress></progress>
-    <text></text>
-    <view class='list-group'></view>
+</view>
+<view class="list-item flex">
+    <image src='../testimg/xlh_pic02.png'></image>
+  <view class='item-info flex flex-col '>
+    <view class="item-title">国会艺术酒店</view> 
+    
+    <view class='flex-group flex'>
+      <view class='progress-bg'>
+        <view class='progress-line' style='width: 58%'>
+          58%
+        </view>
+      </view>
+      <text class=''>已抢1747间</text>
+    </view>
+    <text>满100减30</text>
+    <view class='item-group flex'>
+      <view class="item-price">￥192</view>
+      <view class="item-remove-price">￥288</view>
+      <button class="btn flex">马上抢</button>
+    </view>
   </view>
+</view>
 </view>
