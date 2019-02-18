@@ -1,0 +1,5 @@
+page {
+  line-height: 1;
+  font-size: 30rpx;
+  color: rgb(0, 0, 0);
+}

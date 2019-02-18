@@ -7,7 +7,8 @@ page{
 .navbar{  
   flex: none;  
   display: flex;  
-  background: #fff;  
+  background: #fff; 
+  border-top:1px solid #eee; 
 }  
 .navbar .item{  
   position: relative;  
@@ -18,16 +19,19 @@ page{
 }  
 /* 顶部导航字体颜色 */
 .navbar .item.active{  
-  color: #f0145a;  
+  color: #FF571B;  
 }  
 /* 顶部指示条属性 */
 .navbar .item.active:after{  
   content: "";  
   display: block;  
   position: absolute;  
-  bottom: 0;  
+  bottom:0;  
   left: 0;  
   right: 0;  
-  height: 6rpx;  
-  background: #f0145a;  
+  margin-left:70rpx;
+  height: 4rpx; 
+  width:112rpx; 
+  
+  background: #FF534C;  
 }

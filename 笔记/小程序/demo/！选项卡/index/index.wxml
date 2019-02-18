@@ -1,3 +1,15 @@
 <view class="navbar">  
   <text wx:for="{{navbar}}" data-idx="{{index}}" class="item {{currentTab==index ? 'active' : ''}}" wx:key="unique" bindtap="navbarTap">{{item}}</text>  
 </view> 
+
+<view class="list">
+  <view>
+    <image src=''></image>
+  </view>
+  <view>
+    <view class="title"></view>
+    <progress></progress>
+    <text></text>
+    <view class='list-group'></view>
+  </view>
+</view>

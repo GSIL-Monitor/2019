@@ -55,7 +55,7 @@ image{
   color:#333333;
   font-weight: Bold;
   font-family: PingFang-SC-Bold;
-
+  margin-bottom: 54rpx;
 }
 
 .score{
@@ -84,3 +84,6 @@ image{
   justify-content: space-evenly;
 }
 
+.item-st{
+  margin-bottom:27rpx;
+}
