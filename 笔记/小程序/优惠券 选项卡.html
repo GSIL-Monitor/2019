@@ -1,0 +1,62 @@
+<view class="coupon">
+    <!-- tab选项卡 -->
+    <view class='tab flex'>
+        <view class="item {{template == 1 ? 'item-on' : ''}}" data-index="1" bindtap='toggleTemplate'> 未使用 </view>
+        <view class="item {{template == 2 ? 'item-on' : ''}}" data-index="2" bindtap='toggleTemplate'> 已使用 </view>
+        <view class="item {{template == 3 ? 'item-on' : ''}}" data-index="3" bindtap='toggleTemplate'> 已过期 </view> 
+    </view>
+    <!-- 模板 -->
+    <!-- 未使用 -->
+    <view class='tab-template' wx:if="{{template == 1}}">
+        <view class='list'> <text> 优惠券1 </text> </view>
+    </view>
+    <!-- 已使用 -->
+    <view class='tab-template' wx:if="{{template == 2}}">
+        <view class='list'> <text> 优惠券2 </text> </view>
+    </view>
+    <!-- 已过期 -->
+    <view class='tab-template' wx:if="{{template == 3}}">
+        <view class=''> <text> 优惠券3 </text> </view>
+    </view>
+</view>
+
+ 
+<style>
+.flex {
+  display: flex;
+}
+
+.tab{
+  padding:0 50rpx;
+  border-top:1px solid #D4D4D4;
+  background:#fff;
+}
+.tab .item{
+  width:33.33%;
+  text-align:center;
+  padding:25rpx 0;
+}
+.tab .item-on{
+  border-bottom:4rpx solid #FF534C;
+  color: #FF534C;
+}
+</style>
+<script>
+const app = getApp()
+Page({
+  data: {
+     
+    template: 1
+  },
+
+  onLoad: function (options) {
+
+  },
+  toggleTemplate(e) {
+    var index = e.currentTarget.dataset.index;
+    this.setData({
+      template: index
+    })
+  }
+})
+</script>

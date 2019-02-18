@@ -1,0 +1,169 @@
+//index.wxml
+	<view class="index">
+	  <scroll-view 
+	    scroll-y="true"
+	    style='height: {{windowHeight}}rpx;'
+	    bindscroll="bindPageScroll"
+	  >
+	    <!-- 头部导航 -->
+	    <view class='tbar tbar-primary' style='padding-top: {{barHeight}}rpx; opacity: {{tbarOpacity}}' >
+	      <view class='header'>
+	        <view class='title'>星旅会1</view>
+	      </view>
+	      <view class='flex'>
+	        <navigator url='' class='tbar-address flex flex-align-middle'>
+	          <text>广州</text>
+	         
+	        </navigator>
+	
+	        <navigator url='' class='tbar-search flex flex-grow flex-align-middle'>
+	          
+	        </navigator>
+	        
+	      </view>
+	    </view>
+	
+	    <!-- 浮动导航栏 -->
+	    <view class='tbar tbar-primary tbar-absolute' style='padding-top: {{barHeight}}rpx; opacity: {{tbarOpacity2}}' >
+	      <view class='header'>
+	        <view class='title'>星旅会</view>
+	      </view>
+	    </view>
+	<view>
+	 
+	 
+	
+	 </view>
+	</view>
+	 
+	  </scroll-view>
+	</view>	
+
+<style>
+	
+page {
+	background: #F4F4F4;
+}
+/* 头部导航*/
+	.tbar {
+	padding: 0 25rpx 10rpx;
+}
+.tbar-address {
+	font-size: 26rpx;
+}
+.tbar-search {
+	padding: 0 10rpx;
+	margin-left: 28rpx;
+	height:50rpx;
+	background:rgba(255,255,255,1);
+	border-radius:4rpx;
+	color: #C6C6C6;
+	font-size:26rpx
+}
+.tbar {
+	width: 100%;
+	font-size: 36rpx;
+	color: #333;
+	background: transparent;
+	text-align: center;
+	position: relative;
+	overflow: hidden;
+	background: #fff;
+}
+.tbar-absolute {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 9;
+}
+.tbar-primary {
+	color: #fff;
+	background:linear-gradient(164deg,rgba(255,131,31,1) 0%,rgba(255,86,12,1) 100%);
+}
+.header {
+	height: 90rpx;
+	line-height: 90rpx;
+	box-sizing: border-box;
+	position: relative;
+}
+view,navigator {
+	box-sizing: border-box;
+	font-size: 30rpx;
+}
+.flex {
+	display: flex;
+}
+.flex-grow {
+	flex-grow: 1;
+}
+.flex-align-middle {
+	align-items: center;
+} 
+</style>
+
+<script>
+	const app = getApp()
+Page({
+  data:{
+    barHeight: app.globalData.barHeight,
+    windowHeight: app.globalData.windowHeight,
+    tbarOpacity: 1,
+    tbarOpacity2: 0
+  },
+  onLoad: function () {
+
+  },
+  bindPageScroll(e) {
+    let tbarOpacity = 100
+    this.setData({
+      'tbarOpacity2': e.detail.scrollTop / 100,
+      'tbarOpacity': (tbarOpacity - e.detail.scrollTop) / 100
+    })
+  },
+})
+</script>
+
+
+//app.js
+App({
+  onLaunch: function () {
+    // 初始化数据 - 之后统一在该函数处理
+    this.initGlobalData();
+  },
+  initGlobalData() {
+    let _this = this;
+    //  获取头部高度
+    wx.getSystemInfo({
+      success: function (res) {
+        _this.globalData.barHeight = res.statusBarHeight * 2;
+      },
+    });
+
+    // 取出页面高度
+    wx.getSystemInfo({
+      success: function (res) {
+        _this.globalData.windowHeight = res.windowHeight * 2
+      }
+    });
+  },
+  globalData: {
+    barHeight: 0, //头部高度
+    windowHeight: 0 //页面高度
+  }
+})
+
+
+//app.json
+
+{
+  "pages":[
+    "pages/index/index"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle":"white",
+    "navigationStyle": "custom"
+  }
+}
