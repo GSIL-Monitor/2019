@@ -159,7 +159,7 @@ git config
 
 
 保存更改
-	git add <file> 添加文件
+	git add <file> 添加文件   
 	
 		git add -p
 			y 将这块更改加入缓存，
