@@ -25,43 +25,40 @@ Mustache语法
 
 
 
-.wxs文件
+ 
+引用
 
-	module对象
-		exports: 通过该属性，可以对外共享本模块的私有变量与函数 
-		module.exports.msg = "some msg";
+	.wxs文件
 	
-	require函数
-		require("./tools.wxs");	
-
-<wxs> 标签
-
-<wxs module="foo">
-var some_msg = "hello world";
-module.exports = {
-    msg : some_msg,
-}
-</wxs>
-<view> {{foo.msg}} </view>
-
-
-
-
-
-
+		module对象
+			exports: 通过该属性，可以对外共享本模块的私有变量与函数 
+			module.exports.msg = "some msg";
+		
+		require函数
+			require("./tools.wxs");	
+	
+	<wxs> 标签
+	
+	<wxs module="foo">
+	var some_msg = "hello world";
+	module.exports = {
+	    msg : some_msg,
+	}
+	</wxs>
+	<view> {{foo.msg}} </view>
 
 
 
 
 
 
+app.js 文件
 
 
+onLaunch
 
-
-
-
-
+globalData全局变量数据，
+getUserInfo自定义的方法用于获取用户信息
 
 
 
@@ -69,6 +66,7 @@ module.exports = {
 
 
 
+wx.getStorageSync是获取本地缓存的logs字段
 
 
 
@@ -76,6 +74,39 @@ module.exports = {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+组件  小栗子
 
 
 视图容器
@@ -115,13 +146,6 @@ mode属性
 	行距     line-height
 	字体大小 font-size
 
-删除线
-text-decoration:underline; /文字排版--下划线/
-
-text-decoration:line-through;/文字排版--删除线/
-
-
-
 
 进度条 
 
@@ -140,7 +164,7 @@ text-decoration:line-through;/文字排版--删除线/
 	  overflow:hidden;
 	  }
 	
-	 
+
 	Page({
 	  data: {
 	    isDown: false,
@@ -155,3 +179,20 @@ text-decoration:line-through;/文字排版--删除线/
 	})	
 
 
+
+选项卡样式 
+<view class='tab flex'>
+	<view class="item"><item>
+	<view class="item"><item>
+	<view class="item"><item>
+</view>
+.tab{
+	padding:0 50rpx;
+	border-top:1px solid #D4D4D4；
+	background:#fff；
+}
+.tab .item{
+  width:33.33%;
+  text-align:center;
+  padding:25rpx 0;
+}
