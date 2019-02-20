@@ -1,4 +1,4 @@
- <!-- popup -->
+<!-- popup -->
  <view class="popup">
     <scroll-view 
     scroll-y="true" 
@@ -9,7 +9,7 @@
   <view class='tbar tbar-absolute' style='padding-top: {{barHeight}}rpx; opacity: {{tbarOpacity}}'>
     <view class='header'>
       <navigator class='header-back header-back-black' open-type="navigateBack"></navigator>
-      <view class='fast-title' >套餐包含</view>
+      <view class='popup-title' >套餐包含</view>
     </view>
   </view>
   <view class='tbar-height'></view>
@@ -146,4 +146,3 @@
 
   </scroll-view>
  </view> 
- 

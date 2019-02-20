@@ -5,7 +5,13 @@ page {
 .popup .banner swiper {
    height: 380rpx;
  }
- 
+ .popup-title{
+  font-size:36rpx;
+  font-weight:bold;
+  color:rgba(51,51,51,1);
+   
+  
+ }
 /*套餐*/
  .item-info{
   background:#fff;
