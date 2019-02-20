@@ -1,0 +1,62 @@
+ 
+ .banner swiper {
+   height: 380rpx;
+ }
+.flex{
+  display: flex;
+}
+
+.flex-col{
+  flex-direction:column;
+}
+
+ 
+
+.item-title{
+
+font-size:36rpx;
+padding:31rpx;
+font-weight:bold;
+color:#333333;
+line-height:50rpx; 
+}
+
+.item-group{
+  font-size:30rpx;
+  color:#666666;
+}
+
+.keyword{
+  width:118rpx;
+  height:28rpx;
+  font-size:30rpx;
+  color:#666666;
+}
+.flex-nowrap{
+  flex-wrap:nowrap;
+}
+.flex-wrap{
+  flex-wrap:wrap;
+}
+
+.list {
+  padding: 0 30rpx;
+  font-size: 30rpx;
+}
+
+.list .list-item{
+  margin-bottom: 50rpx;
+}
+
+.list .keyword {
+  color: #666666;
+  width: 18%
+}
+
+.list .content {
+  color: #333333;
+  line-height: 1.5;
+  width: 82%;
+  padding-left: 50rpx;
+  box-sizing: border-box;
+}

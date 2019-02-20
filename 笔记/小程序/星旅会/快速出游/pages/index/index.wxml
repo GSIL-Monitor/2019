@@ -1,3 +1,4 @@
+<view class="fast">
 <view class='swiper-tab'>
   <view class="swiper-item">综合筛选
     <view class="swiper-icon"></view>
@@ -60,4 +61,5 @@
       </view>
     </view>
   </view>
+</view>
 </view>
