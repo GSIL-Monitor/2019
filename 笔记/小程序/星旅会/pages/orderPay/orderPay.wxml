@@ -1,0 +1,61 @@
+
+<view class="index">
+  <scroll-view 
+    style='height: {{windowHeight}}rpx;'
+    bindscroll="bindPageScroll"
+  >
+    <!--导航栏-->
+    <view class='tbar-height'></view>
+      <view class='tbar tbar-primary tbar-absolute' style='padding-top: {{barHeight}}rpx'>
+        <view class='header'>
+          <navigator class='header-back header-back-white' open-type="navigateBack"></navigator>
+            <view class='title'>订单详情</view>  
+        </view>
+      <view style='height: 239rpx;'></view>
+    </view>
+    <!--订单信息-->
+    <view class='detail-info'>
+      <view class='info'>
+        <view class='title'>广州海婓酒店(原云海酒店)</view>
+        <view class='flex flex-justify-between single-room'>
+          <view>
+            <text>单人间</text>
+          </view>
+          <view class='food-detail flex'>
+            <text>房型餐食详情</text>
+            <image src='../../images/xlh_icon_next1.png' ></image>
+          </view>
+        </view>
+        <view class='other-info'>
+          <view class='flex '>
+            <view>1月4号 今天</view>
+            <view>1晚</view>
+            <view>1月5号 周六</view>
+          </view>
+          <view>大床 | 全部房间WiFi免费 | </view>
+        </view>
+        <view class='message'>
+          <view class='flex'>
+            <image src='../../images/xlh_icon_next1.png' ></image>
+            <text>限时取消，2019-01-04 18:00前可付费取消…</text>
+          </view>
+          <view class='flex'>
+            <image src='../../images/xlh_icon_next1.png' ></image>
+            <text>住房提供方要求该价格仅适用持中国身份证…</text>
+          </view>
+        </view>
+        <view class='must-read flex'>
+        <view></view>
+          <view class='flex'>
+            <text>定房必读</text>
+            <image src='../../images/xlh_icon_next1.png' ></image>
+          </view>
+        </view>
+      </view>
+    </view>
+    <!--旅客信息-->
+    <view class='person-info' style='margin-top:{{604-windowHeight-barHeight}}rpx'>
+      
+    </view>
+  </scroll-view>
+</view>

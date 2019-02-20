@@ -1,0 +1,28 @@
+page {
+  background: #F7F7F7;
+}
+
+.set-head-portrait {
+  background: #fff;
+  margin-top: 20rpx;
+  padding: 30rpx;
+}
+
+.set-head-portrait text {
+  font-size: 36rpx;
+}
+
+.set-head-portrait image {
+  width: 124rpx;
+  height: 124rpx;
+}
+
+/* 按钮 */
+.btns {
+  margin-top: 100rpx;
+}
+
+.form-btn {
+  width: calc(100% - 130rpx);
+  margin: 0 65rpx 40rpx;
+}

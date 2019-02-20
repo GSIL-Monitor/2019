@@ -1,0 +1,106 @@
+page {
+  background: #F7F7F7;
+}
+
+.tab {
+  padding: 0 50rpx;
+  border-top: 1px solid #D4D4D4;
+  background: #fff;
+}
+
+.tab .item {
+  width: 33.33%;
+  text-align: center;
+  padding: 25rpx 0;
+}
+
+.tab .item-on {
+  border-bottom: 4rpx solid #FF534C;
+  color: #FF534C;
+}
+
+.tab-empty {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%)
+}
+
+.tab-empty text {
+  font-size: 34rpx;
+  color: #666666;
+  font-weight:500;
+  margin-top: 60rpx;
+}
+
+.tab-empty image {
+  width: 330rpx;
+  height: 265rpx;
+}
+
+/* 模板 */
+.list {
+  margin: 25rpx 0;
+  padding: 0 15rpx;
+  color: #fff;
+}
+
+.list .item {
+  position: relative;
+  margin-bottom: 20rpx;
+}
+
+.list .item-left {
+  width: 230rpx;
+  height: 190rpx;
+}
+
+.list .item-price {
+  font-size:60rpx;
+}
+
+.list .left-font1 {
+  font-size:28rpx;
+  margin-top: 28rpx;
+}
+
+.list .item-right {
+  width: 495rpx;
+  height: 190rpx;
+  padding-left: 50rpx
+}
+
+.list .right-font1 {
+  font-size:30rpx;
+  margin-top: 30rpx;
+}
+
+.list .right-font2 {
+  margin-top: 20rpx;
+  font-size:24rpx;
+}
+
+.list .right-font3 {
+  margin-top: 34rpx;
+  font-size:20rpx;
+}
+
+.list .item-font4 {
+  position: absolute;
+  bottom: 34rpx;
+  right: 38rpx;
+  font-size:24rpx;
+}
+
+.list .item-btn {
+  position: absolute;
+  bottom: 34rpx;
+  right: 38rpx;
+  width:140rpx;
+  height:50rpx;
+  line-height: 50rpx;
+  border:1rpx solid rgba(255,255,255,1);
+  border-radius:25rpx;
+  font-size:24rpx;
+}
+

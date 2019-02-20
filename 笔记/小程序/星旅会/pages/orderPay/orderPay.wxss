@@ -1,0 +1,95 @@
+.index{
+  background-color: #F4F4F4;
+}
+.tbar-primary{
+  background:linear-gradient(to right,rgba(255,86,12,1),rgba(255,131,31,1));
+}
+.detail-info{
+  position: absolute;
+  background-color: #ffffff;
+  width: 690rpx;
+  height: 437rpx;
+  margin-left: 30rpx;
+  z-index: 999;
+}
+.info{
+  padding: 41rpx 27rpx;
+}
+.info .title{
+  font-family: PingFang-SC-Bold;
+  font-size: 34rpx;
+  color: #333333;
+  font-weight: bold
+}
+.single-room{
+  margin-top: 32rpx;
+  font-size: 34rpx;
+  color: #333333;
+  font-weight: Medium
+}
+.food-detail{
+  font-family: PingFang-SC-Medium;
+  font-size: 30rpx;
+  color: #999999;
+}
+.food-detail text{
+  padding-right: 4rpx;
+}
+.food-detail image{
+  width:13rpx;
+  height:24rpx;
+  margin-top: 2.5rpx;
+}
+.other-info{
+  font-size: 28rpx;
+  color: #666666;
+}
+.other-info>view{
+  margin-top: 22rpx;
+}
+.other-info>view:first-child view{
+  margin-right: 13rpx;
+}
+.other-info>view:first-child view:nth-child(2){
+  text-align: center;
+  width:70rpx;
+  height:38rpx;
+  border:1px solid rgba(212,212,212,1);
+  border-radius:19rpx;
+}
+.message{
+  margin-top: 36rpx;
+  font-size: 28rpx;
+  color: #666666;
+}
+.message>view {
+  margin-top: 22rpx;
+  font-size: 28rpx;
+}
+.message >view:first-child{
+  color: #666666
+}
+.message >view:last-child{
+  color: #333333
+}
+.message image {
+  width:25rpx;
+  height:25rpx;
+}
+.must-read{
+  text-align: center;
+  margin-top: 31rpx;
+  font-size: 26rpx;
+  color: #999999;
+}
+.must-read view:first-child{
+  width: 273rpx;
+}
+.must-read image{
+  width: 10rpx;
+  height: 18rpx;
+}
+.person-info{
+  height: 342rpx;
+  background-color: #ffffff
+}

@@ -1,0 +1,14 @@
+.distributionRule-title {
+  font-size:60rpx;
+  text-align: center;
+  margin-top: 58rpx;
+}
+
+.distributionRule-des {
+  margin: 50rpx 20rpx;
+}
+
+.distributionRule-des view {
+  margin-bottom: 20rpx;
+}
+

@@ -1,0 +1,104 @@
+page {
+  background-color: #F4F4F4;
+}
+.tbar{
+  background-color: #FFFFFF;
+}
+/*
+表头订单状态
+*/
+.lists{
+  height: 138rpx;
+  text-align: center;
+  border-top: 1px solid #ddd;
+  background-color: #FFFFFF;
+}
+.list{
+  width: 25%;
+  height: 100%;
+}
+.active{
+  border-bottom: 4rpx solid #FF534C;
+  color: #FF534C;
+}
+.list .item-img{
+  width: 49rpx;
+  height: 49rpx;
+  overflow: hidden;
+  margin-top: 25rpx;
+  margin-left: 73.75rpx;
+}
+
+.list .text{
+  font-size: 30rpx;
+  margin-top: 15rpx;
+}
+
+/*
+  订单信息
+*/
+.order-list{
+  width: 100%;
+  margin-top: 10rpx;
+}
+.order-info{
+  margin: 20rpx 30rpx;
+  padding:26rpx;
+  width: 690rpx;
+  height: 382rpx;
+  background-color: #FFFFFF;
+}
+.order-number{
+  font-size: 30rpx;
+  color: #666666
+}
+.order-info text{
+  font-size: 30rpx;
+  color: #FF534C
+}
+.item{
+  margin-top: 39rpx
+}
+.item button{
+  background-color: #FF534C;
+  border-radius: 14rpx;
+  color: #FFFFFF;
+  width: 140rpx;
+  height: 60rpx;
+}
+.order-total text:first-child{
+  font-size: 34rpx;
+  color: #000000;
+  font-family: PingFang-SC-Medium;
+}
+.order-total text:last-child{
+  font-size: 40rpx;
+  color: #FF571B;
+  font-family: MicrosoftYaHei;
+}
+.item image{
+  width: 134rpx;
+  height: 134rpx;
+}
+.detail{
+  margin-left: 27rpx;
+}
+.detail view{
+  height: 44rpx;
+  line-height: 44rpx;
+}
+.detail view:first-child{
+  font-size: 34rpx;
+  color: #333333;
+  font-family: PingFang-SC-Medium;
+}
+.detail view:nth-child(2){
+  font-size: 32rpx;
+  color: #FF571B;
+  font-family: MicrosoftYaHei;
+}
+.detail view:last-child{
+  font-size: 30rpx;
+  color: #B1B1B1;
+  font-family: PingFang-SC-Medium;
+}

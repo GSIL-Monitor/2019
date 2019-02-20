@@ -1,0 +1,80 @@
+<view class="userInfo">
+
+  <!-- 导航 -->
+  <view class='tbar tbar-absolute tbar-border' style='padding-top: {{barHeight}}rpx'>
+    <view class='header'>
+      <navigator class='header-back header-back-black' open-type="navigateBack"></navigator>
+      <view class='title'>会员资料</view>
+    </view>
+  </view>
+
+  <view class='tbar-height'></view>
+
+  <!-- 头像 -->
+  <navigator url='' class='head-portrait flex flex-justify-between flex-align-middle'>
+    <view class='head-portrait-left flex flex-align-middle'>
+      <image src='../../testImg/user_img.png'></image>
+      <text>独家记忆</text>
+    </view>
+    <view class='head-portrait-right'>
+      <image src='../../images/icon_arrow_right.png'></image>
+    </view>
+  </navigator>
+
+  <!-- 手机号 -->
+  <navigator url='' class='phone flex flex-justify-between'>
+    <view class='phone-left flex'>
+      <text class='label'>手机号</text>
+      <view class='flex'>
+        <text class='required'>*</text>
+        <text class='phone-num'>18814586578</text>
+      </view>
+    </view>
+    <view class='phone-right flex flex-align-middle'>
+      <text>更换绑定</text>
+      <image src='../../images/icon_arrow_right.png'></image>
+    </view>
+  </navigator>
+
+  <!-- 信息 -->
+  <view class='form'>
+    <view class='form-item flex'>
+      <view class="form-label flex flex-justify-between flex-align-middle"><text>姓名</text> <text class='required'>*</text></view>
+      <view class='form-input'>
+        <input type='text' placeholder='请输入您的姓名'></input>
+      </view>
+    </view>
+    <view class='form-item flex'>
+      <view class="form-label flex flex-justify-between flex-align-middle"><text>微信号</text></view>
+      <view class='form-input'>
+        <input type='text' placeholder='请输入您的微信号'></input>
+      </view>
+    </view>
+    <view class='form-item'>
+      <picker
+        style='width: 100%'
+        mode="date"
+        value="{{date}}"
+        bindchange="bindDateChange"
+        >
+        <view class='flex'>   
+          <view class="form-label flex flex-justify-between flex-align-middle"><text>出生日期</text> </view>
+          <view class='form-date'>
+            <text class='pla' wx:if="{{date == ''}}">请选择出生日期</text>
+            <text class=''>{{date}}</text>
+          </view>
+        </view>
+      </picker>
+    </view>
+    <view class='form-item flex'>
+      <view class="form-label flex flex-justify-between flex-align-middle"><text>所在城市</text> </view>
+      <view class='form-font'>
+        广东 广州
+      </view>
+    </view>
+  </view>
+
+  <!-- 修改按钮 -->
+  <view class='form-btn'>确认修改</view>
+
+</view>

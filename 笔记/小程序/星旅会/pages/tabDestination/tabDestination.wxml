@@ -1,0 +1,47 @@
+<!--导航栏-->
+    <view class='tbar-height'></view>
+    <view class='tbar tbar-primary tbar-absolute' style='padding-top: {{barHeight}}rpx'>
+      <view class='header'>
+        <view class='title'>星旅会</view>
+      </view>
+    </view>
+<view class='box-one'>
+  <image src='../../testImg/pic20@3x.png' style='height:500rpx;width:100%;'></image>
+</view>
+<view class='box-two'>
+  <view class='box-two-a'>
+    <view class='box-two-a-a'></view>
+    <view class='box-two-a-text'>景点</view>
+  </view>
+  <view class='box-two-a'> 
+    <view class='box-two-a-a'></view>
+    <view class='box-two-a-text'>酒店</view>
+  </view>
+  <view class='box-two-a'>
+    <view class='box-two-a-a'></view>
+    <view class='box-two-a-text'>美食林</view>
+  </view>
+  <view class='box-two-a'>
+    <view class='box-two-a-a'></view>
+    <view class='box-two-a-text'>自由行</view>
+  </view>
+  <view class='box-two-a'>
+    <view class='box-two-a-a'></view>
+    <view class='box-two-a-text'>跟团游</view>
+  </view>
+</view>
+  <view class='fg'></view>
+<view class='three-box'>
+  <view class='three-box-top'>
+  
+    <view class='top-text'>必玩top榜</view>
+    <image src='../../images/xlh_icon_next.png' class='top-icon'></image>
+  </view>
+  <scroll-view scroll-x="true" class='scroll-box'>
+    <view class="scroll-view-item" wx:for="{{info}}" wx:key="*this">
+      <image class='scroll-view-img' src='{{item.url}}'></image>
+      <view class='scroll-view-text1'>{{item.name}}</view>
+      <view class='scroll-view-text2'>{{item.score}}</view>
+    </view>
+  </scroll-view>
+</view>

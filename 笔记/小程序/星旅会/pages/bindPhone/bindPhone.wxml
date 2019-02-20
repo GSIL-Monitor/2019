@@ -1,0 +1,44 @@
+<view class='bindPhone'>
+  <!-- 导航 -->
+  <view class='tbar tbar-absolute tbar-border' style='padding-top: {{barHeight}}rpx'>
+    <view class='header'>
+      <navigator class='header-back header-back-black' open-type="navigateBack"></navigator>
+      <view class='title'>绑定手机号</view>
+    </view>
+  </view>
+
+  <view class='tbar-height'></view>
+
+  <view class='form'>
+    <view class='form-item flex'>
+      <view class="form-label flex flex-justify-between flex-align-middle"><text>手机号</text> <text class='required'>*</text></view>
+      <view class='form-input'>
+        <input type='text' placeholder='请输入您的手机号'></input>
+      </view>
+    </view>
+    <view class='form-item flex'>
+      <view class="form-label flex flex-justify-between flex-align-middle"><text>验证码</text> <text class='required'>*</text></view>
+      <view class='form-group flex flex-justify-between'>
+        <view class='form-input'>
+          <input type='text' placeholder='5位验证码'></input>
+        </view>
+        <view class='getCode flex flex-align-middle flex-justify-center' bindtap='bindGetCode'>{{codeTimeNum}}</view>
+      </view>
+    </view>
+    <view class='form-item flex'>
+      <view class="form-label flex flex-justify-between flex-align-middle"><text>登录密码</text> <text class='required'>*</text></view>
+      <view class='form-input'>
+        <input type='text' placeholder='请输入您的登录密码'></input>
+      </view>
+    </view>
+    <view class='form-item flex'>
+      <view class="form-label flex flex-justify-between flex-align-middle"><text>确认密码</text> <text class='required'>*</text></view>
+      <view class='form-input'>
+        <input type='text' placeholder='请输入确认密码'></input>
+      </view>
+    </view>
+  </view>
+
+  <view class='form-btn'>立即绑定</view>
+
+</view>

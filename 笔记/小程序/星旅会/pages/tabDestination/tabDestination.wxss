@@ -1,0 +1,83 @@
+.destination-container{
+  height: 1430rpx;
+}
+.box-two{
+display: flex;
+flex-direction: row;
+height:234rpx;
+}
+.box-two-a{
+width: 20%;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+}
+.box-two-a-a{
+width:92rpx;
+height:92rpx;
+background:rgba(243,152,0,1);
+border-radius:10rpx;
+}
+.box-two-a-text{
+  margin-top: 18rpx;
+  font-size:30rpx; 
+  font-family:PingFang-SC-Medium;
+  font-weight:500;
+}
+
+.three-box{
+width: 100%;
+height: 487rpx;
+}
+.three-box-top{
+width: 100%;
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+padding: 30rpx;
+font-size: 34rpx;
+color: #333333;
+}
+.top-icon{
+  padding-right:60rpx; 
+  width:16rpx;
+  height:30rpx;
+}
+
+.scroll-box{
+width: 100%;
+white-space: nowrap;
+display: flex;
+}
+.scroll-view-item{
+width: 300rpx;
+display: inline-block;
+height: 210rpx;
+margin-left:30rpx; 
+
+
+}
+.scroll-view-item:last-child{
+  margin-right:30rpx; 
+}
+.scroll-view-img{
+width: 300rpx;
+height: 210rpx;
+margin-bottom: 20rpx;
+
+}
+.scroll-view-text1{
+  font-size: 36rpx;
+  color: #333333;
+}
+.scroll-view-text2{
+  font-size: 28rpx;
+  color: #FF571B;
+  margin-top: 19rpx;
+}
+.fg{
+  width: 100%;
+  height: 20rpx;
+  background-color: #F7F7F7;
+}

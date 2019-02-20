@@ -1,0 +1,138 @@
+<view class="center">
+  <scroll-view 
+    scroll-y="true"
+    style='height: {{windowHeight}}rpx;'
+    bindscroll="bindPageScroll"
+  >
+
+    <!-- 头部导航 -->
+    <view class='tbar tbar-primary' style='padding-top: {{barHeight}}rpx;' >
+      <view class='header'>
+        <view class='title'>个人中心</view>
+      </view>
+      <view class='user-info'>
+        <view class='flex flex-justify-between' style='margin-bottom: 12rpx'>
+          <view class='level'>普通会员</view>
+          <navigator url=''>
+            <image src='../../images/icon_setting.png' class='icon-set'></image>
+          </navigator>
+        </view>
+        <view class='user-info-content flex flex-justify-between'>
+          <view class='user-info-left flex flex-col flex-align-middle flex-wrap'>
+            <text>余额</text>
+            <text class='overflow-row-hidden'>34.00</text>
+            <navigator url='' class='flex-center user-info-price'>星旅钱包</navigator>
+          </view>
+          <view class='user-info-center flex flex-col flex-align-middle flex-wrap'>
+            <view class='user-info-img'>
+              <image src='../../testImg/user_img.png' mode='center'></image>
+            </view>
+            <view class='user-info-name overflow-row-hidden'>独家记忆</view>
+            <view class='user-info-id overflow-row-hidden'>会员ID：1845786</view>
+          </view>
+          <view class='user-info-right flex flex-col flex-align-middle flex-wrap'>
+            <text>积分</text>
+            <text class="overflow-row-hidden">112</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 浮动导航栏 -->
+    <view class='tbar tbar-primary tbar-absolute' style='padding-top: {{barHeight}}rpx; opacity: {{tbarOpacity2}}' >
+      <view class='header'>
+        <view class='title'>个人中心</view>
+      </view>
+    </view>
+
+    <!-- 绑定手机号 -->
+    <navigator url='' class='bindPhone' wx:if="{{!isBindPhone}}">
+      <view class='flex flex-justify-between'>
+        <view class='bindPhone-left flex'>
+          <image src='../../images/icon_phone.png'></image>
+          <text>绑定手机号</text>
+        </view>
+        <view class='bindPhone-right'>
+          <image src='../../images/icon_arrow_right.png'></image>
+        </view>
+      </view>
+      <view class='bindPhone-des'>
+        绑定手机可以提升账户安全，通过手机端注册的用户绑定后可以同步订单数据以及可以获得积分奖励、抽奖等活动权限！
+      </view>
+    </navigator>
+
+    <!-- 分销中心 -->
+    <navigator url='' class='fenxiao flex flex-justify-between flex-align-middle' wx:if="{{isBindPhone}}">
+      <view class='left-fenxiao flex'>
+        <image src='../../images/icon_fenxiao.png'></image>
+        <text>分销中心</text>
+      </view>
+      <view class='right-fenxiao flex'>
+        <text>查看</text>
+        <image src='../../images/icon_arrow_right.png'></image>
+      </view>
+    </navigator>
+
+    <!-- 我的订单 -->
+    <view class='order'>
+      <view class='order-title'>我的订单</view>
+      <view class='order-tab flex'>
+        <navigator url='' class='flex flex-col flex-align-middle flex-justify-between'>
+          <image src='../../images/icon-center-teb1.png'></image>
+          <text>全部</text>
+        </navigator>
+        <navigator url='' class='flex flex-col flex-align-middle flex-justify-between'>
+          <image src='../../images/icon-center-teb2.png'></image>
+          <text>待付款</text>
+        </navigator>
+        <navigator url='' class='flex flex-col flex-align-middle flex-justify-between'>
+          <image src='../../images/icon-center-teb3.png'></image>
+          <text>待出票</text>
+        </navigator>
+        <navigator url='' class='flex flex-col flex-align-middle flex-justify-between'>
+          <image src='../../images/icon-center-teb4.png'></image>
+          <text>已出票</text>
+        </navigator>
+        <navigator url='' class='flex flex-col flex-align-middle flex-justify-between'>
+          <image src='../../images/icon-center-teb5.png'></image>
+          <text>我的团</text>
+        </navigator>
+      </view>
+    </view>
+
+    <!-- 必要工具 -->
+    <view class='function'>
+      <view class='function-title'>必备工具</view>
+      <view class='function-tab flex flex-wrap'>
+        <navigator url=''>
+          <image src='../../images/icon_center_fn1.png'></image>
+          <text>我的关注</text>
+        </navigator>
+        <navigator url=''>
+          <image src='../../images/icon_center_fn2.png'></image>
+          <text>我的足迹</text>
+        </navigator>
+        <navigator url=''>
+          <image src='../../images/icon_center_fn3.png'></image>
+          <text>快速出游</text>
+        </navigator>
+        <button open-type="contact" >
+          <image src='../../images/icon_center_fn4.png'></image>
+          <text>客服中心</text>
+        </button>
+        <navigator url=''>
+          <image src='../../images/icon_center_fn5.png'></image>
+          <text>收货地址</text>
+        </navigator>
+        <navigator url=''>
+          <image src='../../images/icon_center_fn6.png'></image>
+          <text>我的优惠券</text>
+        </navigator>
+      </view>
+    </view>
+
+    <!-- 版权 -->
+    
+    <view class='copyright'>版权所有(c)星旅会</view>
+  </scroll-view>
+</view>

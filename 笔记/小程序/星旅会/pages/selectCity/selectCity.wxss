@@ -1,0 +1,74 @@
+.search-input {
+  margin: 20rpx 20rpx 30rpx;
+}
+
+.search-module {
+  padding: 0 25rpx;
+}
+
+.search-module .title {
+  color: #999999;
+}
+
+.search-module .right {
+  color: #666;
+}
+
+.search-module .right image {
+  width: 26rpx;
+  height: 32rpx;
+  margin-right: 10rpx;
+}
+ 
+.search-module-content {
+  margin: 34rpx -9rpx 0;
+}
+
+.search-module-content navigator {
+  background: #F0F0F0;
+  border-radius:5rpx;
+  padding: 11rpx 22rpx;
+  margin: 0 9rpx 20rpx;
+}
+
+.search-margin-top {
+  margin-top: 50rpx;
+}
+
+.search-module-content image {
+  width: 24rpx;
+  height: 29rpx;
+  margin-right: 18rpx;
+}
+
+.search-module-cloum3 navigator {
+  width: 30%;
+  margin:0 13rpx 40rpx;
+  text-align: center;
+
+}
+
+/* 热门推荐 */
+.scroll {
+  padding: 30rpx 20rpx;
+  background: #fff;
+  margin-bottom: 20rpx;
+}
+
+.my-title {
+  border-bottom: 1rpx solid #E0E0E0;
+  padding-bottom: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.scroll .item {
+  margin-right: 20rpx;
+}
+
+.scroll .item image {
+  width: 315rpx;
+  height: 181rpx;
+  border-radius: 6rpx;
+}
+
+

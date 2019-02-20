@@ -1,0 +1,149 @@
+ <!-- popup -->
+ <view class="popup">
+    <scroll-view 
+    scroll-y="true" 
+    style='height: {{windowHeight}}rpx;'
+    bindscroll="bindPageScroll"
+  >
+  <!-- 头部导航 -->
+  <view class='tbar tbar-absolute' style='padding-top: {{barHeight}}rpx; opacity: {{tbarOpacity}}'>
+    <view class='header'>
+      <navigator class='header-back header-back-black' open-type="navigateBack"></navigator>
+      <view class='fast-title' >套餐包含</view>
+    </view>
+  </view>
+  <view class='tbar-height'></view>
+  
+   
+    <!-- 轮播 -->
+    <view class="banner" >
+      <swiper autoplay="true" interval="5000" duration="1500">
+        <block wx:for="{{banner}}" wx:key="a">
+          <swiper-item>
+            <image class="banner-img" src='{{item}}' lazy-load="true" />
+          </swiper-item>
+        </block>
+      </swiper>
+      <!-- 指示点 -->
+      <view class="dots">
+      
+      </view>
+    </view>
+
+    <!--套餐-->
+    <view class="item-info">
+      <view class="item-title">酒店：珠海长隆企鹅酒店极地房(海洋+晚餐双人套票) 1晚 可住2人</view>
+      <view class="flex">
+      <view>
+        <image class="item-img" src='../../testImg/xlh_li.png'></image>
+      </view>
+        <text class="item-description">首日提供海洋王国两天无限次入园门＋自助晚餐（海洋王国门票限入住当天起两日内多次入园，晚仅限入住当日使用，使用时间为17:30－21:30）。门票和餐券在酒店大堂票务中心凭房卡领取。温馨提示：连住2晚及以上，套餐内门票仅提供一次，餐饮每日均有提供券2张，至酒店前台领取，凭突体票用。</text>
+      </view>
+     
+      <view class="item-group flex">
+        <view class="item-group-1 flex flex-col">
+          <view class="flex">
+            <text class="item-key">面积</text>
+            <text class="item-message">36㎡</text>
+          </view>
+          <view class="flex">
+            <text class="item-key">床型</text>
+            <text class="item-message">大床/双床</text>
+          </view>
+          <view class="flex">
+            <text class="item-key">含餐</text>
+            <text class="item-message" >01-16无餐</text>
+          </view>
+        </view>
+        
+       <view class="item-group-2 flex flex-col">
+          <view class="flex">
+            <text class="item-key">楼层</text>
+            <text class="item-message">1-2层</text>
+          </view>
+          <view class="flex">
+            <text class="item-key">宽带</text>
+            <text class="item-message">部分房间支持免费无线宽带上网</text>
+          </view>
+        </view>
+      </view>
+
+        <view class="list">
+          <view class="list-item flex">
+            <text class="keyword flex-nowrap">关键描述</text>
+            <text class="content">有窗＂该房型有多种装修风格，入住房型以酒店实际提供为准</text>
+          </view>
+
+          <view class="list-item flex">
+            <text class="keyword flex-nowrap">媒体科技</text>
+            <text class="content">国际长途电话，有线频道，液品电视机，电话，免费国内长途电话</text>
+          </view>
+
+          <view class="list-item flex">
+            <text class="keyword flex-nowrap">其他</text>
+            <text class="content">唤醒服务，语音留言，欢迎礼品</text>
+          </view>
+
+          <view class="list-item flex">
+            <text class="keyword flex-nowrap">食品饮品</text>
+            <text class="content">电热水壶，免费瓶装水，迷你吧小冰箱，茶包</text>
+          </view>
+
+          <view class="list-item flex">
+            <text class="keyword flex-nowrap" >便利设施</text>
+            <text class="content">书桌，多种规格电源插座，房内保险箱，空调，衣柜／衣橱，针线包，220V电压插座，這光窗帘，手动窗帘，备用床具，床具：鹍绒被，沙发．开夜床，电子秤房间内高速上网，客房WI覆盖免费</text>
+          </view>
+          <view class="list-item flex">
+            <text class="keyword flex-nowrap">浴室</text>
+            <text class="content">拖鞋，浴室化妆放大镜24小时热水，免費洗漱用品（6样以上）浴衣，独立淋浴间，吹风机，淋浴</text>
+          </view>
+        </view>
+      <!-- 更多 -->
+      <view class='more-btn flex flex-justify-center'>
+          <view>收起更多房型设施</view>
+          <image class="more-btn-img" src="../../testImg/xlh_up.png"></image>
+      </view>
+    </view>
+    
+    <!-- 门票 -->
+    <view class="ticket flex">
+      <text class="ticket-text flex flex-align-middle ">门票：星旅会自营，优惠立减50元／单！1张</text>
+    </view>
+    
+    
+    <!-- 评论 -->
+    <view class="comment">
+      <view class="comment-title">评论(208)</view>
+        <view class="comment-group flex ">  
+          <view class="comment-img">
+            <image src='../../testImg/admin2.png'></image>
+          </view>
+          <view >
+            <view class="flex flex-justify-between">
+              <view class="comment-username">庄园守护者</view>
+              <view class="comment-time">5分钟前</view>
+            </view>
+            <view class="comment-text">酒店环境不错，周围闹中取静，房间很干净，设施不错，环境清新宜人。</view>
+          
+          </view>
+        </view>
+
+        <view class="comment-group flex">  
+          <view class="comment-img">
+            <image src='../../testImg/admin3.png'></image>
+          </view>
+          <view >
+            <view class="flex flex-justify-between">
+              <view class="comment-username">青丝离歌</view>
+              <view class="comment-time">10分钟前</view>
+            </view>
+            <view class="comment-text">地理位置很好，都是吃的，各路地铁也近，入住没有任何不愉快，下次还会来。</view>
+          </view>  
+      </view>
+      <text class="comment-more">查看全部评论</text>
+    </view>
+
+
+  </scroll-view>
+ </view> 
+ 

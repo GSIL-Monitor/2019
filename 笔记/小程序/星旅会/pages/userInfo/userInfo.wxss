@@ -1,0 +1,59 @@
+page {
+  background: #F7F7F7;
+}
+
+/* 头像 */
+.head-portrait {
+  background: #fff;
+  margin-top: 20rpx;
+  padding: 30rpx 20rpx;
+}
+
+.head-portrait-left image {
+  width: 128rpx;
+  height: 128rpx;
+  margin-right: 26rpx;
+}
+
+.head-portrait-left text {
+  font-size:36rpx;
+}
+
+.head-portrait-right image {
+  width: 14rpx;
+  height: 26rpx;
+}
+
+/* 手机号 */
+.phone {
+  background: #fff;
+  margin-top: 20rpx;
+  padding: 40rpx 30rpx;
+}
+
+.phone-left .label {
+  font-size: 34rpx;
+  margin-right: 40rpx;
+}
+
+.phone-left .phone-num {
+  margin-left: 20rpx;
+  color: #D4D4D4;
+  font-size: 34rpx;
+}
+
+.phone-right text {
+  color: #999999;
+}
+
+.phone-right image {
+  width: 14rpx;
+  height: 26rpx;
+  margin-left: 27rpx;
+}
+
+.form-btn {
+  width: calc(100% - 130rpx);
+  margin: 99rpx 65rpx;
+}
+

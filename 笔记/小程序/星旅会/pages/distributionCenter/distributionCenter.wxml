@@ -1,0 +1,119 @@
+<view class="center">
+  <scroll-view 
+    scroll-y="true"
+    style='height: {{windowHeight}}rpx;'
+    bindscroll="bindPageScroll"
+  >
+
+    <!-- 头部导航 -->
+    <view class='tbar tbar-primary' style='padding-top: {{barHeight}}rpx;' >
+      <view class='header'>
+        <navigator class='header-back header-back-white' open-type="navigateBack"></navigator>
+        <view class='title'>分销中心</view>
+      </view>
+      <view class='user-info'>
+        <view class='flex flex-justify-between' style='margin-bottom: 12rpx'>
+          <view class='level'>普通等级</view>
+          <navigator url=''>
+            <image src='../../images/icon_setting.png' class='icon-set'></image>
+          </navigator>
+        </view>
+        <view class='user-info-content flex flex-justify-between'>
+          <view class='user-info-left flex flex-col flex-align-middle flex-wrap'>
+            <text>成功提醒佣金</text>
+            <text class='overflow-row-hidden'>50.00</text>
+            <navigator url='' class='flex-center user-info-price'>业绩</navigator>
+          </view>
+          <view class='user-info-center flex flex-col flex-align-middle flex-wrap'>
+            <view class='user-info-img'>
+              <image src='../../testImg/user_img.png' mode='center'></image>
+            </view>
+            <view class='user-info-name overflow-row-hidden'>独家记忆</view>
+            <view class='user-info-id overflow-row-hidden'>会员ID：1845786</view>
+          </view>
+          <view class='user-info-right flex flex-col flex-align-middle flex-wrap '>
+            <text>可提现佣金</text>
+            <text class="overflow-row-hidden">0.00</text>
+            <navigator url='' class='flex-center user-info-price'>提现</navigator>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 浮动导航栏 -->
+    <view class='tbar tbar-primary tbar-absolute' style='padding-top: {{barHeight}}rpx; opacity: {{tbarOpacity2}}' >
+      <view class='header'>
+        <navigator class='header-back header-back-white' open-type="navigateBack"></navigator>
+        <view class='title'>分销中心</view>
+      </view>
+    </view>
+
+    <!-- 教程，文章 -->
+    <view class='nav flex'>
+      <navigator url='' class='nav-course flex flex-align-middle flex-justify-center'>
+        <image src='../../images/icon_distributionCenter_jiaocheng.png' class='nav-course-logo'></image>
+        <text>分销教程</text>
+        <image src='../../images/icon_arrow_right_white.png' class='nav-course-right'></image>
+      </navigator>
+      <navigator url='' class='nav-rule flex flex-align-middle flex-justify-center'>
+        <image src='../../images/icon_distributionCenter_jiaocheng.png' class='nav-course-logo'></image>
+        <text>分销教程</text>
+        <image src='../../images/icon_arrow_right_white.png' class='nav-course-right'></image>
+      </navigator>
+    </view>
+
+    <!-- 我的订单 -->
+    <view class='order'>
+      <view class='order-tab flex'>
+        <navigator url='' class='flex flex-col flex-align-middle flex-justify-between'>
+          <image src='../../images/icon_distributionCenter_tab1.png'></image>
+          <text>我的小店</text>
+        </navigator>
+        <navigator url='' class='flex flex-col flex-align-middle flex-justify-between'>
+          <image src='../../images/icon_distributionCenter_tab2.png'></image>
+          <text>分销订单</text>
+        </navigator>
+        <navigator url='' class='flex flex-col flex-align-middle flex-justify-between'>
+          <image src='../../images/icon_distributionCenter_tab3.png'></image>
+          <text>我的客户</text>
+        </navigator>
+        <navigator url='' class='flex flex-col flex-align-middle flex-justify-between'>
+          <image src='../../images/icon_distributionCenter_tab4.png'></image>
+          <text>提现记录</text>
+        </navigator>
+      </view>
+    </view>
+
+    <!-- 必要工具 -->
+    <view class='function'>
+      <view class='function-title'>必备工具</view>
+      <view class='function-tab flex flex-wrap'>
+        <navigator url=''>
+          <image src='../../images/icon_distributionCenter_tab5.png'></image>
+          <text>小店商品</text>
+        </navigator>
+        <navigator url=''>
+          <image src='../../images/icon_distributionCenter_tab6.png'></image>
+          <text>小店海报</text>
+        </navigator>
+        <navigator url=''>
+          <image src='../../images/icon_distributionCenter_tab7.png'></image>
+          <text>微信群</text>
+        </navigator>
+        <button open-type="contact" >
+          <image src='../../images/icon_distributionCenter_tab8.png'></image>
+          <text>小店装修</text>
+        </button>
+        <navigator url=''>
+          <image src='../../images/icon_distributionCenter_tab9.png'></image>
+          <text>团队分红</text>
+        </navigator>
+        <navigator url=''>
+          <image src='../../images/icon_distributionCenter_tab10.png'></image>
+          <text>联系我们</text>
+        </navigator>
+      </view>
+    </view>
+
+  </scroll-view>
+</view>

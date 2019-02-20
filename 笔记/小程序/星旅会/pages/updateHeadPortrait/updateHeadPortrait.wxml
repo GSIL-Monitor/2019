@@ -1,0 +1,35 @@
+<view class='updateHeadPortrait'>
+
+  <!-- 导航 -->
+  <view class='tbar tbar-absolute tbar-border' style='padding-top: {{barHeight}}rpx'>
+    <view class='header'>
+      <navigator class='header-back header-back-black' open-type="navigateBack"></navigator>
+      <view class='title'>编辑头像</view>
+    </view>
+  </view>
+
+  <view class='tbar-height'></view>
+
+  <!-- 设置头像 -->
+  <view class="set-head-portrait flex flex-justify-between flex-align-middle">
+    <text>独家记忆</text>
+    <image src='../../testImg/user_img.png'></image>
+  </view>
+
+  <!-- 修改昵称 -->
+  <view class='form'>
+    <view class='form-item flex'>
+      <view class="form-label flex flex-justify-between flex-align-middle"><text>修改昵称</text> <text class='required'>*</text></view>
+      <view class='form-input'>
+        <input type='text' placeholder='请输入您的昵称' value='独家记忆'></input>
+      </view>
+    </view>
+  </view>
+
+  <!-- 按钮 -->
+  <view class='btns'>
+    <view class='form-btn form-btn-border'>读取微信资料</view>
+    <view class='form-btn'>保存</view>
+  </view>
+
+</view>

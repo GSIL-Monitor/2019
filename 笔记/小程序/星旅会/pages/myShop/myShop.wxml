@@ -1,0 +1,15 @@
+<view class='distributionRule'>
+
+  <!-- 导航 -->
+  <view class='tbar tbar-absolute tbar-border' style='padding-top: {{barHeight}}rpx'>
+    <view class='header'>
+      <navigator class='header-back header-back-black' open-type="navigateBack"></navigator>
+      <view class='title'>独家记忆的小店</view>
+    </view>
+  </view>
+
+  <view class='tbar-height'></view>
+
+
+
+</view>

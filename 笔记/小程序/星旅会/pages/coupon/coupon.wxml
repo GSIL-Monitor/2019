@@ -1,0 +1,100 @@
+<view class="coupon">
+  <!-- 导航 -->
+  <view class='tbar tbar-absolute tbar-border' style='padding-top: {{barHeight}}rpx'>
+    <view class='header'>
+      <navigator class='header-back header-back-black' open-type="navigateBack"></navigator>
+      <view class='title'>我的优惠券</view>
+    </view>
+  </view>
+
+  <view class='tbar-height'></view>
+
+  <!-- tab选项卡 -->
+  <view class='tab flex'>
+    <view class="item {{template == 1 ? 'item-on' : ''}}" data-index="1" bindtap='toggleTemplate'>未使用</view>
+    <view class="item {{template == 2 ? 'item-on' : ''}}" data-index="2" bindtap='toggleTemplate'>已使用</view>
+    <view class="item {{template == 3 ? 'item-on' : ''}}" data-index="3" bindtap='toggleTemplate'>已过期</view>
+  </view>
+
+  <!-- 模板 -->
+  <!-- 未使用 -->
+  <view class='tab-template' wx:if="{{template == 1}}">
+
+    <view class='list'>
+      <view class='item coupon-bg flex'>
+        <view class='item-left flex flex-col flex-align-middle flex-justify-center'>
+          <text class='item-price'>￥30</text>
+          <text class='left-font1'>满499元可用</text>
+        </view>
+        <view class='item-right flex flex-col'>
+          <text class='right-font1'>海立方满额立减</text>
+          <text class='right-font2'>消费满499立减30</text>
+          <text class='right-font3'>永久有效</text>
+        </view>
+        <navigator url='' class='item-btn flex flex-justify-center flex-align-middle'>立即使用</navigator>
+      </view>
+      <view class='item coupon-bg flex'>
+        <view class='item-left flex flex-col flex-align-middle flex-justify-center'>
+          <text class='item-price'>￥30</text>
+          <text class='left-font1'>满499元可用</text>
+        </view>
+        <view class='item-right flex flex-col'>
+          <text class='right-font1'>海立方满额立减</text>
+          <text class='right-font2'>消费满499立减30</text>
+          <text class='right-font3'>永久有效</text>
+        </view>
+        <navigator url='' class='item-btn flex flex-justify-center flex-align-middle'>立即使用</navigator>
+      </view>
+    </view>
+    
+    <!-- <view class='tab-empty flex flex-col flex-align-middle'>
+      <image src='../../images/coupon.png'></image>
+      <text>您还没有优惠券</text>
+    </view> -->
+  </view>
+
+  <!-- 已使用 -->
+  <view class='tab-template' wx:if="{{template == 2}}">
+
+    <view class='list'>
+      <view class='item coupon-bg-off flex'>
+        <view class='item-left flex flex-col flex-align-middle flex-justify-center'>
+          <text class='item-price'>￥30</text>
+          <text class='left-font1'>满499元可用</text>
+        </view>
+        <view class='item-right flex flex-col'>
+          <text class='right-font1'>海立方满额立减</text>
+          <text class='right-font2'>消费满499立减30</text>
+          <text class='right-font3'>永久有效</text>
+        </view>
+        <navigator url='' class='item-font4 flex flex-justify-center flex-align-middle'>已使用</navigator>
+      </view>
+      <view class='item coupon-bg-off flex'>
+        <view class='item-left flex flex-col flex-align-middle flex-justify-center'>
+          <text class='item-price'>￥30</text>
+          <text class='left-font1'>满499元可用</text>
+        </view>
+        <view class='item-right flex flex-col'>
+          <text class='right-font1'>海立方满额立减</text>
+          <text class='right-font2'>消费满499立减30</text>
+          <text class='right-font3'>永久有效</text>
+        </view>
+        <navigator url='' class='item-font4 flex flex-justify-center flex-align-middle'>已使用</navigator>
+      </view>
+    </view>
+
+    <!-- <view class='tab-empty flex flex-col flex-align-middle'>
+      <image src='../../images/coupon.png'></image>
+      <text>您还没有优惠券</text>
+    </view> -->
+  </view>
+
+  <!-- 已过期 -->
+  <view class='tab-template' wx:if="{{template == 3}}">
+    <view class='tab-empty flex flex-col flex-align-middle'>
+      <image src='../../images/coupon.png'></image>
+      <text>您还没有优惠券</text>
+    </view>
+  </view>
+
+</view>

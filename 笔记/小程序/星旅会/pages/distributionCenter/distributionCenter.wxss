@@ -1,0 +1,187 @@
+page {
+  background: #F7F7F7;
+}
+
+/* 头部导航 */
+.icon-set {
+  width: 44rpx;
+  height: 42rpx;
+  margin-right: 30rpx;
+}
+
+.user-info {
+  padding: 25rpx 0 48rpx;
+}
+
+.user-info .level {
+  font-size:28rpx;
+  color: #FF571B;
+  width:171rpx;
+  height:50rpx;
+  line-height: 50rpx;
+  background:rgba(255,255,255,1);
+  border-top-right-radius: 25rpx;
+  border-bottom-right-radius: 25rpx;
+}
+
+.user-info-content text {
+  font-size:30rpx;
+  margin-bottom: 30rpx;
+  width: 100%;
+}
+
+.user-info-content .user-info-price {
+  font-size: 28rpx;
+  width:148rpx;
+  height:50rpx;
+  line-height: 50rpx;
+  border:1rpx solid rgba(255,255,255,1);
+  border-radius:25rpx;
+}
+
+.user-info-left {
+  width: 30%;
+  margin-top: 30rpx;
+  padding: 0 20rpx;
+}
+
+.user-info-right {
+  width: 30%;
+  margin-top: 30rpx;
+  padding: 0 20rpx;
+}
+
+.user-info-center {
+  width: 40%;
+  padding: 0 20rpx;
+}
+
+.user-info-img {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 24rpx;
+  border: 6rpx solid #fff;
+}
+
+.user-info-name {
+  font-size: 34rpx;
+  margin-bottom: 20rpx;
+}
+
+.user-info-id {
+  font-size: 30rpx;
+}
+
+.user-info-name, .user-info-id {
+  width: 100%;
+}
+
+/* 我的订单 */
+.order {
+  padding: 0 30rpx;
+  background: #fff;
+  margin-top: 20rpx;
+}
+
+.order-title {
+  font-weight:500;
+  padding: 25rpx 0;
+  border-bottom: 1rpx solid #E0E0E0;
+}
+
+.order-tab {
+  padding: 55rpx 0;
+}
+ 
+.order-tab navigator {
+  width: 25%;
+  height: 110rpx;
+}
+
+.order-tab navigator image {
+  width: 58rpx;
+  height: 58rpx;
+}
+
+.order-tab navigator text {
+  font-size: 30rpx;
+  color: #666;
+}
+
+/* 必要工具 */
+.function {
+  margin-top: 20rpx;
+  background: #fff;
+  padding: 0 30rpx;
+}
+
+.function-title {
+  font-weight:500;
+  padding: 25rpx 0;
+  border-bottom: 1rpx solid #E0E0E0;
+  margin-bottom: 35rpx;
+} 
+
+.function-tab navigator, .function-tab button {
+  width: 33.33%;
+  text-align: center;
+  margin-bottom: 50rpx;
+}
+
+.function-tab navigator image, .function-tab button image {
+  width: 94rpx;
+  height: 94rpx;
+  margin: 0 auto 11rpx;
+}
+
+.function-tab navigator text, .function-tab button text {
+  color: #666666;
+  font-size: 30rpx;
+}
+
+.copyright {
+  margin: 30rpx auto;
+  text-align: center;
+  color: #999999;
+  font-size: 28rpx;
+}
+
+/* 教程，文章 */
+.nav-course {
+  width:330rpx;
+  height:130rpx;
+  background:linear-gradient(90deg,rgba(137,96,255,1),rgba(250,124,255,1));
+  border-radius:10rpx;
+  margin-right: 30rpx;
+}
+
+.nav-rule {
+  width:330rpx;
+  height:130rpx;
+  background:linear-gradient(90deg,rgba(96,223,255,1),rgba(98,150,255,1));
+  border-radius:10rpx;
+}
+
+.nav {
+  background: #fff;
+  padding: 30rpx;
+}
+
+.nav-course text, .nav-rule text {
+  color: #fff;
+  margin-right: 17rpx;
+}
+
+.nav-course-logo {
+  width: 70rpx;
+  height: 70rpx;
+  margin-right: 28rpx;
+}
+
+.nav-course-right {
+  width: 44rpx;
+  height: 44rpx;
+}
+

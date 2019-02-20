@@ -1,0 +1,161 @@
+<view class='index'>
+    <scroll-view 
+    scroll-y="true" 
+    style='height: {{windowHeight}}rpx;'
+    bindscroll="bindPageScroll"
+  >
+
+    <!-- 头部导航 -->
+    <view class='tbar tbar-absolute' style='padding-top: {{barHeight}}rpx; opacity: {{tbarOpacity}}'>
+      <view class='header'>
+        <navigator class='header-back header-back-black' open-type="navigateBack"></navigator>
+        <view class='title'>限时秒杀</view>
+      </view>
+    </view>
+
+    <view class='tbar-height'></view>
+
+      <!-- tab导航 -->
+      <view class="navbar">  
+        <text wx:for="{{navbar}}" data-idx="{{index}}" class="item {{currentTab==index ? 'active' : ''}}" wx:key="unique" bindtap="navbarTap">{{item}}</text>  
+      </view> 
+      
+      <!-- 列表 -->
+      <view class='list' wx:if="{{currentTab == 0}}">
+        <view class="list-item flex">
+            <image src='../../testImg/xlh_pic01.png'></image>
+          <view class='item-info flex flex-col '>
+            <view class="item-title">杜米妮旺多姆酒店</view> 
+            
+            <view class='flex-group flex'>
+              <view class='progress-bg'>
+                <view class='progress-line' style='width: 58%'>
+                  58%
+                </view>
+              </view>
+              <text class=''>已抢1747间</text>
+            </view>
+            <text>满100减30</text>
+            <view class='item-group flex'>
+              <view class="item-price">￥192</view>
+              <view class="item-remove-price">￥288</view>
+              <button class="btn flex">马上抢</button>
+            </view>
+          </view>
+        </view>
+        <view class="list-item flex">
+            <image src='../../testImg/xlh_pic02.png'></image>
+          <view class='item-info flex flex-col '>
+            <view class="item-title">国会艺术酒店</view> 
+            
+            <view class='flex-group flex'>
+              <view class='progress-bg'>
+                <view class='progress-line' style='width: 58%'>
+                  58%
+                </view>
+              </view>
+              <text class=''>已抢1747间</text>
+            </view>
+            <text>满100减30</text>
+            <view class='item-group flex'>
+              <view class="item-price">￥192</view>
+              <view class="item-remove-price">￥288</view>
+              <button class="btn flex">马上抢</button>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view class='list' wx:if="{{currentTab == 1}}">
+        <view class="list-item flex">
+            <image src='../../testImg/xlh_pic01.png'></image>
+          <view class='item-info flex flex-col '>
+            <view class="item-title">杜米妮旺多姆酒店</view> 
+            
+            <view class='flex-group flex'>
+              <view class='progress-bg'>
+                <view class='progress-line' style='width: 58%'>
+                  58%
+                </view>
+              </view>
+              <text class=''>已抢1747间</text>
+            </view>
+            <text>满100减30</text>
+            <view class='item-group flex'>
+              <view class="item-price">￥192</view>
+              <view class="item-remove-price">￥288</view>
+              <button class="btn flex">马上抢</button>
+            </view>
+          </view>
+        </view>
+        <view class="list-item flex">
+            <image src='../../testImg/xlh_pic02.png'></image>
+          <view class='item-info flex flex-col '>
+            <view class="item-title">国会艺术酒店</view> 
+            
+            <view class='flex-group flex'>
+              <view class='progress-bg'>
+                <view class='progress-line' style='width: 58%'>
+                  58%
+                </view>
+              </view>
+              <text class=''>已抢1747间</text>
+            </view>
+            <text>满100减30</text>
+            <view class='item-group flex'>
+              <view class="item-price">￥192</view>
+              <view class="item-remove-price">￥288</view>
+              <button class="btn flex">马上抢</button>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view class='list' wx:if="{{currentTab == 2}}">
+        <view class="list-item flex">
+            <image src='../../testImg/xlh_pic01.png'></image>
+          <view class='item-info flex flex-col '>
+            <view class="item-title">杜米妮旺多姆酒店</view> 
+            
+            <view class='flex-group flex'>
+              <view class='progress-bg'>
+                <view class='progress-line' style='width: 58%'>
+                  58%
+                </view>
+              </view>
+              <text class=''>已抢1747间</text>
+            </view>
+            <text>满100减30</text>
+            <view class='item-group flex'>
+              <view class="item-price">￥192</view>
+              <view class="item-remove-price">￥288</view>
+              <button class="btn flex">马上抢</button>
+            </view>
+          </view>
+        </view>
+        <view class="list-item flex">
+            <image src='../../testImg/xlh_pic02.png'></image>
+          <view class='item-info flex flex-col '>
+            <view class="item-title">国会艺术酒店</view> 
+            
+            <view class='flex-group flex'>
+              <view class='progress-bg'>
+                <view class='progress-line' style='width: 58%'>
+                  58%
+                </view>
+              </view>
+              <text class=''>已抢1747间</text>
+            </view>
+            <text>满100减30</text>
+            <view class='item-group flex'>
+              <view class="item-price">￥192</view>
+              <view class="item-remove-price">￥288</view>
+              <button class="btn flex">马上抢</button>
+            </view>
+          </view>
+        </view>
+      </view>
+
+
+  </scroll-view>
+</view>

@@ -1,0 +1,20 @@
+<view class='distributionRule'>
+
+  <!-- 导航 -->
+  <view class='tbar tbar-absolute tbar-border' style='padding-top: {{barHeight}}rpx'>
+    <view class='header'>
+      <navigator class='header-back header-back-black' open-type="navigateBack"></navigator>
+      <view class='title'>分销规则</view>
+    </view>
+  </view>
+
+  <view class='tbar-height'></view>
+
+  <view class='distributionRule-title'>《星旅会分销规则》</view>
+
+  <view class='distributionRule-des'>
+    <view>1.测试</view>
+    <view>1.测试</view>
+  </view>
+
+</view>

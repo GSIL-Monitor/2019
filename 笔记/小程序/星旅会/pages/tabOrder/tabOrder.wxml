@@ -1,0 +1,56 @@
+
+<view class="index">
+  <scroll-view 
+    style='height: {{windowHeight}}rpx;'
+    bindscroll="bindPageScroll"
+  >
+    <!--导航栏-->
+    <view class='tbar-height'></view>
+    <view class='tbar tbar-absolute' style='padding-top: {{barHeight}}rpx'>
+      <view class='header'>
+        <navigator class='header-back header-back-black' open-type="navigateBack"></navigator>
+        <view class='title'>我的订单</view>
+      </view>
+    </view>
+    <!--全部订单状态-->
+    <view class='flex lists'>
+      <view class='list {{imgindex==index ?"active":""}}' wx:for="{{orderTpyeInfo}}" data-index="{{index}}" wx:key="*this" bindtap="select">
+        <view class='item-img flex-justify-between'>
+          <image  src='{{item.clickUrl}}' wx:if="{{imgindex==index}}" lazy-load="true" style='width:{{item.w}}rpx;height:{{item.h}}rpx'></image>
+          <image src='{{item.url}}' wx:elif="{{imgindex!=index}}" lazy-load="true" style='width:{{item.w}}rpx;height:{{item.h}}rpx'></image>
+        </view>
+        <view class='text'>
+          <text>{{item.text}}</text>
+        </view>
+      </view>  
+    </view>
+    <!--订单列表-->
+    <view class='order-list'>
+      <view class='order-info' wx:for="{{orderDetailInfo}}" wx:key="*this">
+        <view class='item-group flex flex-justify-between item'>
+          <view class='order-number'>订单号:{{item.orderNumber}}</view>
+          <text>{{item.status}}</text>
+        </view>
+        <view class='order-detail flex item'>
+          <view>
+            <image class='scroll-view-img' src='{{item.detailUrl}}' lazy-load="true"></image>
+          </view>
+          <view class='detail'>
+            <view>{{item.name}}</view>
+            <view>￥{{item.price}}</view>
+            <view>{{item.time}}</view>
+          </view>
+        </view>
+        <view class='item-group flex flex-justify-between item'>
+          <view class='order-total'>
+            <text>总计: </text>
+            <text>￥{{item.totalPrice}}</text>
+          </view>
+          <view>
+            <button size='mini' class='pay' wx:if="{{item.status =='待付款' || imgindex == 1 }}" bindtap="jumpTo">去付款</button>
+          </view>  
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

@@ -1,0 +1,332 @@
+@import './base64Img.wxss';
+
+page {
+  color: #333;
+  line-height: 1;
+  font-size: 30rpx;
+}
+
+.navigator-hover {
+  background: transparent;
+  opacity: 1;
+}
+
+button::after{ 
+  border: none;
+}
+
+button {
+  line-height: 1;
+  border-radius: 0;
+  padding: 0;
+  background:transparent;
+  font-size: 30rpx;
+}
+
+.button-hover {
+  color: #333;
+  background-color:transparent;
+}
+
+.form {
+  margin-top: 20rpx;
+  background: #fff;
+  padding: 34rpx 30rpx;
+}
+
+.form-item {
+  margin-bottom: 48rpx;
+}
+
+.form-item:last-child {
+  margin-bottom: 0;
+}
+
+.form-label {
+  width: 25%;
+  padding-right: 20rpx;
+}
+
+.form-label text {
+  font-size: 34rpx;
+}
+
+.form-input {
+  width: 75%;
+}
+
+.form-input input {
+  width: 100%;
+  height: 100%;
+  font-size: 34rpx;
+}
+
+.form-date {
+  width: 75%;
+}
+
+.form-date .picker{
+  width: 75%;
+}
+
+.form-date .pla {
+  font-size: 34rpx;
+  color: #D4D4D4;
+}
+
+.form-font {
+  font-size: 34rpx;
+}
+
+.form-btn {
+  width:100%;
+  height:90rpx;
+  line-height: 90rpx;
+  background:linear-gradient(-90deg,rgba(255,87,27,1),rgba(255,131,31,1));
+  border-radius:45rpx;
+  color: #fff;
+  text-align: center;
+}
+
+.form-btn-border {
+  background: transparent;
+  border:1px solid rgba(255,83,76,1);
+  color: #FF534C;
+}
+
+.tbar {
+  width: 100%;
+  font-size: 36rpx;
+  color: #333;
+  background: transparent;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  background: #fff;
+}
+
+.tbar-border {
+  border-bottom: 1rpx solid #D4D4D4;
+}
+ 
+.tbar-height {
+  height: 130rpx;
+}
+
+.tbar-absolute {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9;
+}
+
+.tbar-primary {
+  color: #fff;
+  background:linear-gradient(164deg,rgba(255,131,31,1) 0%,rgba(255,86,12,1) 100%);
+}
+
+.overflow-row-hidden {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+}
+
+.header {
+  height: 90rpx;
+  line-height: 90rpx;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.header-back {
+  width: 19rpx;
+  height: 100%;
+  font-size: 0;
+  padding: 0 24rpx;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.head-transparent {
+  background: transparent;
+  color: #333;
+}
+
+.input-placeholder {
+  color: #c8c8c8;
+}
+
+.mask {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,.5);
+}
+
+image {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.required {
+  color: #FF534C;
+  font-size: 34rpx;
+}
+
+view,navigator,text {
+  box-sizing: border-box;
+  font-size: 30rpx;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-grow {
+  flex-grow: 1;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.flex-column, .flex-col {
+  flex-direction: column;
+}
+
+.flex-justify-start {
+  justify-content: flex-start;
+}
+
+.flex-justify-end {
+  justify-content: flex-end;
+}
+
+.flex-justify-center {
+  justify-content: center;
+}
+
+.flex-justify-between {
+  justify-content: space-between;
+}
+
+.flex-justify-around {
+  justify-content: space-around;
+}
+
+.flex-align-stretch {
+  align-items: stretch;
+}
+
+.flex-align-top {
+  align-items: flex-start;
+} 
+
+.flex-align-bottom {
+  align-items: flex-end;
+}
+ 
+.flex-align-middle {
+  align-items: center;
+}
+
+.flex-align-baseline {
+  align-items: baseline;
+}
+
+.flex-item {
+  display: inline-block;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.flex-nowrap {
+  flex-wrap: nowrap;
+}
+
+.flex-wrap-reverse {
+  flex-wrap: wrap-reverse;
+}
+
+.flex-align-self-end {
+  align-self: flex-end
+}
+
+/*预设值的几个简便类*/
+.flex-row-start {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.flex-row-end {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.flex-row-around {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.flex-row-between {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.my-title {
+  margin-bottom: 30rpx;
+  font-size:34rpx;
+  margin-left: 15rpx;
+}
+
+.my-title image {
+  width: 42rpx;
+  height: 42rpx;
+  margin-right: 15rpx;
+}
+
+/* input */
+.input {
+  line-height: 58rpx;
+  height:58rpx;
+  background: #F0F0F0;
+  border-radius:4rpx;
+  position: relative;
+  font-size: 26rpx;
+}
+
+.input input {
+  width: 100%;
+  height: 100%;
+}
+
+.input-search-icon {
+  padding: 0 30rpx 0 70rpx;
+}
+
+.input-search-icon image {
+  width: 31rpx;
+  height: 30rpx;
+  position: absolute;
+  top: 50%;
+  left: 16rpx;
+  transform: translateY(-50%)
+}
+

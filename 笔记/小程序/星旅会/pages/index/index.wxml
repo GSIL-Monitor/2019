@@ -1,0 +1,224 @@
+<view class="index">
+  <scroll-view 
+    scroll-y="true" 
+    style='height: {{windowHeight}}rpx;'
+    bindscroll="bindPageScroll"
+  >
+    <!-- 头部导航 -->
+    <view class='tbar tbar-primary' style='padding-top: {{barHeight}}rpx; opacity: {{tbarOpacity}}'>
+      <view class='header'>
+        <view class='title'>星旅会</view>
+      </view>
+      <view class='flex'>
+        <navigator url='' class='tbar-address flex flex-align-middle'>
+          <text>广州</text>
+          <image src='../../images/icon_arrow_down.png' lazy-load="true"></image>
+        </navigator>
+        <navigator url='' class='tbar-search flex flex-grow flex-align-middle'>
+          <image src='../../images/icon_search.png' lazy-load="true"></image>
+          <text>请输入搜索内容</text>
+        </navigator>
+      </view>
+    </view>
+
+    <!-- 浮动导航栏 -->
+    <view class='tbar tbar-primary tbar-absolute' style='padding-top: {{barHeight}}rpx; opacity: {{tbarOpacity2}}' >
+      <view class='header'>
+        <view class='title'>星旅会</view>
+      </view>
+    </view>
+
+    <!-- 轮播 -->
+    <view class='banner'>
+      <swiper
+      autoplay="true"
+      interval="5000"
+      duration="1500"
+      bindchange="changeBanner"
+      >
+        <block wx:for="{{banner}}"> 
+          <swiper-item>
+            <image src="{{item}}" lazy-load="true" />
+          </swiper-item>
+        </block>
+      </swiper>
+      <view class='indicator-num'>
+        {{bannerIndex}}/{{banner.length}}
+      </view>
+    </view>
+
+    <!-- 分类导航 -->
+    <view class='classification'>
+      <view class='class1 flex flex-wrap'>
+        <view class='item flex flex-col flex-justify-center flex-align-middle'>
+          <view class='item-img'>
+            <image src='../../testImg/index_tab1.png'></image>
+          </view>
+          <text>抢购</text>
+        </view>
+        <view class='item flex flex-col flex-justify-center flex-align-middle'>
+          <view class='item-img'>
+            <image src='../../testImg/index_tab2.png'></image>
+          </view>
+          <text>温泉</text>
+        </view>
+        <view class='item flex flex-col flex-justify-center flex-align-middle'>
+          <view class='item-img'>
+            <image src='../../testImg/index_tab3.png'></image>
+          </view>
+          <text>别墅</text>
+        </view>
+        <view class='item flex flex-col flex-justify-center flex-align-middle'>
+          <view class='item-img'>
+            <image src='../../testImg/index_tab4.png'></image>
+          </view>
+          <text>海滩</text>
+        </view>
+        <view class='item flex flex-col flex-justify-center flex-align-middle'>
+          <view class='item-img'>
+            <image src='../../testImg/index_tab5.png'></image>
+          </view>
+          <text>民宿</text>
+        </view>
+        <view class='item flex flex-col flex-justify-center flex-align-middle'>
+          <view class='item-img'>
+            <image src='../../testImg/index_tab6.png'></image>
+          </view>
+          <text>优惠券</text>
+        </view>
+        <view class='item flex flex-col flex-justify-center flex-align-middle'>
+          <view class='item-img'>
+            <image src='../../testImg/index_tab7.png'></image>
+          </view>
+          <text>玩乐</text>
+        </view>
+        <view class='item flex flex-col flex-justify-center flex-align-middle'>
+          <view class='item-img'>
+            <image src='../../testImg/index_tab8.png'></image>
+          </view>
+          <text>团建</text>
+        </view>
+        <view class='item flex flex-col flex-justify-center flex-align-middle'>
+          <view class='item-img'>
+            <image src='../../testImg/index_tab9.png'></image>
+          </view>
+          <text>门票</text>
+        </view>
+        <view class='item flex flex-col flex-justify-center flex-align-middle'>
+          <view class='item-img'>
+            <image src='../../testImg/index_tab10.png'></image>
+          </view>
+          <text>商城</text>
+        </view>
+      </view>
+      <view class='class2 flex'>
+        <view class='item-block flex flex-col'>
+          <text>音乐餐吧</text>
+          <view class='item-block-image flex-align-self-end'>
+            <image src='../../testImg/img1.png' mode='widthFix' ></image>
+          </view>
+        </view>
+        <view class='item-group'>
+          <view class='flex flex-align-middle flex-justify-between'>
+            <text>亲子</text>
+            <image src='../../testImg/img2.png' mode='widthFix' style='width: 69rpx' lazy-load="true"></image>
+          </view>
+          <view class='flex flex-align-middle flex-justify-between'>
+            <text>会议</text>
+            <image src='../../testImg/img4.png' mode='widthFix' style='width: 66rpx' lazy-load="true"></image>
+          </view>
+        </view>
+        <view class='item-group'>
+          <view class='flex flex-align-middle flex-justify-between'>
+            <text>轰趴</text>
+            <image src='../../testImg/img3.png' mode='widthFix' style='width: 64rpx' lazy-load="true"></image>
+          </view>
+          <view class='flex flex-align-middle flex-justify-between'>
+            <text>定制</text>
+            <image src='../../testImg/img5.png' mode='widthFix' style='width: 70rpx' lazy-load="true"></image>
+          </view>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 热门推荐 -->
+    <view class='scroll'>
+      <view class='my-title flex flex-align-middle'> 
+        <image src='../../images/icon_hot.png'></image>
+        <text>热门推荐</text>
+      </view>
+      <scroll-view scroll-x style="height: 181rpx;">
+        <view class='flex'>
+          <navigator url='' class='item'>
+            <image src='../../testImg/img6.png' lazy-load="true"></image>
+          </navigator>
+          <navigator url='' class='item'>
+            <image src='../../testImg/img7.png' lazy-load="true"></image>
+          </navigator>
+          <navigator url='' class='item'>
+            <image src='../../testImg/img8.png' lazy-load="true"></image>
+          </navigator>
+          <navigator url='' class='item'>
+            <image src='../../testImg/img9.png' lazy-load="true"></image>
+          </navigator>
+        </view>
+      </scroll-view>
+    </view>
+
+    <!-- 热门目的地 -->
+    <view class='product'>
+      <view class='my-title flex flex-align-middle'>
+        <image src='../../images/icon_hot.png'></image>
+        <text>热门目的地</text>
+      </view>
+      <view class='list'>
+        <navigator url='' class='item'>
+          <view class='item-img'>
+            <image src='../../testImg/img9.png' mode='center' lazy-load="true"></image>
+          </view>
+          <view class='item-group flex flex-justify-between'>
+            <view class='title'>广州·从化温泉养生谷</view>
+            <navigator url='' class='location flex'>
+              <image src='../../images/icon-localtion.png'></image>
+              <text>广州-从化</text>
+            </navigator>
+          </view>
+          <view class='item-des'>
+            都市中的“世外桃源”，核心度假区的“度假核心”都市中的“世外桃源”，核心度假区的“度假核心”
+          </view>
+        </navigator>
+        <navigator url='' class='item'>
+          <view class='item-img'>
+            <image src='../../testImg/img9.png' mode='center' lazy-load="true"></image>
+          </view>
+          <view class='item-group flex flex-justify-between'>
+            <view class='title'>广州·从化温泉养生谷</view>
+            <navigator url='' class='location flex'>
+              <image src='../../images/icon-localtion.png'></image>
+              <text>广州-从化</text>
+            </navigator>
+          </view>
+          <view class='item-des'>
+            都市中的“世外桃源”，核心度假区的“度假核心”都市中的“世外桃源”，核心度假区的“度假核心”
+          </view>
+        </navigator>
+        <navigator url='' class='item'>
+          <view class='item-img'>
+            <image src='../../testImg/img9.png' mode='center' lazy-load="true"></image>
+          </view>
+          <view class='item-group flex flex-justify-between'>
+            <view class='title'>广州·从化温泉养生谷</view>
+            <navigator url='' class='location flex'>
+              <image src='../../images/icon-localtion.png'></image>
+              <text>广州-从化</text>
+            </navigator>
+          </view>
+          <view class='item-des'>
+            都市中的“世外桃源”，核心度假区的“度假核心”都市中的“世外桃源”，核心度假区的“度假核心”
+          </view>
+        </navigator>
+      </view>
+    </view>
+
+  </scroll-view>
+</view>

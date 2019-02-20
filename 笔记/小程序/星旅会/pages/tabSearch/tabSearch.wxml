@@ -1,0 +1,93 @@
+
+<view class="index">
+  <scroll-view 
+    style='height: {{windowHeight}}rpx;'
+    bindscroll="bindPageScroll"
+  >
+    <!--导航栏-->
+    <view class='tbar-height'></view>
+    <view class='tbar tbar-primary tbar-absolute' style='padding-top: {{barHeight}}rpx'>
+      <view class='header'>
+        <view class='title'>星旅会</view>
+      </view>
+    </view>
+    <!--轮播-->
+    <swiper
+      indicator-dots="{{indicatorDots}}"
+      autoplay="{{autoplay}}"
+      interval="{{interval}}"
+      duration="{{duration}}"
+      indicator-color="grb(210,210,210)"
+      indicator-active-color="#FF7B4B"
+      style='height:{{Hei}}'
+    >
+      <block wx:for="{{imgUrls}}" wx:key="*this">
+        <swiper-item>
+          <image src="{{item}}" class="slide-image" lazy-load="true"/>
+        </swiper-item>
+      </block>
+    </swiper>
+<!--搜索-->
+    <view class='container'>
+      <view class='form'>
+        <view class='item-group flex flex-justify-between form-item form-input'   style="margin:38rpx;">
+          <view class='title' style="font-weight:bold">广州</view>
+          <navigator url='' class='location flex'>
+            <text>全休名宿预定</text>
+            <image src='../../images/xlh_icon_yuding.png' lazy-load="true"></image>
+          </navigator>
+        </view>
+        <view class="form-item form-input item-group flex flex-justify-between">
+          <view class='start'>
+            <picker
+              mode="date"
+              value="{{startDate}}"
+              start="2015-09-01"
+              end="2020-09-01"
+              bindchange="bindStartDateChange"
+              >
+              <view class="picker">{{startDate}}</view>
+            </picker>
+          </view>
+          <view class='total'>
+            <view>
+              共{{totalDays}}晚
+            </view>
+            <view class='line'>
+              
+            </view>
+          </view>
+          <view class='end'>
+            <picker
+              mode="date"
+              value="{{endDate}}"
+              start="2015-09-01"
+              end="2020-09-01"
+              bindchange="bindEndDateChange"
+              >
+              <view class="picker">{{endDate}}</view>
+            </picker>
+          </view>
+        </view>
+        <view class="form-item form-input">
+          <input name="input" placeholder="关键字/城市/别墅名"/>
+        </view>
+        <view class="btn-area">
+          <button form-type="submit" class='seach'>开始搜索</button>
+        </view>
+      </view>
+    </view>
+<!--热门推荐-->
+    <view class='hot-box'>
+      <view class='my-title flex flex-align-middle' style='padding-top: 30rpx;'>
+        <image src='../../images/icon_hot.png'></image>
+          <text>热门推荐</text>
+      </view>
+      <scroll-view scroll-x="true" class='scroll-box'>
+        <view class="scroll-view-item" wx:for="{{hotImgUrls}}" wx:key="*this">
+          <image class='scroll-view-img' src='{{item}}' lazy-load="true"></image>
+        </view>
+      </scroll-view>
+    </view>
+  </scroll-view>
+</view>

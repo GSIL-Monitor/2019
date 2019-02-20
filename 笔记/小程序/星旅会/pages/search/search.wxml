@@ -1,0 +1,71 @@
+<view class="search">
+
+  <!-- 导航 -->
+  <view class='tbar tbar-primary tbar-absolute' style='padding-top: {{barHeight}}rpx'>
+    <view class='header'>
+      <navigator class='header-back header-back-white' open-type="navigateBack"></navigator>
+      <view class='title'>搜索</view>
+    </view>
+  </view>
+
+  <view class='tbar-height'></view>
+
+  <!-- 搜索 -->
+  <view class='search-input'>
+    <view class='input input-search-icon flex flex-align-middle flex-justify-center'>
+      <image src='../../images/icon_search.png'></image>
+      <input type='text' placeholder='关键字/城市/别墅名'></input>
+    </view>
+  </view>
+
+  <!-- 搜索历史 -->
+  <view class='search-module'>
+    <view class='search-header flex flex-justify-between'>
+      <text class="title">搜索历史</text>
+      <view class='right flex flex-align-middle'>
+        <image src='../../images/icon_delete.png'></image>
+        <text>清除</text>
+      </view>
+    </view>
+    <view class='search-module-content flex flex-wrap'>
+      <navigator url=''>惠州·万科双月湾</navigator>
+      <navigator url=''>惠州</navigator>
+      <navigator url=''>惠州·万科双月湾</navigator>
+      <navigator url=''>惠州</navigator>
+      <navigator url=''>惠州·万科双月湾</navigator>
+      <navigator url=''>惠州·万科双月湾</navigator>
+    </view>
+  </view>
+ 
+  <!-- 热门城市 -->
+  <view class='search-module search-margin-top'>
+    <view class='search-header flex flex-justify-between'>
+      <text class="title">热门城市</text>
+    </view>
+    <view class='search-module-content flex flex-wrap'>
+      <navigator url=''>惠州</navigator>
+      <navigator url=''>广州</navigator>
+      <navigator url=''>清远</navigator>
+      <navigator url=''>珠海</navigator>
+      <navigator url=''>江门</navigator>
+      <navigator url=''>阳江</navigator>
+      <navigator url=''>佛山</navigator>
+    </view>
+  </view>
+
+  <!-- 热门目的地 -->
+  <view class='search-module search-margin-top'>
+    <view class='search-header flex flex-justify-between'>
+      <text class="title">热门目的地</text>
+      <view class='right flex flex-align-middle'>
+        <image src='../../images/icon_change.png'></image>
+        <text>换一批</text>
+      </view>
+    </view>
+    <view class='search-module-content flex flex-wrap'>
+      <navigator url=''>惠州·万科双月湾</navigator>
+      <navigator url=''>珠海长隆度假区</navigator>
+    </view>
+  </view>
+
+</view> 

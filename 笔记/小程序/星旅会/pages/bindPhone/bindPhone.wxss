@@ -1,0 +1,29 @@
+page {
+  background: #F7F7F7;
+}
+
+.getCode {
+  padding: 0 20rpx;
+  height:60rpx;
+  text-align: center;
+  line-height: 60rpx;
+  border-radius:10rpx;
+  border:1rpx solid rgba(102,102,102,1);
+}
+
+.form-group {
+  width: 75%;
+}
+
+.form-group .form-input {
+  width: 45%;
+}
+
+.form-label {
+  width: 30%;
+}
+
+.form-btn {
+  width: calc(100% - 130rpx);
+  margin: 99rpx 65rpx;
+}
