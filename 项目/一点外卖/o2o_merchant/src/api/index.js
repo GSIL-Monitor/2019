@@ -1,8 +1,8 @@
 // import Vue from 'vue'
 import axios from 'axios'
 import * as orderControl from './order.js'
-axios.defaults.baseURL = 'http://192.168.31.172:2011/web/api/'
-// axios.defaults.baseURL = 'http://o2o.711fang.com/web/api/'
+// axios.defaults.baseURL = 'http://192.168.31.172:2011/web/api/'
+axios.defaults.baseURL = 'http://o2o.711fang.com/web/api/'
 // axios.defaults.baseURL = 'http://192.168.31.108:2011/web/api/'
 // Vue.prototype.axios = axios
 axios.defaults.withCredentials = true

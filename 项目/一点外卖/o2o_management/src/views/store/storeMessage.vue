@@ -93,7 +93,10 @@
         type="primary"
         @click="oneKey(0)"
       >{{$t('STOREMESSAGE.BTN.FONT3')}}</el-button>
-
+      <el-button
+        type="primary"
+        @click="search"
+      >创建店铺</el-button>
       <!-- <el-button
         type="primary"
         @click="excelBusShop"
@@ -245,7 +248,6 @@
           align="center"
         >
           <template slot-scope="scope">
-            <el-button type="primary" @click="search">修改店铺</el-button>
             <el-button type="danger" @click="del(scope.row.id)">删除</el-button>
           </template>
         </el-table-column>
@@ -563,14 +565,7 @@ h4 {
 </style>
 <style>
 .contentS .el-button + .el-button {
-  display: flex;
   margin-left: 0;
   margin: 5px 0;
 }
 </style>
-
-
-
-
-
- 

@@ -5,8 +5,6 @@ const gober = () => import('@/views/user/gober.vue')
 const Manage = () => import('@/views/gover/Manage.vue')
 const custom = () => import('@/views/custom/custom.vue')
 const storeMessage = () => import('@/views/store/storeMessage.vue')
-const addShopInfo = () => import('@/views/store/addShopInfo.vue')
-
 const storeAudit = () => import('@/views/store/storeAudit.vue')
 const storeCategory = () => import('@/views/store/storeCategory.vue')
 const productInfo = () => import('@/views/product/productInfo.vue')
@@ -86,10 +84,6 @@ export default new Router({
         {
           path: 'storeMessage',
           component: storeMessage
-        },
-        {
-          path: 'addShopInfo',
-          component: addShopInfo
         },
         {
           path: 'storeAudit',

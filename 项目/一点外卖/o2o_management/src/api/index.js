@@ -14,8 +14,8 @@ import * as menuControl from './menuctrl'
 import vm from '@/main.js'
 // axios.defaults.baseURL = 'http://192.168.31.52:2011/web/api'
 // axios.defaults.baseURL = 'http://o2o.711fang.com/web/api'
-// axios.defaults.baseURL = 'http://192.168.31.108:2011/web/api'
-axios.defaults.baseURL = 'http://192.168.31.172:2011/web/api/'
+axios.defaults.baseURL = 'http://192.168.31.108:2011/web/api'
+// axios.defaults.baseURL = 'http://192.168.31.172:2011/web/api/'
 // axios.defaults.baseURL = 'http://o2o.711fang.com/web/api/'
 axios.defaults.timeout = 6000
 axios.defaults.withCredentials = true

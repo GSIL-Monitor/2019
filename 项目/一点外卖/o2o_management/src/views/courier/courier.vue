@@ -1,5 +1,5 @@
 <script src="../../../config/index.js"></script>
-<template lang="html"> 
+<template>
   <div class="clearfix">
     <div class="operation">
       <div class="clearfix ">
