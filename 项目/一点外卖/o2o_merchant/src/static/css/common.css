@@ -1,0 +1,246 @@
+* {
+  box-sizing: border-box;
+}
+
+body,
+ol,
+ul,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+th,
+td,
+dl,
+dd,
+form,
+fieldset,
+legend,
+input,
+textarea,
+select {
+  margin: 0;
+  padding: 0
+}
+
+body {
+  font: 14px;
+  font-family: MicrosoftYaHei;
+  background: #FFFFFF;
+  -webkit-text-size-adjust: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-weight: normal;
+}
+
+a {
+  color: #999999;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a:hover {
+  color: #00B1FF;
+}
+
+em,
+i {
+  font-style: normal
+}
+
+li {
+  list-style: none
+}
+
+img {
+  border: 0;
+  vertical-align: middle
+}
+
+em {
+  font-weight: normal;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0
+}
+
+p {
+  word-wrap: break-word
+}
+
+.fl {
+  float: left;
+}
+
+.fr {
+  float: right;
+}
+
+.clearfix:after {
+  content: "020";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+
+.clearfix {
+  zoom: 1;
+}
+
+button {
+  border: 1px solid rgba(212, 212, 212, 1);
+  border-radius: 2px;
+  cursor: pointer;
+  outline: none;
+}
+
+input {
+  border: 1px solid rgba(212, 212, 212, 1);
+  border-radius: 4px;
+  outline: none;
+  width: 250px ;
+  height: 30px;
+  text-indent: 5px;
+}
+
+/* 版心 */
+.container {
+  width: 1180px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 0 30px;
+}
+
+/* 二级标题头部 */
+.subTitleTop {
+  height: 68px;
+  line-height: 68px;
+  border-bottom: 1px solid #e1e1e1;
+}
+
+.subTitleTop>span {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+
+/* 自定义按钮 */
+.btn {
+  width: 120px;
+  height: 36px;
+  line-height: 36px;
+  border-radius: 4px;
+  text-align: center;
+  color: rgba(255, 255, 255, 1);
+  background-color: #00B1FF;
+  font-size: 16px;
+}
+
+/* 登录注册、忘记密码输入部分 ********************************************/
+.formBox {
+  color: #666;
+  background-color: rgba(255, 255, 255, 1);
+  border-radius: 4px;
+}
+
+.formBox .titleTop {
+  margin-bottom: 40px;
+  color: #333;
+}
+
+.formBox .titleTop h2 {
+  font-weight: 400;
+  font-size: 30px;
+  margin-right: 8px;
+  display: inline-block;
+
+}
+
+.formBox .titleTop h3 {
+  font-size: 20px;
+  font-weight: 400;
+  display: inline-block;
+
+}
+
+/* 获取验证码按钮 */
+.formBox .codeFl {
+  width: 200px;
+  border-radius: 6px;
+}
+
+.formBox .codeFr {
+  float: right;
+  width: 140px;
+  height: 38px;
+  border-radius: 6px;
+  font-size: 18px;
+  color: #fff;
+  background-color: #00b1ff;
+}
+
+/* 模拟验证码禁用状态 */
+.formBox .disabled {
+  background-color: #eeeeee;
+  color: #aaaaaa;
+  /* 鼠标变化 */
+  /* cursor: not-allowed; */
+  border: #eeeeee;
+}
+
+/* 现实语言选择按钮 */
+.languageBtn {
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.08);
+  border-radius: 2px;
+  margin-top: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #666;
+}
+
+.formBox h4 {
+  font-weight: 400;
+  margin: 15px 0;
+  font-size: 16px;
+}
+
+/* 提交按钮 */
+.formBox .submitBtn {
+  width: 100%;
+  height: 50px;
+  background: rgba(0, 177, 255, 1);
+  border-radius: 6px;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+/* 多语言选择框 */
+.LanguageBox span {
+  display: inline-block;
+  width: 207px;
+  text-align: center;
+  height: 48px;
+  line-height: 48px;
+}
+
+.LanguageBox span:hover {
+  background: rgba(238, 238, 238, 1);
+  cursor: pointer;
+}
+
+/* end ********************************/

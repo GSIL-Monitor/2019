@@ -1,0 +1,13 @@
+接口文档：http://rap.taozhuma.com/workspace/myWorkspace.do?projectId=37#7006
+
+账号：yangchenjun
+密码：yangchenjun
+
+管理后台：http://o2admin.711fang.com/#/
+账号密码：admin 12345678
+
+
+商家平台：http://o2mch.711fang.com/#/
+账号密码：liangzhaoshun123   liangzhaoshun123
+
+

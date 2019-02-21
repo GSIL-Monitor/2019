@@ -1,0 +1,14 @@
+{
+    "messages": {
+      "loginTitle": "商务系统",
+      "loginTitle2": "商家中心",
+      "account":"商户账号",
+      "accountInput":"请输入您的账号",
+      "password":"登录密码",
+      "passwordtInput":"请输入登录密码",
+      "reset":"忘记密码",
+      "loginBtn":"登录",
+      "goRegister":"还没账号？立即注册"
+    }
+  }
+  

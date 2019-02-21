@@ -1,0 +1,118 @@
+/* 重置element表格样式 */
+/* 登录注册表单 */
+.formBox .el-form--label-top .el-form-item__label {
+  padding: 0;
+  font-size: 16px;
+}
+
+.formBox .el-input__inner {
+  background: rgb(229, 247, 255);
+  border-radius: 6px;
+  border: none;
+  height: 38px;
+  line-height: 38px;
+  font-size: 16px;
+}
+
+/* 语言框切换框 */
+.LanguageBox .el-dialog--center .el-dialog__body {
+  padding: 0 0 40px;
+}
+
+/* 表格 */
+.el-table .cell {
+  text-align: center;
+}
+
+.el-table .warning-row {
+  background: #f9f9f9;
+  border-color: #e1e1e1;
+}
+
+.el-table td,
+.el-table th.is-leaf {
+  border-color: #e1e1e1;
+}
+
+.el-table--border td,
+.el-table--border th,
+.el-table__body-wrapper .el-table--border.is-scrolling-left~.el-table__fixed {
+  border-color: #e1e1e1;
+}
+
+/* 滑块 */
+.el-switch.is-checked .el-switch__core {
+  background-color: #00B1FF !important;
+  border-color: #00B1FF !important;
+}
+
+/* label标题 */
+.el-checkbox__label {
+  font-size: 16px;
+}
+
+/* 输入框 */
+.home .el-input {
+  width: 230px;
+}
+
+/* 文本域 */
+.el-textarea__inner {
+  width: 400px;
+  height: 160px;
+  resize: none;
+}
+
+.home .el-input__inner {
+  height: 30px;
+  line-height: 30px;
+  width: 230px;
+  border: 1px solid rgba(212, 212, 212, 1);
+}
+
+.drawmoney .page .el-input__inner {
+  width: 50px;
+}
+
+.drawmoney .page .el-input {
+  width: 60px;
+}
+
+/* 字体图标 */
+.el-input__icon {
+  line-height: 30px;
+}
+
+.el-date-editor .el-range-separator {
+  line-height: 24px;
+}
+
+.el-date-editor .el-range__icon {
+  line-height: 24px;
+}
+
+/* 时间选择器 */
+.finance .el-date-editor .el-range__icon {
+  line-height: 24px;
+}
+
+.finance .el-date-editor .el-range-separator {
+  line-height: 24px;
+}
+
+.el-checkbox__input.is-checked .el-checkbox__inner, .el-checkbox__input.is-indeterminate .el-checkbox__inner{
+  background-color: #00B1FF !important;
+  border-color: #00B1FF !important;
+}
+.el-checkbox__input.is-checked+.el-checkbox__label{
+  color: #00B1FF;
+}
+.el-select-dropdown.is-multiple .el-select-dropdown__item.selected{
+  color: #00B1FF;
+}
+.el-select-dropdown__item.selected {
+  color: #00B1FF; 
+}
+.el-form-item.is-success .el-input__inner, .el-form-item.is-success .el-input__inner:focus, .el-form-item.is-success .el-textarea__inner, .el-form-item.is-success .el-textarea__inner:focus{
+  border-color: rgba(212, 212, 212, 1);
+}
